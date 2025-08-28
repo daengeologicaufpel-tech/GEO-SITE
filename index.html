@@ -37,7 +37,7 @@
         .site-header.scrolled .main-nav ul li a { color: var(--color-text-light); }
         .main-nav ul li a::after { content: ''; position: absolute; bottom: 5px; left: 15px; right: 15px; height: 2px; background-color: var(--color-text-light); transform: scaleX(0); transition: transform 0.3s ease; }
         .main-nav ul li a:hover::after { transform: scaleX(1); }
-        .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; }
+        .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; z-index: 1001; }
         .main-nav ul li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
         .dropdown-menu li a { padding: 12px 20px; white-space: nowrap; transition: background-color 0.3s ease; }
         .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
@@ -255,47 +255,71 @@
 
             // LÓGICA PARA CARREGAR POSTS DINAMICAMENTE
             const postsGrid = document.getElementById('posts-grid');
-            fetch('_data/posts.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // A nova configuração salva os posts dentro de um objeto, na chave "lista_de_posts"
-                    const posts = data.lista_de_posts || []; 
-                    postsGrid.innerHTML = ''; 
-                    if (posts.length === 0) {
-                        postsGrid.innerHTML = '<p>Nenhuma publicação encontrada.</p>';
-                        return;
-                    }
-                    posts.forEach(post => {
-                        const postCard = document.createElement('article');
-                        postCard.classList.add('post-card');
-                        
-                        const postDate = new Date(post.date);
-                        const formattedDate = postDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
+            
+            // --- ATENÇÃO: SUBSTITUA 'seu-usuario' E 'seu-repositorio' ABAIXO ---
+            const GITHUB_USER = "luskisaulo";
+            const GITHUB_REPO = "site-dafpo";
+            
+            const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/_posts`;
 
-                        postCard.innerHTML = `
-                            <a href="#">
-                                <div class="post-card-image">
-                                    <img src="${post.thumbnail || 'img/default-post-image.png'}" alt="">
-                                </div>
-                                <div class="post-card-content">
-                                    <span class="post-date">${formattedDate}</span>
-                                    <h3 class="post-title">${post.title}</h3>
-                                    <p class="post-excerpt">${post.excerpt}</p>
-                                </div>
-                            </a>
-                        `;
-                        postsGrid.appendChild(postCard);
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(files => {
+                    if (!Array.isArray(files)) {
+                        throw new Error("A pasta _posts não foi encontrada ou está vazia.");
+                    }
+                    const fetchPromises = files.map(file => fetch(file.download_url).then(res => res.text()));
+                    return Promise.all(fetchPromises);
+                })
+                .then(postsContent => {
+                    postsGrid.innerHTML = ''; // Limpa a área de posts
+                    if (postsContent.length === 0) {
+                         postsGrid.innerHTML = '<p>Nenhuma publicação encontrada.</p>';
+                    }
+                    
+                    postsContent.forEach(content => {
+                        const post = parseFrontmatter(content);
+                        if (post) {
+                            const postCard = document.createElement('article');
+                            postCard.classList.add('post-card');
+                            
+                            const postDate = new Date(post.date);
+                            const formattedDate = postDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
+
+                            postCard.innerHTML = `
+                                <a href="#">
+                                    <div class="post-card-image">
+                                        <img src="${post.thumbnail}" alt="">
+                                    </div>
+                                    <div class="post-card-content">
+                                        <span class="post-date">${formattedDate}</span>
+                                        <h3 class="post-title">${post.title}</h3>
+                                        <p class="post-excerpt">${post.excerpt}</p>
+                                    </div>
+                                </a>
+                            `;
+                            postsGrid.appendChild(postCard);
+                        }
                     });
                 })
                 .catch(error => {
                     console.error('Erro ao carregar os posts:', error);
                     postsGrid.innerHTML = '<p>Não foi possível carregar as publicações no momento.</p>';
                 });
+
+            function parseFrontmatter(markdownContent) {
+                const match = markdownContent.match(/---([\s\S]*?)---/);
+                if (!match) return null;
+
+                const frontmatter = {};
+                const lines = match[1].trim().split('\n');
+                lines.forEach(line => {
+                    const [key, ...valueParts] = line.split(':');
+                    const value = valueParts.join(':').trim().replace(/^['"]|['"]$/g, ''); // Remove aspas
+                    frontmatter[key.trim()] = value;
+                });
+                return frontmatter;
+            }
         });
     </script>
 </body>
