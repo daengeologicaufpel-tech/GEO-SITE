@@ -5,7 +5,7 @@ thumbnail: /img/LOGIN_PERGAMUM.webp
 excerpt: A UFPel possui acesso ao acervo do portal "Minha biblioteca digital"
   que se chama Pergamum , todo aluno pode acessar com seu número de...
 ---
-![]()
+
 
 <!--StartFragment-->
 
@@ -22,3 +22,7 @@ Caso ficou alguma dúvida deem uma olhada nas fotos abaixo.
 O DAFPO deseja a todos bons estudos.
 
 <!--EndFragment-->
+
+![](/img/captura-de-tela-2025-08-28-194018.png)
+
+![](/img/captura-de-tela-2025-08-28-192409.png)
