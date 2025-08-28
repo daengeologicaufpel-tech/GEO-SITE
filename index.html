@@ -256,9 +256,20 @@
             // LÓGICA PARA CARREGAR POSTS DINAMICAMENTE
             const postsGrid = document.getElementById('posts-grid');
             fetch('_data/posts.json')
-                .then(response => response.json())
-                .then(posts => {
-                    postsGrid.innerHTML = ''; // Limpa os posts de exemplo
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // A nova configuração salva os posts dentro de um objeto, na chave "lista_de_posts"
+                    const posts = data.lista_de_posts || []; 
+                    postsGrid.innerHTML = ''; 
+                    if (posts.length === 0) {
+                        postsGrid.innerHTML = '<p>Nenhuma publicação encontrada.</p>';
+                        return;
+                    }
                     posts.forEach(post => {
                         const postCard = document.createElement('article');
                         postCard.classList.add('post-card');
@@ -269,7 +280,7 @@
                         postCard.innerHTML = `
                             <a href="#">
                                 <div class="post-card-image">
-                                    <img src="${post.thumbnail}" alt="${post.title}">
+                                    <img src="${post.thumbnail || 'img/default-post-image.png'}" alt="">
                                 </div>
                                 <div class="post-card-content">
                                     <span class="post-date">${formattedDate}</span>
@@ -283,7 +294,7 @@
                 })
                 .catch(error => {
                     console.error('Erro ao carregar os posts:', error);
-                    postsGrid.innerHTML = '<p>Não foi possível carregar as publicações.</p>';
+                    postsGrid.innerHTML = '<p>Não foi possível carregar as publicações no momento.</p>';
                 });
         });
     </script>
