@@ -1,19 +1,22 @@
-backend:
+backend:backend:
   name: git-gateway
-  branch: main # Se o seu ramo principal for 'master', troque aqui.
+  branch: main
 
-media_folder: "img" # Onde as imagens enviadas pelo painel serão salvas
+media_folder: "img"
 public_folder: "/img"
 
 collections:
   - name: "posts"
     label: "Posts (Fique por Dentro)"
-    folder: "_posts" # Os posts serão salvos como arquivos aqui
+    label_singular: "Post"
+    # Mudamos de 'folder' para 'file' e definimos um arquivo específico
+    file: "_data/posts.json"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    # A widget "list" permite adicionar múltiplos itens dentro de um único arquivo
+    widget: list
     fields:
       - {label: "Título", name: "title", widget: "string"}
       - {label: "Data de Publicação", name: "date", widget: "datetime"}
       - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
       - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
-      - {label: "Conteúdo Completo do Post", name: "body", widget: "markdown"}
+      - {label: "Conteúdo Completo do Post (ainda não usado)", name: "body", widget: "markdown", required: false}
