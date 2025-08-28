@@ -9,15 +9,17 @@ collections:
   - name: "posts"
     label: "Posts (Fique por Dentro)"
     label_singular: "Post"
-    # Mudamos de 'folder' para 'file' e definimos um arquivo específico
     file: "_data/posts.json"
-    create: true
-    # A widget "list" permite adicionar múltiplos itens dentro de um único arquivo
-    widget: list
+    create: false # Desativado para usar a edição de lista abaixo
+    
+    # Esta é a estrutura correta para editar uma lista de itens em um arquivo
     fields:
-      - {label: "Título", name: "title", widget: "string"}
-      - {label: "Data de Publicação", name: "date", widget: "datetime"}
-      - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
-      - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
-      - {label: "Conteúdo Completo do Post (ainda não usado)", name: "body", widget: "markdown", required: false}
-
+      - name: items
+        label: Lista de Posts
+        widget: list
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Data de Publicação", name: "date", widget: "datetime"}
+          - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
+          - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
+          - {label: "Conteúdo Completo do Post (ainda não usado)", name: "body", widget: "markdown", required: false}
