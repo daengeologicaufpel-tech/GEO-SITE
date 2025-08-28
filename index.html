@@ -33,15 +33,16 @@
         .site-header.scrolled .logo { filter: none; }
         .main-nav ul { display: flex; list-style: none; }
         .main-nav ul li { position: relative; }
-        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: block; transition: color 0.3s ease; }
         .site-header.scrolled .main-nav ul li a { color: var(--color-text-light); }
+        .main-nav ul li a::after { content: ''; position: absolute; bottom: 5px; left: 15px; right: 15px; height: 2px; background-color: var(--color-text-light); transform: scaleX(0); transition: transform 0.3s ease; }
+        .main-nav ul li a:hover::after { transform: scaleX(1); }
         .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; z-index: 1001; }
         .main-nav ul li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
         .dropdown-menu li a { padding: 12px 20px; white-space: nowrap; transition: background-color 0.3s ease; }
         .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
         .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
         .dropdown-menu--wide li a { white-space: normal; text-align: left; }
-        .dropdown-arrow { display: none; width: 18px; height: 18px; fill: currentColor; }
         .login-button { background-color: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; }
         .login-button:hover { background-color: white; color: var(--color-primary-green); }
         .site-header.scrolled .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border-color: transparent; }
@@ -111,20 +112,19 @@
                 display: none; 
                 flex-direction: column; 
                 position: absolute; 
-                top: 70px; 
+                top: 70px; /* Alinha abaixo do cabeçalho */
                 left: 0; 
                 width: 100%; 
-                background-color: var(--color-primary-green);
+                background-color: var(--color-primary-green); /* CORREÇÃO: Fundo sólido */
                 box-shadow: 0 5px 10px rgba(0,0,0,0.2);
             }
             .main-nav ul.nav-active { display: flex; }
             .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
-            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; }
-            .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; }
-            .dropdown-arrow { display: inline-block; }
+            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); }
+            .dropdown-menu--wide { display: block; min-width: auto; gap: 0; }
             .menu-toggle { display: block; z-index: 10; }
-            .content-grid { grid-template-columns: 1fr; } 
+            .content-grid { grid-template-columns: 1fr; } /* Empilha as colunas */
+            .sidebar-right { grid-column: auto; }
         }
         
         @media (max-width: 768px) {
@@ -145,20 +145,16 @@
             <nav class="main-nav">
                 <ul id="nav-list">
                     <li><a href="index.html">Início</a></li>
-                    <li class="has-dropdown">
-                        <a href="origem.html">Quem somos 
-                            <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
-                        </a>
+                    <li>
+                        <a href="origem.html">Quem somos</a>
                         <ul class="dropdown-menu">
                             <li><a href="origem.html">Origem</a></li>
                             <li><a href="diretorias.html">Diretorias</a></li>
                             <li><a href="estatuto.html">Estatuto</a></li>
                         </ul>
                     </li>
-                    <li class="has-dropdown">
-                        <a href="curso.html">O Curso
-                            <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
-                        </a>
+                    <li>
+                        <a href="curso.html">O Curso</a>
                         <ul class="dropdown-menu dropdown-menu--wide">
                             <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
                             <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
@@ -258,26 +254,113 @@
     </footer>
     
     <script>
-        // --- SCRIPT PARA FUNCIONALIDADES INTERATIVAS ---
         const header = document.getElementById('site-header');
         window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); });
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
         menuToggle.addEventListener('click', () => { navList.classList.toggle('nav-active'); });
-
-        // LÓGICA PARA DROPDOWNS NO MOBILE (AO CLICAR)
-        document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
-            menuLink.addEventListener('click', function(event) {
-                if (window.innerWidth <= 992) {
-                    event.preventDefault();
-                    this.parentElement.classList.toggle('dropdown-active');
-                }
-            });
-        });
-
-        // LÓGICA DO SLIDESHOW
         document.addEventListener('DOMContentLoaded', () => {
-            // ... (A lógica do slideshow e dos posts continua a mesma)
+            const slidesContainer = document.getElementById('slides-container');
+            const imageData = [
+                { file: "PREDIO DA ALFANDEGA.jpg", caption: "PREDIO DA ALFANDEGA"}, { file: "2012 - Campo de Prospecção e Pesquisa Mineral - Minas de Corrales - Uruguai.jpg", caption: "Campo de Prospecção e Pesquisa Mineral (Minas de Corrales/Uruguai) - 2012" }, { file: "Pedreira Pelotense - Pelotas RS.jpg", caption: "Pedreira Pelotense (Pelotas/RS)" }, { file: "MINAS DO CAMAQUA 2.jpg", caption: "Minas do Camaquã" }, { file: "MINAS DO CAMAQUA 1.jpg", caption: "Minas do Camaquã" }, { file: "VETERANOS E BIXOS 2017-1.jpg", caption: "Veteranos e Bixos - 2017/1" }, { file: "VETERANOS E BIXOS 2016-1.png", caption: "Veteranos e Bixos - 2016/1" }, { file: "MAPEAMENTO GEOLOGICO 2019-2.png", caption: "Mapeamento Geológico - 2019/2" }, { file: "VETERANOS E BIXOS 2019-1.jpg", caption: "Veteranos e Bixos - 2019/1" }, { file: "SEDIMENTOLOGIA 2019-1.jpg", caption: "Sedimentologia - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2019-1.jpg", caption: "Campo de Geologia Geral - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2018-1.jpg", caption: "Campo de Geologia Geral - 2018/1" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "PETROLOGIA METAMORFICA 2018-2.png", caption: "Petrologia Metamórfica - 2018/2" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "GEOLOGIA ESTRUTURAL 2018-2.jpg", caption: "Geologia Estrutural - 2018/2" }, { file: "PETROLOGIA SEDIMENTAR 2017-2.jpg", caption: "Petrologia Sedimentar - 2017/2" }, { file: "XVII SNET XI SSBG 2019-1.jpg", caption: "XVII SNET XI SSBG - 2019/1" }, { file: "FORMATURA.jpg", caption: "Formatura" }
+            ];
+            imageData.forEach(data => { const slide = document.createElement('div'); slide.classList.add('slide'); const img = document.createElement('img'); img.src = `img/${data.file}`; img.alt = data.caption; img.classList.add('slide-image'); const caption = document.createElement('div'); caption.classList.add('caption'); caption.textContent = data.caption; slide.appendChild(img); slide.appendChild(caption); slidesContainer.appendChild(slide); });
+            const slides = document.querySelectorAll('.slide'); const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn'); const playPauseBtn = document.getElementById('play-pause-btn');
+            if (slides.length > 0) {
+                let currentSlide = 0; let isPlaying = true; let slideInterval = null;
+                const moveToSlide = (slideIndex) => { if (slides[currentSlide]) { slides[currentSlide].classList.remove('active'); } currentSlide = (slideIndex + slides.length) % slides.length; if (slides[currentSlide]) { slides[currentSlide].classList.add('active'); } };
+                const startSlideshow = () => { isPlaying = true; playPauseBtn.classList.remove('is-paused'); playPauseBtn.setAttribute('aria-label', 'Pausar'); slideInterval = setInterval(() => moveToSlide(currentSlide + 1), 4000); };
+                const pauseSlideshow = () => { isPlaying = false; clearInterval(slideInterval); playPauseBtn.classList.add('is-paused'); playPauseBtn.setAttribute('aria-label', 'Continuar'); };
+                nextBtn.addEventListener('click', () => { moveToSlide(currentSlide + 1); pauseSlideshow(); });
+                prevBtn.addEventListener('click', () => { moveToSlide(currentSlide - 1); pauseSlideshow(); });
+                playPauseBtn.addEventListener('click', () => { if (isPlaying) { pauseSlideshow(); } else { startSlideshow(); } });
+                moveToSlide(0);
+                startSlideshow();
+            }
+
+            const postsGrid = document.getElementById('posts-grid');
+            const GITHUB_USER = "daengeologicaufpel-tech";
+            const GITHUB_REPO = "GEO-SITE";
+            const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/_posts`;
+
+            async function fetchPosts() {
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) { throw new Error(`Erro de rede: ${response.statusText}`); }
+                    const files = await response.json();
+                    if (!Array.isArray(files)) { throw new Error("A pasta _posts não foi encontrada ou está vazia."); }
+                    
+                    postsGrid.innerHTML = ''; 
+                    if (files.length === 0) {
+                        postsGrid.innerHTML = '<p>Nenhuma publicação encontrada.</p>';
+                        return;
+                    }
+
+                    const fetchPromises = files.map(file => 
+                        fetch(file.download_url).then(res => res.text()).then(content => ({
+                            content: content,
+                            slug: file.name.replace(/\.md$/, '')
+                        }))
+                    );
+
+                    const postsData = await Promise.all(fetchPromises);
+                    
+                    postsData.sort((a, b) => {
+                        const dateA = new Date(parseFrontmatter(a.content).date);
+                        const dateB = new Date(parseFrontmatter(b.content).date);
+                        return dateB - dateA;
+                    });
+                    
+                    postsData.forEach(postData => {
+                        const post = parseFrontmatter(postData.content);
+                        if (post) {
+                            post.slug = postData.slug;
+                            displayPost(post);
+                        }
+                    });
+
+                } catch (error) {
+                    console.error('Erro ao carregar os posts:', error);
+                    postsGrid.innerHTML = '<p>Não foi possível carregar as publicações no momento.</p>';
+                }
+            }
+
+            function parseFrontmatter(markdownContent) {
+                const match = markdownContent.match(/---([\s\S]*?)---/);
+                if (!match) return null;
+                const frontmatter = {};
+                const lines = match[1].trim().split('\n');
+                lines.forEach(line => {
+                    const [key, ...valueParts] = line.split(':');
+                    const value = valueParts.join(':').trim().replace(/^['"]|['"]$/g, '');
+                    frontmatter[key.trim()] = value;
+                });
+                return frontmatter;
+            }
+
+            function displayPost(post) {
+                const postCard = document.createElement('article');
+                postCard.classList.add('post-card');
+                
+                const postDate = new Date(post.date);
+                const formattedDate = postDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
+
+                postCard.innerHTML = `
+                    <a href="post.html?post=${post.slug}">
+                        <div class="post-card-image">
+                            <img src="${post.thumbnail}" alt="">
+                        </div>
+                        <div class="post-card-content">
+                            <span class="post-date">${formattedDate}</span>
+                            <h3 class="post-title">${post.title}</h3>
+                            <p class="post-excerpt">${post.excerpt}</p>
+                        </div>
+                    </a>
+                `;
+                postsGrid.appendChild(postCard);
+            }
+
+            fetchPosts();
         });
     </script>
 </body>
