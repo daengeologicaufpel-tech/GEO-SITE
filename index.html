@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAFPO - Engenharia Geológica UFPel (Versão Moderna)</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-primary-green: #67651c;
+            --color-heading-maroon: #702727;
+            --color-background: #f4f4f4;
+            --color-surface: #ffffff;
+            --color-text-primary: #2d2d2d;
+            --color-text-secondary: #5f5f5f;
+            --color-text-light: #fdfdfc;
+            --font-body: 'Poppins', sans-serif;
+            --font-heading: 'Lora', serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background-color: var(--color-background); color: var(--color-text-primary); }
+        .site-header { position: sticky; top: 0; width: 100%; z-index: 1000; background-color: transparent; transition: background-color 0.4s ease, box-shadow 0.4s ease; }
+        .site-header.scrolled { background-color: var(--color-primary-green); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 10px 30px; height: 70px; }
+        .logo { height: 50px; width: auto; filter: brightness(0) invert(1); transition: filter 0.4s ease; }
+        .site-header.scrolled .logo { filter: none; }
+        .main-nav ul { display: flex; list-style: none; }
+        .main-nav ul li { position: relative; }
+        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: block; transition: color 0.3s ease; }
+        .site-header.scrolled .main-nav ul li a { color: var(--color-text-light); }
+        .main-nav ul li a::after { content: ''; position: absolute; bottom: 5px; left: 15px; right: 15px; height: 2px; background-color: var(--color-text-light); transform: scaleX(0); transition: transform 0.3s ease; }
+        .main-nav ul li a:hover::after { transform: scaleX(1); }
+        .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; }
+        .main-nav ul li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
+        .dropdown-menu li a { padding: 12px 20px; white-space: nowrap; transition: background-color 0.3s ease; }
+        .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
+        .dropdown-menu--wide li a { white-space: normal; text-align: left; }
+        .login-button { background-color: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; }
+        .login-button:hover { background-color: white; color: var(--color-primary-green); }
+        .site-header.scrolled .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border-color: transparent; }
+        .site-header.scrolled .login-button:hover { background-color: rgba(255,255,255,0.8); }
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; }
+        .menu-toggle svg path { stroke: white; }
+        .site-header.scrolled .menu-toggle svg path { stroke: var(--color-text-light); }
+        .hero { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 60vh; min-height: 400px; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('img/PREDIO DA ALFANDEGA.jpg'); background-size: cover; background-position: center; color: white; padding: 20px; margin-top: -70px; }
+        .hero-content { animation: fadeInFromBottom 1s ease-out forwards; opacity: 0; }
+        @keyframes fadeInFromBottom { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .hero h1 { font-family: var(--font-heading); color: var(--color-surface); font-size: 3.5rem; text-shadow: 2px 2px 6px rgba(0,0,0,0.7); margin-bottom: 10px; }
+        .hero h2 { font-size: 1.2rem; font-weight: 400; max-width: 700px; text-shadow: 1px 1px 3px rgba(0,0,0,0.7); color: rgba(255,255,255,0.9); }
+        .content-grid { display: grid; grid-template-columns: 1fr 2.5fr 1fr; gap: 30px; padding: 40px; max-width: 1400px; margin: 0 auto; }
+        .sidebar .social-widget { position: relative; height: 200px; border-radius: 8px; overflow: hidden; background-size: cover; background-position: center; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; }
+        .social-widget .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .social-widget h3 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 10px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .social-widget .social-buttons { display: flex; gap: 8px; }
+        .social-widget .social-button { display: inline-flex; align-items: center; justify-content: center; padding: 8px 12px; border-radius: 5px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: transform 0.2s ease, opacity 0.2s ease; opacity: 0.8; }
+        .social-widget .social-button:hover { transform: scale(1.08); opacity: 1; }
+        .social-widget .social-button svg { width: 18px; height: 18px; margin-right: 6px; }
+        .social-button.facebook { background-color: #1877F2; color: white; }
+        .social-button.instagram { background: #d6249f; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); color: white; }
+        .slideshow-container { width: 100%; padding-top: 75%; position: relative; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .slides { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #e0e0e0; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease-in-out; z-index: 1; }
+        .slide.active { opacity: 1; z-index: 2; }
+        .slide-image { width: 100%; height: 100%; object-fit: cover; }
+        .slide .caption { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; padding: 30px 20px 15px; font-size: 14px; transform: translateY(100%); transition: transform 0.5s ease-out, opacity 0.5s ease-out; opacity: 0; }
+        .slide.active .caption { transform: translateY(0); opacity: 1; }
+        .slide-controls { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+        .slide-control { pointer-events: auto; position: absolute; background-color: rgba(0, 0, 0, 0.4); border: none; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease; }
+        .slideshow-container:hover .slide-control { opacity: 1; }
+        .slide-control:hover { background-color: rgba(0, 0, 0, 0.7); transform: scale(1.1); }
+        .slide-control.prev { top: 50%; left: 15px; transform: translateY(-50%); }
+        .slide-control.next { top: 50%; right: 15px; transform: translateY(-50%); }
+        .slide-control.play-pause { bottom: 15px; right: 15px; }
+        .slide-control svg { fill: white; width: 24px; height: 24px; }
+        .play-pause .icon-pause { display: block; }
+        .play-pause .icon-play { display: none; }
+        .play-pause.is-paused .icon-pause { display: none; }
+        .play-pause.is-paused .icon-play { display: block; }
+        .posts-section { padding: 40px; max-width: 1400px; margin: 0 auto; }
+        .posts-section h2 { font-family: var(--font-heading); font-size: 2.5rem; color: var(--color-text-primary); text-align: center; margin-bottom: 30px; }
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .post-card { background-color: var(--color-surface); border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .post-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .post-card a { text-decoration: none; color: inherit; display: block; }
+        .post-card-image img { width: 100%; height: 200px; object-fit: cover; }
+        .post-card-content { padding: 20px; }
+        .post-date { font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 8px; display: block; }
+        .post-title { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 10px; }
+        .post-excerpt { font-size: 0.95rem; line-height: 1.6; color: var(--color-text-secondary); }
+        .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
+        .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
+        .footer-column p, .footer-column a { color: rgba(255, 255, 255, 0.8); text-decoration: none; line-height: 1.7; }
+        .footer-column a:hover { color: white; text-decoration: underline; }
+        .social-links { display: flex; gap: 15px; margin-top: 15px; }
+        .social-links a { display: inline-block; transition: transform 0.3s ease; }
+        .social-links a:hover { transform: scale(1.1); }
+        .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
+        @media (max-width: 992px) { .content-grid { grid-template-columns: 1fr 1fr; } .sidebar-right { grid-column: 1 / 3; } .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: white; } .site-header.scrolled .main-nav ul { background-color: var(--color-primary-green); } .main-nav ul.nav-active { display: flex; } .main-nav ul li a { color: var(--color-text-primary); border-bottom: 1px solid #f0f0f0; } .site-header.scrolled .main-nav ul li a { color: var(--color-text-light); } .menu-toggle { display: block; z-index: 10; } }
+        @media (max-width: 768px) { .nav-container { padding: 10px 20px; } .hero h1 { font-size: 2.2rem; } .hero h2 { font-size: 1rem; } .content-grid { grid-template-columns: 1fr; padding: 20px; gap: 20px; } .sidebar-right { grid-column: auto; } .login-button { display: none; } .main-nav { position: relative; } .posts-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header class="site-header" id="site-header">
+        <div class="nav-container">
+            <a href="index.html"><img src="img/logo-dafpo.png" alt="Logo do DAFPO" class="logo"></a>
+            <nav class="main-nav">
+                <ul id="nav-list">
+                    <li><a href="index.html">Início</a></li>
+                    <li>
+                        <a href="origem.html">Quem somos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="origem.html">Origem</a></li>
+                            <li><a href="diretorias.html">Diretorias</a></li>
+                            <li><a href="estatuto.html">Estatuto</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="curso.html">O Curso</a>
+                        <ul class="dropdown-menu dropdown-menu--wide">
+                            <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
+                            <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
+                            <li><a href="egressos.html">Egressos</a></li>
+                            <li><a href="professores.html">Professores</a></li>
+                            <li><a href="laboratorios.html">Laboratórios</a></li>
+                            <li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
+                    <li><a href="contato.html">Fale Conosco</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                </ul>
+            </nav>
+            <a href="#" class="login-button">Fazer login</a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Diretório Acadêmico Francisco de Paula Oliveira</h1>
+            <h2>Bacharelado em Engenharia Geológica - Universidade Federal de Pelotas - UFPel</h2>
+        </div>
+    </section>
+
+    <main>
+        <div class="content-grid">
+            <aside class="sidebar sidebar-left">
+                 <div class="social-widget" style="background-image: url('img/banner insta.png');">
+                    <div class="overlay">
+                        <h3>DAFPO</h3>
+                        <div class="social-buttons">
+                            <a href="https://www.instagram.com/engeo.ufpel" target="_blank" class="social-button instagram">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg>
+                                @engeo.ufpel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <section class="slideshow-container">
+                <div class="slides" id="slides-container"></div>
+                <div class="slide-controls">
+                    <button class="slide-control prev" id="prev-btn" aria-label="Imagem Anterior"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+                    <button class="slide-control next" id="next-btn" aria-label="Próxima Imagem"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+                    <button class="slide-control play-pause" id="play-pause-btn" aria-label="Pausar">
+                        <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </button>
+                </div>
+            </section>
+            <aside class="sidebar sidebar-right">
+                <div class="social-widget" style="background-image: url('img/banner insta.png');">
+                    <div class="overlay">
+                        <h3>Eng. Geológica</h3>
+                        <div class="social-buttons">
+                           <a href="https://www.facebook.com/dafpo.ufpel" target="_blank" class="social-button facebook">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3h-2.5v6.8c4.56-.93 8-4.96 8-9.8z"></path></svg>
+                                Facebook
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <section class="posts-section" id="fique-por-dentro">
+            <h2>Fique por Dentro</h2>
+            <div class="posts-grid">
+                <article class="post-card">
+                    <a href="#">
+                        <div class="post-card-image">
+                            <img src="img/AVISO_geo.webp" alt="Aviso sobre novo estatuto do curso">
+                        </div>
+                        <div class="post-card-content">
+                            <span class="post-date">2 de maio</span>
+                            <h3 class="post-title">Confira o novo Estatuto do curso!</h3>
+                            <p class="post-excerpt">
+                                Informamos que o novo Estatuto do DAFPO já está disponível para consulta. O documento foi atualizado com o objetivo de aprimorar a...
+                            </p>
+                        </div>
+                    </a>
+                </article>
+                <article class="post-card">
+                    <a href="#">
+                        <div class="post-card-image">
+                            <img src="img/LOGIN_PERGAMUM.webp" alt="Tutorial para Acessar a Biblioteca Digital Pergamum">
+                        </div>
+                        <div class="post-card-content">
+                            <span class="post-date">3 de maio</span>
+                            <h3 class="post-title">Mini Tutorial para Acessar Minha Biblioteca Digital</h3>
+                            <p class="post-excerpt">
+                                A UFPel possui acesso ao acervo do portal "Minha Biblioteca Digital" que se chama Pergamum, todo aluno pode acessar com seu número de...
+                            </p>
+                        </div>
+                    </a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Quem Somos</h3>
+                <p>O Diretório Acadêmico Francisco de Paula Oliveira (DAFPO) é a entidade que representa os estudantes do curso de Engenharia Geológica da UFPel, lutando por seus direitos e promovendo a integração acadêmica.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <p>Email: <a href="mailto:diretorioengeologica@gmail.com">diretorioengeologica@gmail.com</a></p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/engeo.ufpel" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg></a>
+                    <a href="https://www.facebook.com/dafpo.ufpel" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3h-2.5v6.8c4.56-.93 8-4.96 8-9.8z"></path></svg></a>
+                    <a href="https://www.linkedin.com/company/dafpo" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path></svg></a>
+                    <a href="https://wa.me/5553999024007" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 12c0 1.74.44 3.38 1.22 4.82l-1.34 4.91 5.04-1.32c1.39.73 2.96 1.15 4.59 1.15h.01c5.46 0 9.9-4.45 9.9-9.91s-4.44-9.9-9.89-9.9zm4.31 14.23c-.19.29-.71.55-1.07.61-.33.05-.72.06-1.12-.04-.45-.11-1.06-.41-2.02-1.25-1.16-.96-1.9-2.14-2.04-2.5-.14-.35-.01-.55.13-.7.13-.14.29-.36.42-.5.15-.17.2-.29.3-.47.1-.19.04-.36-.02-.52s-.52-1.25-.71-1.71c-.19-.46-.39-.4-.54-.4h-.47c-.15 0-.41.06-.63.31-.22.25-.87.84-.87 2.05 0 1.21.89 2.37 1.01 2.53.13.16 1.71 2.73 4.16 3.63 2.44.9 2.44.6 2.88.55.43-.05 1.36-.55 1.55-.94.19-.38.19-.71.13-.81-.06-.09-.24-.15-.42-.27z"></path></svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 por DAFPO - Engenharia Geológica UFPel. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // O JavaScript continua o mesmo
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); });
+        const menuToggle = document.getElementById('menu-toggle');
+        const navList = document.getElementById('nav-list');
+        menuToggle.addEventListener('click', () => { navList.classList.toggle('nav-active'); });
+        document.addEventListener('DOMContentLoaded', () => {
+            const slidesContainer = document.getElementById('slides-container');
+            const imageData = [
+                 { file: "PREDIO DA ALFANDEGA.jpg", caption: "PREDIO DA ALFANDEGA"}, { file: "2012 - Campo de Prospecção e Pesquisa Mineral - Minas de Corrales - Uruguai.jpg", caption: "Campo de Prospecção e Pesquisa Mineral (Minas de Corrales/Uruguai) - 2012" }, { file: "Pedreira Pelotense - Pelotas RS.jpg", caption: "Pedreira Pelotense (Pelotas/RS)" }, { file: "MINAS DO CAMAQUA 2.jpg", caption: "Minas do Camaquã" }, { file: "MINAS DO CAMAQUA 1.jpg", caption: "Minas do Camaquã" }, { file: "VETERANOS E BIXOS 2017-1.jpg", caption: "Veteranos e Bixos - 2017/1" }, { file: "VETERANOS E BIXOS 2016-1.png", caption: "Veteranos e Bixos - 2016/1" }, { file: "MAPEAMENTO GEOLOGICO 2019-2.png", caption: "Mapeamento Geológico - 2019/2" }, { file: "VETERANOS E BIXOS 2019-1.jpg", caption: "Veteranos e Bixos - 2019/1" }, { file: "SEDIMENTOLOGIA 2019-1.jpg", caption: "Sedimentologia - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2019-1.jpg", caption: "Campo de Geologia Geral - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2018-1.jpg", caption: "Campo de Geologia Geral - 2018/1" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "PETROLOGIA METAMORFICA 2018-2.png", caption: "Petrologia Metamórfica - 2018/2" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "GEOLOGIA ESTRUTURAL 2018-2.jpg", caption: "Geologia Estrutural - 2018/2" }, { file: "PETROLOGIA SEDIMENTAR 2017-2.jpg", caption: "Petrologia Sedimentar - 2017/2" }, { file: "XVII SNET XI SSBG 2019-1.jpg", caption: "XVII SNET XI SSBG - 2019/1" }, { file: "FORMATURA.jpg", caption: "Formatura" }
+            ];
+            imageData.forEach(data => { const slide = document.createElement('div'); slide.classList.add('slide'); const img = document.createElement('img'); img.src = `img/${data.file}`; img.alt = data.caption; img.classList.add('slide-image'); const caption = document.createElement('div'); caption.classList.add('caption'); caption.textContent = data.caption; slide.appendChild(img); slide.appendChild(caption); slidesContainer.appendChild(slide); });
+            const slides = document.querySelectorAll('.slide'); const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn'); const playPauseBtn = document.getElementById('play-pause-btn');
+            if (slides.length > 0) {
+                let currentSlide = 0; let isPlaying = true; let slideInterval = null;
+                const moveToSlide = (slideIndex) => { if (slides[currentSlide]) { slides[currentSlide].classList.remove('active'); } currentSlide = (slideIndex + slides.length) % slides.length; if (slides[currentSlide]) { slides[currentSlide].classList.add('active'); } };
+                const startSlideshow = () => { isPlaying = true; playPauseBtn.classList.remove('is-paused'); playPauseBtn.setAttribute('aria-label', 'Pausar'); slideInterval = setInterval(() => moveToSlide(currentSlide + 1), 4000); };
+                const pauseSlideshow = () => { isPlaying = false; clearInterval(slideInterval); playPauseBtn.classList.add('is-paused'); playPauseBtn.setAttribute('aria-label', 'Continuar'); };
+                nextBtn.addEventListener('click', () => { moveToSlide(currentSlide + 1); pauseSlideshow(); });
+                prevBtn.addEventListener('click', () => { moveToSlide(currentSlide - 1); pauseSlideshow(); });
+                playPauseBtn.addEventListener('click', () => { if (isPlaying) { pauseSlideshow(); } else { startSlideshow(); } });
+                moveToSlide(0);
+                startSlideshow();
+            }
+        });
+    </script>
+</body>
+</html>

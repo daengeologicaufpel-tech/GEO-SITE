@@ -1,0 +1,12 @@
+# Arquivo de configuração da Netlify
+[build]
+  publish = "."
+  command = ""
+
+# Habilita o sistema de login da Netlify
+[identity]
+  url = "YOUR_SITE_URL" # Substituiremos isso depois
+
+# Habilita as funções de backend para os e-mails no futuro
+[functions]
+  directory = "netlify/functions"
