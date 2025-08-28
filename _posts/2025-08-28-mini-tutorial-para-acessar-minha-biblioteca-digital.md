@@ -1,0 +1,8 @@
+---
+title: Mini Tutorial para Acessar Minha Biblioteca Digital
+date: 2025-08-28T21:04:35.787Z
+thumbnail: /img/LOGIN_PERGAMUM.webp
+excerpt: A UFPel possui acesso ao acervo do portal 'Minha Biblioteca Digital'
+  que se chama Pergamum, todo aluno pode acessar com seu número de...
+---
+A UFPel possui acesso ao acervo do portal 'Minha Biblioteca Digital' que se chama Pergamum, todo aluno pode acessar com seu número de...A UFPel possui acesso ao acervo do portal 'Minha Biblioteca Digital' que se chama Pergamum, todo aluno pode acessar com seu número de...A UFPel possui acesso ao acervo do portal 'Minha Biblioteca Digital' que se chama Pergamum, todo aluno pode acessar com seu número de...A UFPel possui acesso ao acervo do portal 'Minha Biblioteca Digital' que se chama Pergamum, todo aluno pode acessar com seu número de...
