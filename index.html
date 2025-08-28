@@ -198,36 +198,8 @@
 
         <section class="posts-section" id="fique-por-dentro">
             <h2>Fique por Dentro</h2>
-            <div class="posts-grid">
-                <article class="post-card">
-                    <a href="#">
-                        <div class="post-card-image">
-                            <img src="img/AVISO_geo.webp" alt="Aviso sobre novo estatuto do curso">
-                        </div>
-                        <div class="post-card-content">
-                            <span class="post-date">2 de maio</span>
-                            <h3 class="post-title">Confira o novo Estatuto do curso!</h3>
-                            <p class="post-excerpt">
-                                Informamos que o novo Estatuto do DAFPO já está disponível para consulta. O documento foi atualizado com o objetivo de aprimorar a...
-                            </p>
-                        </div>
-                    </a>
-                </article>
-                <article class="post-card">
-                    <a href="#">
-                        <div class="post-card-image">
-                            <img src="img/LOGIN_PERGAMUM.webp" alt="Tutorial para Acessar a Biblioteca Digital Pergamum">
-                        </div>
-                        <div class="post-card-content">
-                            <span class="post-date">3 de maio</span>
-                            <h3 class="post-title">Mini Tutorial para Acessar Minha Biblioteca Digital</h3>
-                            <p class="post-excerpt">
-                                A UFPel possui acesso ao acervo do portal "Minha Biblioteca Digital" que se chama Pergamum, todo aluno pode acessar com seu número de...
-                            </p>
-                        </div>
-                    </a>
-                </article>
-            </div>
+            <div class="posts-grid" id="posts-grid">
+                </div>
         </section>
     </main>
 
@@ -254,15 +226,18 @@
     </footer>
     
     <script>
+        // --- SCRIPT PARA FUNCIONALIDADES INTERATIVAS ---
         const header = document.getElementById('site-header');
         window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); });
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
         menuToggle.addEventListener('click', () => { navList.classList.toggle('nav-active'); });
+
+        // LÓGICA DO SLIDESHOW
         document.addEventListener('DOMContentLoaded', () => {
             const slidesContainer = document.getElementById('slides-container');
             const imageData = [
-                 { file: "PREDIO DA ALFANDEGA.jpg", caption: "PREDIO DA ALFANDEGA"}, { file: "2012 - Campo de Prospecção e Pesquisa Mineral - Minas de Corrales - Uruguai.jpg", caption: "Campo de Prospecção e Pesquisa Mineral (Minas de Corrales/Uruguai) - 2012" }, { file: "Pedreira Pelotense - Pelotas RS.jpg", caption: "Pedreira Pelotense (Pelotas/RS)" }, { file: "MINAS DO CAMAQUA 2.jpg", caption: "Minas do Camaquã" }, { file: "MINAS DO CAMAQUA 1.jpg", caption: "Minas do Camaquã" }, { file: "VETERANOS E BIXOS 2017-1.jpg", caption: "Veteranos e Bixos - 2017/1" }, { file: "VETERANOS E BIXOS 2016-1.png", caption: "Veteranos e Bixos - 2016/1" }, { file: "MAPEAMENTO GEOLOGICO 2019-2.png", caption: "Mapeamento Geológico - 2019/2" }, { file: "VETERANOS E BIXOS 2019-1.jpg", caption: "Veteranos e Bixos - 2019/1" }, { file: "SEDIMENTOLOGIA 2019-1.jpg", caption: "Sedimentologia - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2019-1.jpg", caption: "Campo de Geologia Geral - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2018-1.jpg", caption: "Campo de Geologia Geral - 2018/1" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "PETROLOGIA METAMORFICA 2018-2.png", caption: "Petrologia Metamórfica - 2018/2" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "GEOLOGIA ESTRUTURAL 2018-2.jpg", caption: "Geologia Estrutural - 2018/2" }, { file: "PETROLOGIA SEDIMENTAR 2017-2.jpg", caption: "Petrologia Sedimentar - 2017/2" }, { file: "XVII SNET XI SSBG 2019-1.jpg", caption: "XVII SNET XI SSBG - 2019/1" }, { file: "FORMATURA.jpg", caption: "Formatura" }
+                { file: "PREDIO DA ALFANDEGA.jpg", caption: "PREDIO DA ALFANDEGA"}, { file: "2012 - Campo de Prospecção e Pesquisa Mineral - Minas de Corrales - Uruguai.jpg", caption: "Campo de Prospecção e Pesquisa Mineral (Minas de Corrales/Uruguai) - 2012" }, { file: "Pedreira Pelotense - Pelotas RS.jpg", caption: "Pedreira Pelotense (Pelotas/RS)" }, { file: "MINAS DO CAMAQUA 2.jpg", caption: "Minas do Camaquã" }, { file: "MINAS DO CAMAQUA 1.jpg", caption: "Minas do Camaquã" }, { file: "VETERANOS E BIXOS 2017-1.jpg", caption: "Veteranos e Bixos - 2017/1" }, { file: "VETERANOS E BIXOS 2016-1.png", caption: "Veteranos e Bixos - 2016/1" }, { file: "MAPEAMENTO GEOLOGICO 2019-2.png", caption: "Mapeamento Geológico - 2019/2" }, { file: "VETERANOS E BIXOS 2019-1.jpg", caption: "Veteranos e Bixos - 2019/1" }, { file: "SEDIMENTOLOGIA 2019-1.jpg", caption: "Sedimentologia - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2019-1.jpg", caption: "Campo de Geologia Geral - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2018-1.jpg", caption: "Campo de Geologia Geral - 2018/1" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "PETROLOGIA METAMORFICA 2018-2.png", caption: "Petrologia Metamórfica - 2018/2" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "GEOLOGIA ESTRUTURAL 2018-2.jpg", caption: "Geologia Estrutural - 2018/2" }, { file: "PETROLOGIA SEDIMENTAR 2017-2.jpg", caption: "Petrologia Sedimentar - 2017/2" }, { file: "XVII SNET XI SSBG 2019-1.jpg", caption: "XVII SNET XI SSBG - 2019/1" }, { file: "FORMATURA.jpg", caption: "Formatura" }
             ];
             imageData.forEach(data => { const slide = document.createElement('div'); slide.classList.add('slide'); const img = document.createElement('img'); img.src = `img/${data.file}`; img.alt = data.caption; img.classList.add('slide-image'); const caption = document.createElement('div'); caption.classList.add('caption'); caption.textContent = data.caption; slide.appendChild(img); slide.appendChild(caption); slidesContainer.appendChild(slide); });
             const slides = document.querySelectorAll('.slide'); const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn'); const playPauseBtn = document.getElementById('play-pause-btn');
@@ -277,6 +252,39 @@
                 moveToSlide(0);
                 startSlideshow();
             }
+
+            // LÓGICA PARA CARREGAR POSTS DINAMICAMENTE
+            const postsGrid = document.getElementById('posts-grid');
+            fetch('_data/posts.json')
+                .then(response => response.json())
+                .then(posts => {
+                    postsGrid.innerHTML = ''; // Limpa os posts de exemplo
+                    posts.forEach(post => {
+                        const postCard = document.createElement('article');
+                        postCard.classList.add('post-card');
+                        
+                        const postDate = new Date(post.date);
+                        const formattedDate = postDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
+
+                        postCard.innerHTML = `
+                            <a href="#">
+                                <div class="post-card-image">
+                                    <img src="${post.thumbnail}" alt="${post.title}">
+                                </div>
+                                <div class="post-card-content">
+                                    <span class="post-date">${formattedDate}</span>
+                                    <h3 class="post-title">${post.title}</h3>
+                                    <p class="post-excerpt">${post.excerpt}</p>
+                                </div>
+                            </a>
+                        `;
+                        postsGrid.appendChild(postCard);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar os posts:', error);
+                    postsGrid.innerHTML = '<p>Não foi possível carregar as publicações.</p>';
+                });
         });
     </script>
 </body>
