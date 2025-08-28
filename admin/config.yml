@@ -6,20 +6,19 @@ media_folder: "img"
 public_folder: "/img"
 
 collections:
-  - name: "posts"
-    label: "Posts (Fique por Dentro)"
-    label_singular: "Post"
-    file: "_data/posts.json"
-    create: false # Desativado para usar a edição de lista abaixo
-    
-    # Esta é a estrutura correta para editar uma lista de itens em um arquivo
-    fields:
-      - name: items
-        label: Lista de Posts
-        widget: list
+  - name: "conteudo" # Nome geral da coleção
+    label: "Conteúdos do Site"
+    files: # A propriedade 'files' que estava faltando
+      - name: "posts" # Um identificador para o nosso conjunto de posts
+        label: "Posts (Fique por Dentro)"
+        file: "_data/posts.json" # O arquivo que será editado
         fields:
-          - {label: "Título", name: "title", widget: "string"}
-          - {label: "Data de Publicação", name: "date", widget: "datetime"}
-          - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
-          - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
-          - {label: "Conteúdo Completo do Post (ainda não usado)", name: "body", widget: "markdown", required: false}
+          - name: "lista_de_posts"
+            label: "Posts"
+            widget: list
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Data de Publicação", name: "date", widget: "datetime"}
+              - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
+              - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
+              - {label: "Conteúdo Completo do Post", name: "body", widget: "markdown", required: false}
