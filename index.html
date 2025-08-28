@@ -47,8 +47,8 @@
         .login-button:hover { background-color: white; color: var(--color-primary-green); }
         .site-header.scrolled .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border-color: transparent; }
         .site-header.scrolled .login-button:hover { background-color: rgba(255,255,255,0.8); }
-        .menu-toggle { display: none; background: none; border: none; cursor: pointer; }
-        .menu-toggle svg path { stroke: white; }
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
+        .menu-toggle svg path { stroke: white; transition: stroke 0.4s ease; }
         .site-header.scrolled .menu-toggle svg path { stroke: var(--color-text-light); }
         .hero { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 60vh; min-height: 400px; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('img/PREDIO DA ALFANDEGA.jpg'); background-size: cover; background-position: center; color: white; padding: 20px; margin-top: -70px; }
         .hero-content { animation: fadeInFromBottom 1s ease-out forwards; opacity: 0; }
@@ -105,8 +105,36 @@
         .social-links a:hover { transform: scale(1.1); }
         .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
         .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
-        @media (max-width: 992px) { .content-grid { grid-template-columns: 1fr 1fr; } .sidebar-right { grid-column: 1 / 3; } .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: white; } .site-header.scrolled .main-nav ul { background-color: var(--color-primary-green); } .main-nav ul.nav-active { display: flex; } .main-nav ul li a { color: var(--color-text-primary); border-bottom: 1px solid #f0f0f0; } .site-header.scrolled .main-nav ul li a { color: var(--color-text-light); } .menu-toggle { display: block; z-index: 10; } }
-        @media (max-width: 768px) { .nav-container { padding: 10px 20px; } .hero h1 { font-size: 2.2rem; } .hero h2 { font-size: 1rem; } .content-grid { grid-template-columns: 1fr; padding: 20px; gap: 20px; } .sidebar-right { grid-column: auto; } .login-button { display: none; } .main-nav { position: relative; } .posts-grid { grid-template-columns: 1fr; } }
+        
+        /* === MEDIA QUERIES PARA RESPONSIVIDADE (ATUALIZADAS) === */
+        @media (max-width: 992px) {
+            .main-nav ul { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 70px; /* Alinha abaixo do cabeçalho */
+                left: 0; 
+                width: 100%; 
+                background-color: var(--color-primary-green); /* CORREÇÃO: Fundo sólido */
+                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            }
+            .main-nav ul.nav-active { display: flex; }
+            .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); }
+            .dropdown-menu--wide { display: block; min-width: auto; gap: 0; }
+            .menu-toggle { display: block; z-index: 10; }
+            .content-grid { grid-template-columns: 1fr; } /* Empilha as colunas */
+            .sidebar-right { grid-column: auto; }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container { padding: 10px 20px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero h2 { font-size: 1rem; }
+            .content-grid { padding: 20px; gap: 20px; }
+            .login-button { display: none; }
+            .posts-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -226,14 +254,11 @@
     </footer>
     
     <script>
-        // --- SCRIPT PARA FUNCIONALIDADES INTERATIVAS ---
         const header = document.getElementById('site-header');
         window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); });
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
         menuToggle.addEventListener('click', () => { navList.classList.toggle('nav-active'); });
-
-        // LÓGICA DO SLIDESHOW
         document.addEventListener('DOMContentLoaded', () => {
             const slidesContainer = document.getElementById('slides-container');
             const imageData = [
@@ -253,26 +278,17 @@
                 startSlideshow();
             }
 
-            // LÓGICA PARA CARREGAR POSTS DINAMICAMENTE
             const postsGrid = document.getElementById('posts-grid');
-            
-            // --- ATENÇÃO: SUBSTITUA COM SEU USUÁRIO E REPOSITÓRIO DO GITHUB ---
             const GITHUB_USER = "daengeologicaufpel-tech";
             const GITHUB_REPO = "GEO-SITE";
-            
             const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/_posts`;
 
             async function fetchPosts() {
                 try {
                     const response = await fetch(apiUrl);
-                    if (!response.ok) {
-                        throw new Error(`Erro de rede: ${response.statusText}`);
-                    }
+                    if (!response.ok) { throw new Error(`Erro de rede: ${response.statusText}`); }
                     const files = await response.json();
-
-                    if (!Array.isArray(files)) {
-                        throw new Error("A pasta _posts não foi encontrada ou está vazia.");
-                    }
+                    if (!Array.isArray(files)) { throw new Error("A pasta _posts não foi encontrada ou está vazia."); }
                     
                     postsGrid.innerHTML = ''; 
                     if (files.length === 0) {
@@ -283,13 +299,12 @@
                     const fetchPromises = files.map(file => 
                         fetch(file.download_url).then(res => res.text()).then(content => ({
                             content: content,
-                            slug: file.name.replace(/\.md$/, '') // Salva o slug aqui
+                            slug: file.name.replace(/\.md$/, '')
                         }))
                     );
 
                     const postsData = await Promise.all(fetchPromises);
                     
-                    // Ordena os posts pela data, do mais novo para o mais antigo
                     postsData.sort((a, b) => {
                         const dateA = new Date(parseFrontmatter(a.content).date);
                         const dateB = new Date(parseFrontmatter(b.content).date);
@@ -313,7 +328,6 @@
             function parseFrontmatter(markdownContent) {
                 const match = markdownContent.match(/---([\s\S]*?)---/);
                 if (!match) return null;
-
                 const frontmatter = {};
                 const lines = match[1].trim().split('\n');
                 lines.forEach(line => {
