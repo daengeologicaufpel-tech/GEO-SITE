@@ -1,4 +1,4 @@
-backend:backend:
+backend:
   name: git-gateway
   branch: main
 
@@ -20,3 +20,4 @@ collections:
       - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
       - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
       - {label: "Conteúdo Completo do Post (ainda não usado)", name: "body", widget: "markdown", required: false}
+
