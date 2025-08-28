@@ -28,7 +28,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: var(--font-body); background-color: var(--color-background); color: var(--color-text-primary); }
-        /* Estilos do Cabeçalho, Navegação e Rodapé (iguais aos do index.html) */
         .site-header { position: sticky; top: 0; width: 100%; z-index: 1000; background-color: var(--color-primary-green); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); }
         .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 10px 30px; height: 70px; }
         .logo { height: 50px; width: auto; }
@@ -43,10 +42,11 @@
         .dropdown-menu--wide li a { white-space: normal; text-align: left; }
         .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border: 1px solid transparent; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; }
         .login-button:hover { background-color: rgba(255,255,255,0.8); }
-        .menu-toggle { display: none; }
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
+        .menu-toggle svg path { stroke: var(--color-text-light); }
 
         /* Estilos para a página de post individual */
-        .post-container {
+        .page-container {
             max-width: 800px;
             margin: 40px auto;
             padding: 40px;
@@ -79,15 +79,23 @@
             line-height: 1.8;
             color: var(--color-text-primary);
         }
-        .post-content h2, .post-content h3 {
+        .post-content h1, .post-content h2, .post-content h3 {
             font-family: var(--font-heading);
             color: var(--color-primary-green);
             margin-top: 30px;
             margin-bottom: 15px;
         }
+        .post-content p {
+            margin-bottom: 20px;
+        }
         .post-content a {
             color: var(--color-primary-green);
             text-decoration: underline;
+        }
+        .post-content img { /* Garante que imagens dentro do post sejam responsivas */
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
         }
         .loading-message { text-align: center; padding: 50px; font-size: 1.2rem; color: var(--color-text-secondary); }
 
@@ -101,7 +109,21 @@
         .social-links a:hover { transform: scale(1.1); }
         .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
         .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
-        @media (max-width: 768px) { .post-container { padding: 20px; margin: 20px; } .post-header .post-title { font-size: 2rem; } }
+        
+        @media (max-width: 992px) {
+            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
+            .main-nav ul.nav-active { display: flex; }
+            .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .menu-toggle { display: block; z-index: 10; }
+            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); }
+            .dropdown-menu--wide { display: block; min-width: auto; gap: 0; }
+        }
+        @media (max-width: 768px) { 
+            .nav-container { padding: 10px 20px; } 
+            .page-container { padding: 20px; margin: 20px 15px; } 
+            .post-header .post-title { font-size: 2rem; }
+            .login-button { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -112,15 +134,34 @@
             <nav class="main-nav">
                 <ul id="nav-list">
                     <li><a href="index.html">Início</a></li>
-                    <li><a href="origem.html">Quem somos</a><ul class="dropdown-menu"><li><a href="origem.html">Origem</a></li><li><a href="diretorias.html">Diretorias</a></li><li><a href="estatuto.html">Estatuto</a></li></ul></li>
-                    <li><a href="curso.html">O Curso</a><ul class="dropdown-menu dropdown-menu--wide"><li><a href="curso.html">O curso de Engenharia Geológica</a></li><li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li><li><a href="egressos.html">Egressos</a></li><li><a href="professores.html">Professores</a></li><li><a href="laboratorios.html">Laboratórios</a></li><li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li></ul></li>
+                    <li>
+                        <a href="origem.html">Quem somos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="origem.html">Origem</a></li>
+                            <li><a href="diretorias.html">Diretorias</a></li>
+                            <li><a href="estatuto.html">Estatuto</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="curso.html">O Curso</a>
+                        <ul class="dropdown-menu dropdown-menu--wide">
+                            <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
+                            <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
+                            <li><a href="egressos.html">Egressos</a></li>
+                            <li><a href="professores.html">Professores</a></li>
+                            <li><a href="laboratorios.html">Laboratórios</a></li>
+                            <li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li>
+                        </ul>
+                    </li>
                     <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
                     <li><a href="contato.html">Fale Conosco</a></li>
                     <li><a href="eventos.html">Eventos</a></li>
                 </ul>
             </nav>
             <a href="#" class="login-button">Fazer login</a>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu"> ... </button>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
         </div>
     </header>
 
@@ -129,16 +170,37 @@
     </main>
 
     <footer class="site-footer">
-        </footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Quem Somos</h3>
+                <p>O Diretório Acadêmico Francisco de Paula Oliveira (DAFPO) é a entidade que representa os estudantes do curso de Engenharia Geológica da UFPel, lutando por seus direitos e promovendo a integração acadêmica.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <p>Email: <a href="mailto:diretorioengeologica@gmail.com">diretorioengeologica@gmail.com</a></p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/engeo.ufpel" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg></a>
+                    <a href="https://www.facebook.com/dafpo.ufpel" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3h-2.5v6.8c4.56-.93 8-4.96 8-9.8z"></path></svg></a>
+                    <a href="https://www.linkedin.com/company/dafpo" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path></svg></a>
+                    <a href="https://wa.me/5553999024007" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 12c0 1.74.44 3.38 1.22 4.82l-1.34 4.91 5.04-1.32c1.39.73 2.96 1.15 4.59 1.15h.01c5.46 0 9.9-4.45 9.9-9.91s-4.44-9.9-9.89-9.9zm4.31 14.23c-.19.29-.71.55-1.07.61-.33.05-.72.06-1.12-.04-.45-.11-1.06-.41-2.02-1.25-1.16-.96-1.9-2.14-2.04-2.5-.14-.35-.01-.55.13-.7.13-.14.29-.36.42-.5.15-.17.2-.29.3-.47.1-.19.04-.36-.02-.52s-.52-1.25-.71-1.71c-.19-.46-.39-.4-.54-.4h-.47c-.15 0-.41.06-.63.31-.22.25-.87.84-.87 2.05 0 1.21.89 2.37 1.01 2.53.13.16 1.71 2.73 4.16 3.63 2.44.9 2.44.6 2.88.55.43-.05 1.36-.55 1.55-.94.19-.38.19-.71.13-.81-.06-.09-.24-.15-.42-.27z"></path></svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 por DAFPO - Engenharia Geológica UFPel. Todos os direitos reservados.</p>
+        </div>
+    </footer>
     
     <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navList = document.getElementById('nav-list');
+        menuToggle.addEventListener('click', () => { navList.classList.toggle('nav-active'); });
+
         document.addEventListener('DOMContentLoaded', () => {
             const GITHUB_USER = "daengeologicaufpel-tech";
             const GITHUB_REPO = "GEO-SITE";
             
             const mainContent = document.getElementById('main-content');
-
-            // 1. Pega o "slug" do post a partir do URL
             const params = new URLSearchParams(window.location.search);
             const postSlug = params.get('post');
 
@@ -147,7 +209,6 @@
                 return;
             }
 
-            // 2. Busca o conteúdo do arquivo .md específico no GitHub
             const postUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/_posts/${postSlug}.md`;
             
             fetch(postUrl)
@@ -156,30 +217,29 @@
                     return response.text();
                 })
                 .then(markdown => {
-                    // 3. Separa os metadados (frontmatter) do conteúdo (body)
                     const contentParts = markdown.split('---');
                     const frontmatter = parseFrontmatter(contentParts[1]);
                     const bodyMarkdown = contentParts.slice(2).join('---');
 
-                    // 4. Converte o corpo do post de Markdown para HTML
-                    const converter = new showdown.Converter();
+                    const converter = new showdown.Converter({tables: true}); // Habilita tabelas
                     const bodyHtml = converter.makeHtml(bodyMarkdown);
 
-                    // 5. Atualiza a página com o conteúdo do post
                     document.title = `${frontmatter.title} - DAFPO`;
                     const postDate = new Date(frontmatter.date);
                     const formattedDate = postDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
 
                     mainContent.innerHTML = `
-                        <div class="post-container">
-                            <header class="post-header">
-                                <h1 class="post-title">${frontmatter.title}</h1>
-                                <p class="post-date">Publicado em ${formattedDate}</p>
-                            </header>
-                            <img src="${frontmatter.thumbnail}" alt="${frontmatter.title}" class="post-image">
-                            <section class="post-content">
-                                ${bodyHtml}
-                            </section>
+                        <div class="page-container">
+                            <article class="content-article">
+                                <header class="post-header">
+                                    <h1 class="post-title">${frontmatter.title}</h1>
+                                    <p class="post-date">Publicado em ${formattedDate}</p>
+                                </header>
+                                <img src="${frontmatter.thumbnail}" alt="${frontmatter.title}" class="post-image">
+                                <section class="post-content">
+                                    ${bodyHtml}
+                                </section>
+                            </article>
                         </div>
                     `;
                 })
@@ -188,13 +248,15 @@
                     mainContent.innerHTML = "<p class='loading-message'>Não foi possível carregar o post.</p>";
                 });
 
-            // Função auxiliar para extrair dados do cabeçalho do arquivo
             function parseFrontmatter(text) {
                 const data = {};
+                if (!text) return data;
                 text.trim().split('\n').forEach(line => {
                     const [key, ...valueParts] = line.split(':');
-                    const value = valueParts.join(':').trim().replace(/^['"]|['"]$/g, '');
-                    data[key.trim()] = value;
+                    if(key) {
+                        const value = valueParts.join(':').trim().replace(/^['"]|['"]$/g, '');
+                        data[key.trim()] = value;
+                    }
                 });
                 return data;
             }
