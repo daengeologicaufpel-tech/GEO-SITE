@@ -133,8 +133,9 @@
             .hero h1 { font-size: 2.2rem; }
             .hero h2 { font-size: 1rem; }
             .content-grid { padding: 20px; gap: 20px; }
-            .login-button { display: none; }
             .posts-grid { grid-template-columns: 1fr; }
+            /* A linha abaixo foi removida para que o botão de login apareça no celular */
+            /* .login-button { display: none; } */
         }
     </style>
 </head>
@@ -288,7 +289,7 @@
                 }
             });
         });
-
+        
         // 4. ATIVAR BOTÃO DE LOGIN
         const loginButton = document.getElementById('login-button');
         if (loginButton) {
