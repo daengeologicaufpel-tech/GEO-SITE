@@ -31,19 +31,19 @@
         .logo { height: 50px; width: auto; }
         .main-nav ul { display: flex; list-style: none; }
         .main-nav ul li { position: relative; }
-        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: block; }
+        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
         .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; z-index: 1001;}
         .main-nav ul li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
         .dropdown-menu li a { padding: 12px 20px; white-space: nowrap; transition: background-color 0.3s ease; }
         .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
         .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
         .dropdown-menu--wide li a { white-space: normal; text-align: left; }
+        .dropdown-arrow { display: none; width: 18px; height: 18px; fill: currentColor; }
         .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border: 1px solid transparent; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; }
         .login-button:hover { background-color: rgba(255,255,255,0.8); }
         .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
         .menu-toggle svg path { stroke: var(--color-text-light); }
 
-        /* Estilos para a página de conteúdo */
         .page-container {
             max-width: 900px;
             margin: 40px auto;
@@ -86,7 +86,6 @@
         .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
         .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
         
-        /* === CORREÇÕES PARA O MENU MOBILE === */
         @media (max-width: 992px) {
             .main-nav ul { 
                 display: none; 
@@ -95,20 +94,24 @@
                 top: 70px; 
                 left: 0; 
                 width: 100%; 
-                background-color: var(--color-primary-green); /* Fundo sólido */
+                background-color: var(--color-primary-green);
                 box-shadow: 0 5px 10px rgba(0,0,0,0.2);
             }
             .main-nav ul.nav-active { display: flex; }
             .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
+            .main-nav ul li:hover > .dropdown-menu { display: none; }
+            .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; }
+            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; }
+            .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; }
+            .dropdown-arrow { display: inline-block; }
             .menu-toggle { display: block; z-index: 10; }
-            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); }
-            .dropdown-menu--wide { display: block; min-width: auto; gap: 0; }
         }
         @media (max-width: 768px) { 
             .nav-container { padding: 10px 20px; } 
             .page-container { padding: 20px; margin: 20px 15px; } 
-            .login-button { display: none; }
             .content-article h1 { font-size: 2rem; }
+            .login-button { display: none; }
         }
     </style>
 </head>
@@ -120,16 +123,16 @@
             <nav class="main-nav">
                 <ul id="nav-list">
                     <li><a href="index.html">Início</a></li>
-                    <li>
-                        <a href="origem.html">Quem somos</a>
+                    <li class="has-dropdown">
+                        <a href="origem.html">Quem somos<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
                         <ul class="dropdown-menu">
                             <li><a href="origem.html">Origem</a></li>
                             <li><a href="diretorias.html">Diretorias</a></li>
                             <li><a href="estatuto.html">Estatuto</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="curso.html">O Curso</a>
+                    <li class="has-dropdown">
+                        <a href="curso.html">O Curso<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
                         <ul class="dropdown-menu dropdown-menu--wide">
                             <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
                             <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
@@ -155,14 +158,11 @@
         <article class="content-article">
             <h1>Origem do DAFPO</h1>
             <p>O Diretório Acadêmico do curso de Engenharia Geológica da Universidade Federal de Pelotas foi fundado em 2010, no mesmo ano de início do curso. Inicialmente, a entidade não possuía um nome definido, sendo apenas "Diretório Acadêmico de Engenharia Geológica".</p>
-
             <h2>O Nome</h2>
             <p>Em 2012, através de uma votação entre os alunos, o diretório foi batizado como Diretório Acadêmico Francisco de Paula Oliveira, prestando homenagem a este importante geólogo brasileiro que também dá nome à biblioteca do Serviço Geológico do Brasil (CPRM).</p>
-
             <h2>O Símbolo</h2>
             <p>O símbolo do DAFPO foi criado por alunos do curso e é carregado de significados:</p>
             <blockquote>"A engrenagem representa a Engenharia. O martelo e a bússola, ferramentas essenciais, representam a Geologia. No centro, o globo terrestre estilizado exibe as cores da bandeira do Rio Grande do Sul, com o marrom simbolizando o solo, o verde as vegetações e o amarelo as riquezas minerais."</blockquote>
-            
             <h2>Missão e Objetivo</h2>
             <p>O DAFPO possui como principal objetivo representar e auxiliar os alunos do curso de Engenharia Geológica da UFPel. Em busca de uma gestão transparente e de sucesso, estaremos abertos para sugestões e críticas construtivas.</p>
         </article>
@@ -191,10 +191,21 @@
     </footer>
     
     <script>
+        // Script para o menu mobile
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
+        
         menuToggle.addEventListener('click', () => {
             navList.classList.toggle('nav-active');
+        });
+
+        document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
+            menuLink.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992) {
+                    event.preventDefault();
+                    this.parentElement.classList.toggle('dropdown-active');
+                }
+            });
         });
     </script>
 </body>
