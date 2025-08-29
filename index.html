@@ -108,24 +108,43 @@
         
         /* === MEDIA QUERIES PARA RESPONSIVIDADE (ATUALIZADAS) === */
         @media (max-width: 992px) {
-            .main-nav ul { 
-                display: none; 
-                flex-direction: column; 
-                position: absolute; 
-                top: 70px; /* Alinha abaixo do cabeçalho */
-                left: 0; 
-                width: 100%; 
-                background-color: var(--color-primary-green); /* CORREÇÃO: Fundo sólido */
-                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-            }
-            .main-nav ul.nav-active { display: flex; }
-            .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); }
-            .dropdown-menu--wide { display: block; min-width: auto; gap: 0; }
-            .menu-toggle { display: block; z-index: 10; }
-            .content-grid { grid-template-columns: 1fr; } /* Empilha as colunas */
-            .sidebar-right { grid-column: auto; }
-        }
+    .main-nav ul { 
+        display: none; 
+        flex-direction: column; 
+        position: absolute; 
+        top: 70px; 
+        left: 0; 
+        width: 100%; 
+        background-color: var(--color-primary-green);
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    .main-nav ul.nav-active { display: flex; }
+    .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    
+    /* Regras para o dropdown no celular */
+    .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
+    .dropdown-menu { 
+        position: static; 
+        box-shadow: none; 
+        border-radius: 0; 
+        background-color: rgba(0,0,0,0.2); /* Fundo mais escuro para diferenciar */
+        opacity: 1; 
+        visibility: visible; 
+        transform: none; 
+        transition: none; 
+        display: none; /* Escondido por padrão */
+    }
+    .dropdown-menu--wide { 
+        display: none; /* Escondido por padrão */
+        min-width: auto; 
+        gap: 0; 
+        grid-template-columns: 1fr; 
+    }
+    .dropdown-arrow { display: inline-block; } /* Mostra a seta no celular */
+    
+    .menu-toggle { display: block; z-index: 10; }
+    .content-grid { grid-template-columns: 1fr; } 
+}
         
         @media (max-width: 768px) {
             .nav-container { padding: 10px 20px; }
@@ -142,33 +161,40 @@
     <header class="site-header" id="site-header">
         <div class="nav-container">
             <a href="index.html"><img src="img/logo-dafpo.png" alt="Logo do DAFPO" class="logo"></a>
-            <nav class="main-nav">
-                <ul id="nav-list">
-                    <li><a href="index.html">Início</a></li>
-                    <li>
-                        <a href="origem.html">Quem somos</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="origem.html">Origem</a></li>
-                            <li><a href="diretorias.html">Diretorias</a></li>
-                            <li><a href="estatuto.html">Estatuto</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="curso.html">O Curso</a>
-                        <ul class="dropdown-menu dropdown-menu--wide">
-                            <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
-                            <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
-                            <li><a href="egressos.html">Egressos</a></li>
-                            <li><a href="professores.html">Professores</a></li>
-                            <li><a href="laboratorios.html">Laboratórios</a></li>
-                            <li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
-                    <li><a href="contato.html">Fale Conosco</a></li>
-                    <li><a href="eventos.html">Eventos</a></li>
-                </ul>
-            </nav>
+<nav class="main-nav">
+    <ul id="nav-list">
+        <li><a href="index.html">Início</a></li>
+        
+        <li class="has-dropdown">
+            <a href="origem.html">Quem somos 
+                <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="origem.html">Origem</a></li>
+                <li><a href="diretorias.html">Diretorias</a></li>
+                <li><a href="estatuto.html">Estatuto</a></li>
+            </ul>
+        </li>
+
+        <li class="has-dropdown">
+            <a href="curso.html">O Curso
+                <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+            </a>
+            <ul class="dropdown-menu dropdown-menu--wide">
+                <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
+                <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
+                <li><a href="egressos.html">Egressos</a></li>
+                <li><a href="professores.html">Professores</a></li>
+                <li><a href="laboratorios.html">Laboratórios</a></li>
+                <li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li>
+            </ul>
+        </li>
+
+        <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
+        <li><a href="contato.html">Fale Conosco</a></li>
+        <li><a href="eventos.html">Eventos</a></li>
+    </ul>
+</nav>
             <a href="#" class="login-button">Fazer login</a>
             <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
                 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
@@ -254,6 +280,19 @@
     </footer>
     
     <script>
+
+    // LÓGICA PARA DROPDOWNS NO MOBILE (AO CLICAR)
+document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
+    menuLink.addEventListener('click', function(event) {
+        // Ativa a função de clique apenas em telas de celular/tablet
+        if (window.innerWidth <= 992) {
+            // Impede o link de navegar para outra página
+            event.preventDefault();
+            // Adiciona ou remove a classe que mostra o submenu
+            this.parentElement.classList.toggle('dropdown-active');
+        }
+    });
+});
         const header = document.getElementById('site-header');
         window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); });
         const menuToggle = document.getElementById('menu-toggle');
@@ -365,4 +404,5 @@
     </script>
 </body>
 </html>
+
 
