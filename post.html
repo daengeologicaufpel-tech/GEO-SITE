@@ -93,7 +93,7 @@
             color: var(--color-primary-green);
             text-decoration: underline;
         }
-        .post-content img { /* Garante que imagens dentro do post sejam responsivas */
+        .post-content img {
             max-width: 100%;
             height: auto;
             border-radius: 4px;
@@ -112,10 +112,21 @@
         .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
         
         @media (max-width: 992px) {
-            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
+            .main-nav ul { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute; 
+                top: 70px; 
+                left: 0; 
+                width: 100%; 
+                background-color: var(--color-primary-green);
+                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            }
             .main-nav ul.nav-active { display: flex; }
             .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
             .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
+            .main-nav ul li:hover > .dropdown-menu { display: none; }
+            .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; }
             .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; }
             .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; }
             .dropdown-arrow { display: inline-block; }
@@ -195,7 +206,6 @@
     </footer>
     
     <script>
-        // Script para o menu mobile
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
         const dropdownToggles = document.querySelectorAll('.has-dropdown > a');
@@ -207,13 +217,12 @@
         dropdownToggles.forEach(toggle => {
             toggle.addEventListener('click', function(event) {
                 if (window.innerWidth <= 992) {
-                    event.preventDefault(); // Impede a navegação no clique
+                    event.preventDefault();
                     this.parentElement.classList.toggle('dropdown-active');
                 }
             });
         });
 
-        // Lógica para carregar o conteúdo do post
         document.addEventListener('DOMContentLoaded', () => {
             const GITHUB_USER = "daengeologicaufpel-tech";
             const GITHUB_REPO = "GEO-SITE";
