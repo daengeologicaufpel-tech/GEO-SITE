@@ -6,6 +6,4 @@ excerpt: Datas do referente ao mês de setembro disponivel já, clique para sabe
 ---
 D﻿atas referente ao mês de setembro abaixo:
 
-
-
-![](/img/Datas Semestre 2025-01.webp "Datas Importantes")
+![](/img/seete.png "Datas Importantes")
