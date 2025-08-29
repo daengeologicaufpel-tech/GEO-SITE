@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
 
     <style>
@@ -41,12 +40,10 @@
         .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
         .dropdown-menu--wide li a { white-space: normal; text-align: left; }
         .dropdown-arrow { display: none; width: 18px; height: 18px; fill: currentColor; }
-        .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border: 1px solid transparent; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; }
+        .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border: 1px solid transparent; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; }
         .login-button:hover { background-color: rgba(255,255,255,0.8); }
         .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
         .menu-toggle svg path { stroke: var(--color-text-light); }
-
-        /* Estilos para a página de post individual */
         .page-container {
             max-width: 800px;
             margin: 40px auto;
@@ -99,7 +96,6 @@
             border-radius: 4px;
         }
         .loading-message { text-align: center; padding: 50px; font-size: 1.2rem; color: var(--color-text-secondary); }
-
         .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
@@ -136,7 +132,6 @@
             .nav-container { padding: 10px 20px; } 
             .page-container { padding: 20px; margin: 20px 15px; } 
             .post-header .post-title { font-size: 2rem; }
-            .login-button { display: none; }
         }
     </style>
 </head>
@@ -170,10 +165,10 @@
                     <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
                     <li><a href="contato.html">Fale Conosco</a></li>
                     <li><a href="eventos.html">Eventos</a></li>
-                     <li><a href="galeria.html">Galeria</a></li>
+                    <li><a href="galeria.html">Galeria</a></li>
                 </ul>
             </nav>
-            <a href="#" class="login-button">Fazer login</a>
+            <a class="login-button" id="login-button">Fazer login</a>
             <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
                 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
             </button>
@@ -207,22 +202,39 @@
     </footer>
     
     <script>
+        // SCRIPT COMPLETO E CORRIGIDO
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
-        const dropdownToggles = document.querySelectorAll('.has-dropdown > a');
-
         menuToggle.addEventListener('click', () => {
             navList.classList.toggle('nav-active');
         });
 
-        dropdownToggles.forEach(toggle => {
-            toggle.addEventListener('click', function(event) {
+        document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
+            menuLink.addEventListener('click', function(event) {
                 if (window.innerWidth <= 992) {
                     event.preventDefault();
                     this.parentElement.classList.toggle('dropdown-active');
                 }
             });
         });
+
+        const loginButton = document.getElementById('login-button');
+        if (loginButton) {
+            loginButton.addEventListener('click', () => {
+                if (window.netlifyIdentity) {
+                    netlifyIdentity.open();
+                }
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             const GITHUB_USER = "daengeologicaufpel-tech";
