@@ -33,13 +33,14 @@
         .logo { height: 50px; width: auto; }
         .main-nav ul { display: flex; list-style: none; }
         .main-nav ul li { position: relative; }
-        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: block; }
+        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
         .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; z-index: 1001;}
         .main-nav ul li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
         .dropdown-menu li a { padding: 12px 20px; white-space: nowrap; transition: background-color 0.3s ease; }
         .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
         .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
         .dropdown-menu--wide li a { white-space: normal; text-align: left; }
+        .dropdown-arrow { display: none; width: 18px; height: 18px; fill: currentColor; }
         .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border: 1px solid transparent; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; }
         .login-button:hover { background-color: rgba(255,255,255,0.8); }
         .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
@@ -114,9 +115,11 @@
             .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
             .main-nav ul.nav-active { display: flex; }
             .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
+            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; }
+            .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; }
+            .dropdown-arrow { display: inline-block; }
             .menu-toggle { display: block; z-index: 10; }
-            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); }
-            .dropdown-menu--wide { display: block; min-width: auto; gap: 0; }
         }
         @media (max-width: 768px) { 
             .nav-container { padding: 10px 20px; } 
@@ -134,16 +137,16 @@
             <nav class="main-nav">
                 <ul id="nav-list">
                     <li><a href="index.html">Início</a></li>
-                    <li>
-                        <a href="origem.html">Quem somos</a>
+                    <li class="has-dropdown">
+                        <a href="origem.html">Quem somos<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
                         <ul class="dropdown-menu">
                             <li><a href="origem.html">Origem</a></li>
                             <li><a href="diretorias.html">Diretorias</a></li>
                             <li><a href="estatuto.html">Estatuto</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="curso.html">O Curso</a>
+                    <li class="has-dropdown">
+                        <a href="curso.html">O Curso<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
                         <ul class="dropdown-menu dropdown-menu--wide">
                             <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
                             <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
@@ -192,10 +195,25 @@
     </footer>
     
     <script>
+        // Script para o menu mobile
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
-        menuToggle.addEventListener('click', () => { navList.classList.toggle('nav-active'); });
+        const dropdownToggles = document.querySelectorAll('.has-dropdown > a');
 
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('nav-active');
+        });
+
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992) {
+                    event.preventDefault(); // Impede a navegação no clique
+                    this.parentElement.classList.toggle('dropdown-active');
+                }
+            });
+        });
+
+        // Lógica para carregar o conteúdo do post
         document.addEventListener('DOMContentLoaded', () => {
             const GITHUB_USER = "daengeologicaufpel-tech";
             const GITHUB_REPO = "GEO-SITE";
@@ -205,7 +223,7 @@
             const postSlug = params.get('post');
 
             if (!postSlug) {
-                mainContent.innerHTML = "<p class='loading-message'>Post não encontrado.</p>";
+                mainContent.innerHTML = "<div class='page-container'><p class='loading-message'>Post não encontrado.</p></div>";
                 return;
             }
 
@@ -221,7 +239,7 @@
                     const frontmatter = parseFrontmatter(contentParts[1]);
                     const bodyMarkdown = contentParts.slice(2).join('---');
 
-                    const converter = new showdown.Converter({tables: true}); // Habilita tabelas
+                    const converter = new showdown.Converter({tables: true});
                     const bodyHtml = converter.makeHtml(bodyMarkdown);
 
                     document.title = `${frontmatter.title} - DAFPO`;
@@ -245,7 +263,7 @@
                 })
                 .catch(error => {
                     console.error("Erro ao buscar o post:", error);
-                    mainContent.innerHTML = "<p class='loading-message'>Não foi possível carregar o post.</p>";
+                    mainContent.innerHTML = "<div class='page-container'><p class='loading-message'>Não foi possível carregar o post.</p></div>";
                 });
 
             function parseFrontmatter(text) {
