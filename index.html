@@ -35,17 +35,14 @@
         .main-nav ul li { position: relative; }
         .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
         .site-header.scrolled .main-nav ul li a { color: var(--color-text-light); }
-        .main-nav ul li a::after { content: ''; position: absolute; bottom: 5px; left: 15px; right: 15px; height: 2px; background-color: var(--color-text-light); transform: scaleX(0); transition: transform 0.3s ease; }
-        .main-nav ul li a:hover::after { transform: scaleX(1); }
         .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; z-index: 1001; }
-        /* No PC, o menu continua abrindo ao passar o mouse */
         .main-nav ul li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
         .dropdown-menu li a { padding: 12px 20px; white-space: nowrap; transition: background-color 0.3s ease; }
         .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
         .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
         .dropdown-menu--wide li a { white-space: normal; text-align: left; }
         .dropdown-arrow { display: none; width: 18px; height: 18px; fill: currentColor; }
-        .login-button { background-color: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; }
+        .login-button { background-color: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; }
         .login-button:hover { background-color: white; color: var(--color-primary-green); }
         .site-header.scrolled .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border-color: transparent; }
         .site-header.scrolled .login-button:hover { background-color: rgba(255,255,255,0.8); }
@@ -113,7 +110,7 @@
                 display: none; 
                 flex-direction: column; 
                 position: absolute; 
-                top: 70px;
+                top: 70px; 
                 left: 0; 
                 width: 100%; 
                 background-color: var(--color-primary-green);
@@ -121,15 +118,12 @@
             }
             .main-nav ul.nav-active { display: flex; }
             .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
-            
-            /* Correção para Dropdown no Mobile */
             .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
-            .main-nav ul li:hover > .dropdown-menu { display: none; } /* Desativa o hover no mobile */
-            .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; } /* Garante que funcione com o clique */
+            .main-nav ul li:hover > .dropdown-menu { display: none; }
+            .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; }
             .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; }
             .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; }
             .dropdown-arrow { display: inline-block; }
-            
             .menu-toggle { display: block; z-index: 10; }
             .content-grid { grid-template-columns: 1fr; }
         }
@@ -181,7 +175,7 @@
                     <li><a href="galeria.html">Galeria</a></li>
                 </ul>
             </nav>
-            <a href="#" class="login-button">Fazer login</a>
+            <a class="login-button" id="login-button">Fazer login</a>
             <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
                 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
             </button>
@@ -266,14 +260,26 @@
     </footer>
     
     <script>
-        // --- SCRIPT PARA FUNCIONALIDADES INTERATIVAS ---
+        // SCRIPT COMPLETO E CORRIGIDO
+        
+        // 1. Efeito do cabeçalho ao rolar a página
         const header = document.getElementById('site-header');
-        window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); });
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 2. Funcionalidade do menu hambúrguer para mobile
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
-        menuToggle.addEventListener('click', () => { navList.classList.toggle('nav-active'); });
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('nav-active');
+        });
 
-        // LÓGICA PARA DROPDOWNS NO MOBILE (AO CLICAR)
+        // 3. LÓGICA PARA DROPDOWNS NO MOBILE (AO CLICAR)
         document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
             menuLink.addEventListener('click', function(event) {
                 if (window.innerWidth <= 992) {
@@ -282,25 +288,37 @@
                 }
             });
         });
+
+        // 4. ATIVAR BOTÃO DE LOGIN
+        const loginButton = document.getElementById('login-button');
+        if (loginButton) {
+            loginButton.addEventListener('click', () => {
+                if (window.netlifyIdentity) {
+                    netlifyIdentity.open();
+                }
+            });
+        }
         
-        // LÓGICA DO SLIDESHOW E POSTS DINÂMICOS
+        // 5. LÓGICA DO SLIDESHOW E POSTS DINÂMICOS
         document.addEventListener('DOMContentLoaded', () => {
             const slidesContainer = document.getElementById('slides-container');
-            const imageData = [
-                { file: "PREDIO DA ALFANDEGA.jpg", caption: "PREDIO DA ALFANDEGA"}, { file: "2012 - Campo de Prospecção e Pesquisa Mineral - Minas de Corrales - Uruguai.jpg", caption: "Campo de Prospecção e Pesquisa Mineral (Minas de Corrales/Uruguai) - 2012" }, { file: "Pedreira Pelotense - Pelotas RS.jpg", caption: "Pedreira Pelotense (Pelotas/RS)" }, { file: "MINAS DO CAMAQUA 2.jpg", caption: "Minas do Camaquã" }, { file: "MINAS DO CAMAQUA 1.jpg", caption: "Minas do Camaquã" }, { file: "VETERANOS E BIXOS 2017-1.jpg", caption: "Veteranos e Bixos - 2017/1" }, { file: "VETERANOS E BIXOS 2016-1.png", caption: "Veteranos e Bixos - 2016/1" }, { file: "MAPEAMENTO GEOLOGICO 2019-2.png", caption: "Mapeamento Geológico - 2019/2" }, { file: "VETERANOS E BIXOS 2019-1.jpg", caption: "Veteranos e Bixos - 2019/1" }, { file: "SEDIMENTOLOGIA 2019-1.jpg", caption: "Sedimentologia - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2019-1.jpg", caption: "Campo de Geologia Geral - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2018-1.jpg", caption: "Campo de Geologia Geral - 2018/1" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "PETROLOGIA METAMORFICA 2018-2.png", caption: "Petrologia Metamórfica - 2018/2" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "GEOLOGIA ESTRUTURAL 2018-2.jpg", caption: "Geologia Estrutural - 2018/2" }, { file: "PETROLOGIA SEDIMENTAR 2017-2.jpg", caption: "Petrologia Sedimentar - 2017/2" }, { file: "XVII SNET XI SSBG 2019-1.jpg", caption: "XVII SNET XI SSBG - 2019/1" }, { file: "FORMATURA.jpg", caption: "Formatura" }
-            ];
-            imageData.forEach(data => { const slide = document.createElement('div'); slide.classList.add('slide'); const img = document.createElement('img'); img.src = `img/${data.file}`; img.alt = data.caption; img.classList.add('slide-image'); const caption = document.createElement('div'); caption.classList.add('caption'); caption.textContent = data.caption; slide.appendChild(img); slide.appendChild(caption); if(slidesContainer) {slidesContainer.appendChild(slide);} });
-            const slides = document.querySelectorAll('.slide'); const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn'); const playPauseBtn = document.getElementById('play-pause-btn');
-            if (slides.length > 0) {
-                let currentSlide = 0; let isPlaying = true; let slideInterval = null;
-                const moveToSlide = (slideIndex) => { if (slides[currentSlide]) { slides[currentSlide].classList.remove('active'); } currentSlide = (slideIndex + slides.length) % slides.length; if (slides[currentSlide]) { slides[currentSlide].classList.add('active'); } };
-                const startSlideshow = () => { isPlaying = true; playPauseBtn.classList.remove('is-paused'); playPauseBtn.setAttribute('aria-label', 'Pausar'); slideInterval = setInterval(() => moveToSlide(currentSlide + 1), 4000); };
-                const pauseSlideshow = () => { isPlaying = false; clearInterval(slideInterval); playPauseBtn.classList.add('is-paused'); playPauseBtn.setAttribute('aria-label', 'Continuar'); };
-                nextBtn.addEventListener('click', () => { moveToSlide(currentSlide + 1); pauseSlideshow(); });
-                prevBtn.addEventListener('click', () => { moveToSlide(currentSlide - 1); pauseSlideshow(); });
-                playPauseBtn.addEventListener('click', () => { if (isPlaying) { pauseSlideshow(); } else { startSlideshow(); } });
-                moveToSlide(0);
-                startSlideshow();
+            if (slidesContainer) {
+                const imageData = [
+                    { file: "PREDIO DA ALFANDEGA.jpg", caption: "PREDIO DA ALFANDEGA"}, { file: "2012 - Campo de Prospecção e Pesquisa Mineral - Minas de Corrales - Uruguai.jpg", caption: "Campo de Prospecção e Pesquisa Mineral (Minas de Corrales/Uruguai) - 2012" }, { file: "Pedreira Pelotense - Pelotas RS.jpg", caption: "Pedreira Pelotense (Pelotas/RS)" }, { file: "MINAS DO CAMAQUA 2.jpg", caption: "Minas do Camaquã" }, { file: "MINAS DO CAMAQUA 1.jpg", caption: "Minas do Camaquã" }, { file: "VETERANOS E BIXOS 2017-1.jpg", caption: "Veteranos e Bixos - 2017/1" }, { file: "VETERANOS E BIXOS 2016-1.png", caption: "Veteranos e Bixos - 2016/1" }, { file: "MAPEAMENTO GEOLOGICO 2019-2.png", caption: "Mapeamento Geológico - 2019/2" }, { file: "VETERANOS E BIXOS 2019-1.jpg", caption: "Veteranos e Bixos - 2019/1" }, { file: "SEDIMENTOLOGIA 2019-1.jpg", caption: "Sedimentologia - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2019-1.jpg", caption: "Campo de Geologia Geral - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2018-1.jpg", caption: "Campo de Geologia Geral - 2018/1" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "PETROLOGIA METAMORFICA 2018-2.png", caption: "Petrologia Metamórfica - 2018/2" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "GEOLOGIA ESTRUTURAL 2018-2.jpg", caption: "Geologia Estrutural - 2018/2" }, { file: "PETROLOGIA SEDIMENTAR 2017-2.jpg", caption: "Petrologia Sedimentar - 2017/2" }, { file: "XVII SNET XI SSBG 2019-1.jpg", caption: "XVII SNET XI SSBG - 2019/1" }, { file: "FORMATURA.jpg", caption: "Formatura" }
+                ];
+                imageData.forEach(data => { const slide = document.createElement('div'); slide.classList.add('slide'); const img = document.createElement('img'); img.src = `img/${data.file}`; img.alt = data.caption; img.classList.add('slide-image'); const caption = document.createElement('div'); caption.classList.add('caption'); caption.textContent = data.caption; slide.appendChild(img); slide.appendChild(caption); if(slidesContainer) {slidesContainer.appendChild(slide);} });
+                const slides = document.querySelectorAll('.slide'); const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn'); const playPauseBtn = document.getElementById('play-pause-btn');
+                if (slides.length > 0) {
+                    let currentSlide = 0; let isPlaying = true; let slideInterval = null;
+                    const moveToSlide = (slideIndex) => { if (slides[currentSlide]) { slides[currentSlide].classList.remove('active'); } currentSlide = (slideIndex + slides.length) % slides.length; if (slides[currentSlide]) { slides[currentSlide].classList.add('active'); } };
+                    const startSlideshow = () => { isPlaying = true; playPauseBtn.classList.remove('is-paused'); playPauseBtn.setAttribute('aria-label', 'Pausar'); slideInterval = setInterval(() => moveToSlide(currentSlide + 1), 4000); };
+                    const pauseSlideshow = () => { isPlaying = false; clearInterval(slideInterval); playPauseBtn.classList.add('is-paused'); playPauseBtn.setAttribute('aria-label', 'Continuar'); };
+                    nextBtn.addEventListener('click', () => { moveToSlide(currentSlide + 1); pauseSlideshow(); });
+                    prevBtn.addEventListener('click', () => { moveToSlide(currentSlide - 1); pauseSlideshow(); });
+                    playPauseBtn.addEventListener('click', () => { if (isPlaying) { pauseSlideshow(); } else { startSlideshow(); } });
+                    moveToSlide(0);
+                    startSlideshow();
+                }
             }
 
             const postsGrid = document.getElementById('posts-grid');
@@ -393,4 +411,3 @@
     </script>
 </body>
 </html>
-
