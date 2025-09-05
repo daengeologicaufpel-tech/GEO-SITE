@@ -52,6 +52,12 @@
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
+        .content-article .article-banner {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
         .content-article h1, .content-article h2 {
             font-family: var(--font-heading);
             color: var(--color-heading-maroon);
@@ -63,13 +69,19 @@
             border-bottom: 2px solid var(--color-background);
             padding-bottom: 10px;
         }
-        .content-article p {
+        .content-article p, .content-article ul {
             font-size: 1.05rem;
             line-height: 1.8;
             color: var(--color-text-secondary);
             margin-bottom: 20px;
         }
-        
+        .content-article ul {
+            padding-left: 20px;
+        }
+        .content-article a {
+            color: var(--color-primary-green);
+        }
+
         .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
@@ -82,16 +94,7 @@
         .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
         
         @media (max-width: 992px) {
-            .main-nav ul { 
-                display: none; 
-                flex-direction: column; 
-                position: absolute; 
-                top: 70px; 
-                left: 0; 
-                width: 100%; 
-                background-color: var(--color-primary-green);
-                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-            }
+            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
             .main-nav ul.nav-active { display: flex; }
             .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
             .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
@@ -152,16 +155,25 @@
     <main class="page-container">
         <article class="content-article">
             <h1>O Curso de Engenharia Geológica</h1>
-            <p>Aqui entrará a descrição completa sobre o curso de Engenharia Geológica da UFPel, abordando sua história, estrutura e diferenciais. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.</p>
+            <img src="img/demostracao.jpg" alt="Demonstração do curso de Engenharia Geológica" class="article-banner">
 
-            <h2>Objetivos do Curso</h2>
-            <p>Descreva aqui os principais objetivos do curso, como a formação de profissionais capacitados para atuar na prospecção e exploração de recursos minerais e hídricos. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.</p>
-
-            <h2>Perfil do Egresso</h2>
-            <p>Detalhe o perfil do profissional formado pelo curso, suas competências e habilidades. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in.</p>
+            <h2>HISTÓRIA</h2>
+            <p>A criação do Curso de Graduação em Engenharia Geológica (título Engenheiro Geólogo) em 2008 faz parte do REUNI, reestruturação e expansão universitária. Foi realizada através de um acordo de cooperação técnica financiado entre o Ministério da Educação e Cultura e a Universidade Federal de Pelotas (UFPel), com o intuito de ampliar o ensino superior nas universidades brasileiras, e particularly na UFPel, representando uma Instituição de Ensino Superior (IES) da metade sul do Estado do Rio Grande do Sul.</p>
+            <p>A presença de instituições de ensino superior em qualquer região é elemento fundamental de desenvolvimento econômico e social, bem como de melhoria da qualidade de vida da população, uma vez que proporciona o aproveitamento das potencialidades locais. Os municípios que possuem representações de universidades estão permanentemente desfrutando de um acentuado processo de transformação econômica e cultural, mediante parcerias firmadas entre essas instituições e as comunidades em que estão inseridas. Dessa forma, é fomentada a troca de informações e a interação científica, tecnológica e intelectual, que permitem a transferência de conhecimentos necessários ao estabelecimento do desenvolvimento sustentável que respeite e estimule os sistemas produtivos locais.</p>
+            <p>Nesse sentido, a criação de um Curso de Graduação em Engenharia Geológica busca ser um agente da definitiva incorporação da região ao mapa do desenvolvimento das geociências do Rio Grande do Sul. Esse curso permitirá formar mão-de-obra qualificada e adquirir as informações necessárias para impulsionar o progresso de sua região e, com isso, novas perspectivas econômicas para a região. A carência de estudos de geologia na metade sul do estado e a propagação/necessidade do uso racional e sustentado de recursos naturais pelo ser humano têm sido as principais motivações para a criação do Curso de Graduação em Engenharia Geológica. A partir da década de 90, com a criação do IQG (Instituto de Química e Geociências) na UFPel, essencialmente pela presença de geólogos no quadro do instituto, vislumbrava-se uma ampliação da área de geociências, com a criação de um curso próprio. Com a proposta do REUNI, diversos fatores foram reunidos e permitiram a proposição do curso, ressaltando, além do aporte de recursos financeiros, a possibilidade de contratação de corpo docente e técnico, e ainda a própria motivação política da universidade.</p>
+            <p>A implantação do Curso de Graduação em Engenharia Geológica na UFPel preenche a carência de estudos sobre recursos naturais (rochas, minerais, fósseis, sedimentos). O Curso de Graduação em Engenharia Geológica, nessa região, constitui uma possibilidade de estudos, pesquisa e extensão complementar às demais áreas já existentes, como, por exemplo, agronomia, engenharia agrícola, engenharia ambiental e engenharia de materiais. Por outro lado, o reduzido número de cursos de Geologia no país e o crescimento da demanda de profissionais desta área nos mercados mineradores, de engenharia civil e ambiental, petroleiro dentre outros, vêm corroborar a importância de implantar um curso dessa natureza no sul do estado.</p>
             
-            <h2>Áreas de Atuação</h2>
-            <p>Liste e descreva as principais áreas onde o Engenheiro Geólogo pode atuar, como mineração, geotecnia, hidrogeologia, geologia ambiental, entre outras. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
+            <h2>Objetivo</h2>
+            <p>O objetivo do Curso de Graduação em Engenharia Geológica é formar profissionais para atuar nas diversas atividades que competem a um Engenheiro Geólogo, bem como, em programas de extensão e cursos de pós-graduação nas áreas de Engenharia e Geociências.</p>
+
+            <h2>Perfil do profissional/egresso</h2>
+            <p>O Geólogo ou Engenheiro Geólogo atua na compreensão dos processos de formação e evolução da Terra e na localização e extração de recursos naturais, tais como águas subterrâneas, petróleo e carvão mineral. Em sua atividade, realiza o levantamento e a análise de rochas e solos, elabora mapeamentos geológicos e geotécnicos e avalia o risco de atividade sísmica. Atua, também, na identificação, modelagem e exploração de aquíferos, depósitos de fosseis e jazidas minerais. Realiza a prospecção mineral, de petróleo e de águas subterrâneas, controlando a poluição nos solos e aquíferos. Coordena e supervisiona equipes de trabalho; realiza pesquisa científica e tecnológica e estudos de viabilidade técnico-econômica; executa e fiscaliza obras e serviços técnicos; efetua vistorias, perícias e avaliações, emitindo laudos e pareceres. Em suas atividades, considera a ética, a segurança e os impactos sócio-ambientais.</p>
+
+            <h2>Links Institucionais</h2>
+            <ul>
+                <li><a href="https://wp.ufpel.edu.br/engenhariageologica/" target="_blank" rel="noopener noreferrer">Site do Curso de Engenharia Geológica</a></li>
+                <li><a href="https://institucional.ufpel.edu.br/cursos/cod/5600" target="_blank" rel="noopener noreferrer">Página Institucional do Curso</a></li>
+            </ul>
         </article>
     </main>
 
