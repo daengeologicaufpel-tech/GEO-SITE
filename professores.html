@@ -68,6 +68,8 @@
             border-radius: 8px;
             padding: 25px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
         }
         .professor-card h2 {
             font-family: var(--font-heading);
@@ -80,13 +82,14 @@
             line-height: 1.7;
             color: var(--color-text-secondary);
             text-align: justify;
+            flex-grow: 1; /* Faz o parágrafo ocupar o espaço disponível */
         }
         .professor-links {
             margin-top: 20px;
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            gap: 25px; /* Aumentei o espaçamento */
+            gap: 25px;
         }
         .professor-links a {
             display: flex;
@@ -101,7 +104,7 @@
             transform: scale(1.05);
         }
         .professor-links img {
-            height: 35px; /* Ajustei a altura */
+            height: 35px;
             width: auto;
         }
         
@@ -187,12 +190,101 @@
                 <h2>Adelir José Strieder</h2>
                 <p>Professor Titular do Centro de Engenharias da UFPel. Geólogo (UFRGS, 1985), Mestre (1989) e Doutor (1993) em Geologia Econômica e Prospecção pela UnB. Pós-doutorado em Modelagem Geofísica pelo IST de Lisboa. Atua em instrumentação geológica e ambiental, pesquisa mineral, integração de dados espaciais e geologia de engenharia.</p>
                 <div class="professor-links">
-                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"></a>
-                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"></a>
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
                 </div>
             </article>
 
-            </div>
+            <article class="professor-card">
+                <h2>Alexandre Felipe Bruch</h2>
+                <p>Docente na UFPel no Centro das Engenharias e Coordenador Adjunto do Núcleo de Estudos de Tecnologias em Geociências. Geógrafo (UFPEL, 2007), Mestre (2009) e Doutor (2015) em Geografia pela UFRGS. Especialista em Agrimensura (UNISINOS, 2018). Atua em Geomensura, Geomorfologia, Geoprocessamento, Sensoriamento Remoto e Geoquímica da Paisagem.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+
+            <article class="professor-card">
+                <h2>Amilcar Oliveira Barum</h2>
+                <p>Professor da UFPel. Engenheiro Eletricista (UCPel, 1985) e Mestre em Engenharia Mecânica (UFRGS, 1996). Cursa Licenciatura em História na UFPel. Tem experiência em Geração de Energia Elétrica, com foco em energia, biomassa, biodiesel e desenvolvimento sustentável. Em História, estuda trabalho, organização portuária e Segunda Guerra Mundial.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+
+            <article class="professor-card">
+                <h2>Antonio Carlos da Silva Ramos</h2>
+                <p>Professor/pesquisador na UFPel nos cursos de Engenharia Geológica e de Petróleo. Engenheiro Químico (UFRN, 1992), Mestre (1995) e Doutor (2001) em Engenharia Química. Tem experiência no comportamento de frações pesadas de petróleos, com foco em asfaltenos, resinas, parafinas, modelagem termodinâmica e processos de separação.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+
+            <article class="professor-card">
+                <h2>Angélica Cirolini</h2>
+                <p>Professora da UFPel no Centro de Engenharias (CEng). Possui graduação em Geografia (UFSM, 2004), mestrado em Geografia (UFSM, 2008) e doutorado em Geografia pela UFRGS. Atua principalmente nos temas de cartografia, geoprocessamento, SIG, tecnologia da informação e meio ambiente.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+
+            <article class="professor-card">
+                <h2>Camile Urban</h2>
+                <p>Docente da UFPel, ministra aulas nos cursos de Engenharia Geológica e Engenharia de Petróleo. Pesquisadora nas áreas de estratigrafia, sedimentologia e cartografia geológica. Possui graduação e mestrado em Geologia pela UFPR.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+
+            <article class="professor-card">
+                <h2>Leandro Fagundes</h2>
+                <p>Engenheiro de Minas (UFRGS, 1987), Mestre (1990) e Doutor (1996) em Engenharia de Minas, Metalúrgica e de Materiais pela UFRGS.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+            
+            <article class="professor-card">
+                <h2>Luiz Henrique Ronchi</h2>
+                <p>Professor na UFPel. Geólogo (UFPR, 1982), Mestre em Geologia Econômica (UnB, 1986) e Doutor pela Université d?Orléans, França (1993). Atuou na UnB e UNISINOS, com Bolsa de Produtividade em Pesquisa do CNPq. Sua pesquisa foca em metalogenia e estudo de inclusões fluidas em depósitos minerais. Ministra disciplinas como Depósitos Minerais e Petrologia.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+            
+            <article class="professor-card">
+                <h2>Ricardo Giumelli Marquezan</h2>
+                <p>Geólogo (UFRGS, 1976), Mestre em Geociências/Geologia Ambiental (UFRGS, 1999) e Doutor em Recursos Hídricos e Saneamento Ambiental (UFRGS, 2008). Tem experiência em hidrogeologia, com foco em avaliação de vulnerabilidade de aquíferos, prevenção e remediação na proteção de recursos hídricos e modelagem de fluxo subterrâneo.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+            
+            <article class="professor-card">
+                <h2>Suzana Maria Morsch</h2>
+                <p>Professora Associada na UFPel. Licenciada em Ciências Biológicas (UFRGS, 1978), Mestre em Geociências (UFRGS, 1984) e Doutora em Ciências da Terra pela Université de Poitiers (1995). Tem experiência na área de Geociências, com ênfase em Paleontologia Estratigráfica.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+
+            <article class="professor-card">
+                <h2>Viter Magalhães Pinto</h2>
+                <p>Professor efetivo do curso de Engenharia Geológica da UFPel. Geólogo (UFRGS, 1994), Mestre (1997) e Doutor (2010) em Geociências pela UFRGS, com período sanduíche na Universidade do Oeste da Austrália. Atua em geoquímica, metalogênese, geocronologia, geotectônica, mapeamento geológico e geotecnologias aplicadas à prospecção mineral.</p>
+                <div class="professor-links">
+                    <a href="#" target="_blank"><img src="https://wp.ufpel.edu.br/ceng/files/2019/10/UFPel-Logo-768x959.png" alt="Perfil UFPel"> <span>Perfil UFPel</span></a>
+                    <a href="#" target="_blank"><img src="https://logodownload.org/wp-content/uploads/2017/04/plataforma-lattes-logo.png" alt="Currículo Lattes"> <span>Lattes</span></a>
+                </div>
+            </article>
+        </div>
     </main>
 
     <footer class="site-footer">
