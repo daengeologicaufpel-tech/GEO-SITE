@@ -18,3 +18,15 @@ collections:
       - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
       - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
       - {label: "Conteúdo Completo do Post", name: "body", widget: "markdown"}
+      
+- name: "projetos" # Identificador da nova coleção
+    label: "Projetos de Pesquisa" # Nome que aparecerá no painel
+    label_singular: "Projeto" # Rótulo para um item
+    folder: "_projetos" # Pasta onde os arquivos dos projetos serão salvos
+    create: true # Habilita o botão "Novo Projeto"
+    slug: "{{slug}}" # O nome do arquivo será o título
+    fields:
+      - {label: "Título do Projeto", name: "title", widget: "string"}
+      - {label: "Professor Responsável", name: "coordenador", widget: "string"}
+      - {label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false}
+      - {label: "Descrição Completa do Projeto", name: "body", widget: "markdown"}
