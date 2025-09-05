@@ -30,3 +30,17 @@ collections:
       - {label: "Professor Responsável", name: "coordenador", widget: "string"}
       - {label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false}
       - {label: "Descrição Completa do Projeto", name: "body", widget: "markdown"}
+      
+  - name: "eventos" # Identificador da nova coleção
+    label: "Eventos" # Nome que aparecerá no painel
+    label_singular: "Evento" # Rótulo para um item
+    folder: "_eventos" # Pasta onde os arquivos dos eventos serão salvos
+    create: true # Habilita o botão "Novo Evento"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Título do Evento", name: "title", widget: "string"}
+      - {label: "Data do Evento", name: "date", widget: "datetime"}
+      - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
+      - {label: "Descrição Curta (para a lista)", name: "excerpt", widget: "text"}
+      - {label: "Descrição Completa do Evento", name: "body", widget: "markdown"}     
+
