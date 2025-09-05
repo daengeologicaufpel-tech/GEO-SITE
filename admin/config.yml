@@ -19,7 +19,7 @@ collections:
       - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
       - {label: "Conteúdo Completo do Post", name: "body", widget: "markdown"}
       
-- name: "projetos" # Identificador da nova coleção
+  - name: "projetos" # Identificador da nova coleção
     label: "Projetos de Pesquisa" # Nome que aparecerá no painel
     label_singular: "Projeto" # Rótulo para um item
     folder: "_projetos" # Pasta onde os arquivos dos projetos serão salvos
