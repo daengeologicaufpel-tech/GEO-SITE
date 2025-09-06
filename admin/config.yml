@@ -42,5 +42,21 @@ collections:
       - {label: "Data do Evento", name: "date", widget: "datetime"}
       - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
       - {label: "Descrição Curta (para a lista)", name: "excerpt", widget: "text"}
-      - {label: "Descrição Completa do Evento", name: "body", widget: "markdown"}     
+      - {label: "Descrição Completa do Evento", name: "body", widget: "markdown"} 
+      
+   - name: "galleries"
+    label: "Galerias de Fotos"
+    label_singular: "Galeria por Ano"
+    folder: "_galleries"
+    create: true
+    slug: "{{title}}"
+    fields:
+      - {label: "Ano da Galeria", name: "title", widget: "string"}
+      - name: "photos"
+        label: "Fotos"
+        widget: "list"
+        fields:
+          - {label: "Imagem", name: "image", widget: "image"}
+          - {label: "Legenda", name: "caption", widget: "string"}   
+
 
