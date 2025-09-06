@@ -44,6 +44,7 @@
         .login-button:hover { background-color: rgba(255,255,255,0.8); }
         .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
         .menu-toggle svg path { stroke: var(--color-text-light); }
+
         .page-container {
             max-width: 800px;
             margin: 40px auto;
@@ -202,21 +203,15 @@
     </footer>
     
     <script>
-        // SCRIPT COMPLETO E CORRIGIDO
-        const header = document.getElementById('site-header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
-        menuToggle.addEventListener('click', () => {
-            navList.classList.toggle('nav-active');
-        });
+        const loginButton = document.getElementById('login-button');
+
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navList.classList.toggle('nav-active');
+            });
+        }
 
         document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
             menuLink.addEventListener('click', function(event) {
@@ -227,8 +222,7 @@
             });
         });
 
-        const loginButton = document.getElementById('login-button');
-        if (loginButton) {
+        if(loginButton) {
             loginButton.addEventListener('click', () => {
                 if (window.netlifyIdentity) {
                     netlifyIdentity.open();
@@ -242,18 +236,20 @@
             
             const mainContent = document.getElementById('main-content');
             const params = new URLSearchParams(window.location.search);
-            const postSlug = params.get('post');
+            const postType = params.get('type') || 'posts';
+            const postSlug = params.get('slug');
 
             if (!postSlug) {
-                mainContent.innerHTML = "<div class='page-container'><p class='loading-message'>Post não encontrado.</p></div>";
+                mainContent.innerHTML = "<div class='page-container'><p class='loading-message'>Conteúdo não encontrado.</p></div>";
                 return;
             }
 
-            const postUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/_posts/${postSlug}.md`;
+            const contentFolder = `_${postType}`;
+            const postUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${contentFolder}/${postSlug}.md`;
             
             fetch(postUrl)
                 .then(response => {
-                    if (!response.ok) throw new Error('Post não encontrado no repositório.');
+                    if (!response.ok) throw new Error('Conteúdo não encontrado no repositório.');
                     return response.text();
                 })
                 .then(markdown => {
@@ -284,8 +280,8 @@
                     `;
                 })
                 .catch(error => {
-                    console.error("Erro ao buscar o post:", error);
-                    mainContent.innerHTML = "<div class='page-container'><p class='loading-message'>Não foi possível carregar o post.</p></div>";
+                    console.error("Erro ao buscar o conteúdo:", error);
+                    mainContent.innerHTML = "<div class='page-container'><p class='loading-message'>Não foi possível carregar o conteúdo.</p></div>";
                 });
 
             function parseFrontmatter(text) {
