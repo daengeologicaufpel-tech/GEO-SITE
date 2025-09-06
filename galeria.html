@@ -43,6 +43,7 @@
         .login-button:hover { background-color: rgba(255,255,255,0.8); }
         .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
         .menu-toggle svg path { stroke: var(--color-text-light); }
+        
         .page-container {
             max-width: 1200px;
             margin: 40px auto;
@@ -55,40 +56,85 @@
             margin-bottom: 40px;
             text-align: center;
         }
-        .gallery-year-section {
-            margin-bottom: 50px;
-        }
-        .gallery-year-section h2 {
-            font-family: var(--font-heading);
-            color: var(--color-primary-green);
-            font-size: 2.2rem;
-            border-bottom: 2px solid var(--color-background);
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .photo-grid {
+        .albums-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
-        .photo-item {
+        .album-card {
             background-color: var(--color-surface);
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .photo-item img {
+        .album-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        .album-cover {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
-            display: block;
         }
-        .photo-item figcaption {
-            padding: 15px;
-            font-size: 0.95rem;
+        .album-info {
+            padding: 20px;
+        }
+        .album-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-text-primary);
+        }
+        .album-count {
+            font-size: 0.9rem;
             color: var(--color-text-secondary);
-            background-color: var(--color-surface);
         }
+        
+        /* Estilos do Lightbox (Galeria Interativa) */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 80vh;
+        }
+        .lightbox-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .lightbox-caption {
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.1rem;
+        }
+        .lightbox-close, .lightbox-prev, .lightbox-next {
+            position: absolute;
+            cursor: pointer;
+            color: white;
+            font-size: 3rem;
+            user-select: none;
+        }
+        .lightbox-close { top: 15px; right: 30px; }
+        .lightbox-prev, .lightbox-next { top: 50%; transform: translateY(-50%); }
+        .lightbox-prev { left: 15px; }
+        .lightbox-next { right: 15px; }
+        
         .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
@@ -116,113 +162,66 @@
             .nav-container { padding: 10px 20px; } 
             .page-container { padding: 0 15px; margin: 20px 0; } 
             .page-header h1 { font-size: 2.2rem; }
-            .photo-grid { grid-template-columns: 1fr; }
+            .albums-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+            .album-cover { height: 120px; }
+            .album-info { padding: 15px; }
+            .album-title { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
 
     <header class="site-header scrolled">
-        <div class="nav-container">
-            <a href="index.html"><img src="img/logo-dafpo.png" alt="Logo do DAFPO" class="logo"></a>
-            <nav class="main-nav">
-                <ul id="nav-list">
-                    <li><a href="index.html">Início</a></li>
-                    <li class="has-dropdown">
-                        <a href="origem.html">Quem somos<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="origem.html">Origem</a></li>
-                            <li><a href="diretorias.html">Diretorias</a></li>
-                            <li><a href="estatuto.html">Estatuto</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="curso.html">O Curso<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
-                        <ul class="dropdown-menu dropdown-menu--wide">
-                            <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
-                            <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
-                            <li><a href="egressos.html">Egressos</a></li>
-                            <li><a href="professores.html">Professores</a></li>
-                            <li><a href="laboratorios.html">Laboratórios</a></li>
-                            <li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
-                    <li><a href="contato.html">Fale Conosco</a></li>
-                    <li><a href="eventos.html">Eventos</a></li>
-                    <li><a href="galeria.html">Galeria</a></li>
-                </ul>
-            </nav>
-            <a class="login-button" id="login-button">Fazer login</a>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
-                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
-            </button>
-        </div>
-    </header>
+        </header>
 
     <main class="page-container">
         <header class="page-header">
             <h1>Galeria de Fotos</h1>
         </header>
         
-        <div id="gallery-container">
+        <div class="albums-grid" id="albums-grid">
             </div>
     </main>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-prev">&#10094;</span>
+        <span class="lightbox-next">&#10095;</span>
+        <div class="lightbox-content">
+            <img src="" class="lightbox-image" id="lightbox-image">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
 
     <footer class="site-footer">
         </footer>
     
     <script>
-        // Script para o menu mobile e login
-        const menuToggle = document.getElementById('menu-toggle');
-        const navList = document.getElementById('nav-list');
-        const loginButton = document.getElementById('login-button');
-
-        if(menuToggle) {
-            menuToggle.addEventListener('click', () => {
-                navList.classList.toggle('nav-active');
-            });
-        }
-
-        document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
-            menuLink.addEventListener('click', function(event) {
-                if (window.innerWidth <= 992) {
-                    event.preventDefault();
-                    this.parentElement.classList.toggle('dropdown-active');
-                }
-            });
-        });
-
-        if(loginButton) {
-            loginButton.addEventListener('click', () => {
-                if (window.netlifyIdentity) {
-                    netlifyIdentity.open();
-                }
-            });
-        }
+        // Scripts de menu e login
+        // ... (cole aqui os scripts do menu e login de outra página) ...
         
-        // Lógica para carregar as galerias dinamicamente
+        // Lógica para carregar e controlar a galeria
         document.addEventListener('DOMContentLoaded', () => {
-            const galleryContainer = document.getElementById('gallery-container');
             const GITHUB_USER = "daengeologicaufpel-tech";
             const GITHUB_REPO = "GEO-SITE";
             const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/_galleries`;
 
+            const albumsGrid = document.getElementById('albums-grid');
+            let allGalleries = []; // Armazena todas as galerias
+
             async function fetchGalleries() {
                 try {
                     const response = await fetch(apiUrl);
-                    if (!response.ok) throw new Error(`Erro de rede: ${response.statusText}`);
+                    if (!response.ok) throw new Error(`Erro de rede`);
                     
                     const files = await response.json();
-                    if (!Array.isArray(files) || files.message) throw new Error("A pasta _galleries não foi encontrada ou o repositório é privado.");
+                    if (!Array.isArray(files) || files.message) throw new Error("A pasta _galleries não foi encontrada.");
 
-                    galleryContainer.innerHTML = '';
                     if (files.length === 0) {
-                        galleryContainer.innerHTML = '<p>Nenhuma galeria de fotos encontrada.</p>';
+                        albumsGrid.innerHTML = '<p>Nenhum álbum encontrado.</p>';
                         return;
                     }
                     
-                    // Ordena os anos do mais novo para o mais antigo
                     files.sort((a, b) => b.name.localeCompare(a.name));
 
                     for (const file of files) {
@@ -230,74 +229,108 @@
                         const content = await galleryResponse.text();
                         const gallery = parseFrontmatter(content);
                         
-                        if (gallery && gallery.title && gallery.photos && gallery.photos.length > 0) {
-                            displayGallery(gallery);
+                        if (gallery && gallery.title) {
+                            allGalleries.push(gallery);
+                            displayAlbum(gallery, allGalleries.length - 1);
                         }
                     }
                 } catch (error) {
-                    console.error('Erro ao carregar as galerias:', error);
-                    galleryContainer.innerHTML = '<p>Não foi possível carregar as galerias no momento.</p>';
+                    console.error('Erro ao carregar galerias:', error);
+                    albumsGrid.innerHTML = '<p>Não foi possível carregar os álbuns.</p>';
                 }
             }
 
-            // FUNÇÃO parseFrontmatter CORRIGIDA
-            function parseFrontmatter(markdownContent) {
-                const match = markdownContent.match(/---([\s\S]*?)---/);
+            function parseFrontmatter(text) {
+                const match = text.match(/---([\s\S]*?)---/);
                 if (!match) return null;
-
-                const frontmatterString = match[1].trim();
-                const lines = frontmatterString.split('\n');
-
-                const gallery = {
-                    title: '',
-                    photos: []
-                };
-
-                let currentPhoto = null;
-
+                const lines = match[1].trim().split('\n');
+                const data = { photos: [] };
+                let inPhotos = false;
                 lines.forEach(line => {
-                    const titleMatch = line.match(/^title:\s*['"]?(.*?)['"]?$/);
-                    const imageMatch = line.match(/-\s*image:\s*(.*)/);
-                    const captionMatch = line.match(/^\s*caption:\s*['"]?(.*?)['"]?$/);
-
-                    if (titleMatch) {
-                        gallery.title = titleMatch[1];
-                    } else if (imageMatch) {
-                        currentPhoto = { image: imageMatch[1].trim(), caption: '' };
-                        gallery.photos.push(currentPhoto);
-                    } else if (captionMatch && currentPhoto) {
-                        currentPhoto.caption = captionMatch[1];
+                    if (line.startsWith('title:')) {
+                        data.title = line.split(':')[1].trim().replace(/['"]/g, '');
+                    } else if (line.startsWith('cover_image:')) {
+                        data.cover_image = line.split(':')[1].trim();
+                    } else if (line.startsWith('photos:')) {
+                        inPhotos = true;
+                    } else if (inPhotos && line.trim().startsWith('- image:')) {
+                        const imgLine = line.match(/- image:\s*(.*)/);
+                        const captionLine = lines[lines.indexOf(line) + 1] || '';
+                        const caption = captionLine.trim().startsWith('caption:') ? captionLine.split(':')[1].trim().replace(/['"]/g, '') : '';
+                        if (imgLine) {
+                            data.photos.push({ image: imgLine[1], caption: caption });
+                        }
                     }
                 });
-
-                return gallery;
+                return data;
             }
 
-            function displayGallery(gallery) {
-                const section = document.createElement('section');
-                section.classList.add('gallery-year-section');
+            function displayAlbum(album, index) {
+                const albumCard = document.createElement('div');
+                albumCard.className = 'album-card';
+                albumCard.dataset.albumIndex = index;
 
-                let photosHtml = '<div class="photo-grid">';
-                if (gallery.photos && gallery.photos.length > 0) {
-                    gallery.photos.forEach(photo => {
-                        if (photo.image) {
-                            photosHtml += `
-                                <figure class="photo-item">
-                                    <img src="${photo.image}" alt="${photo.caption || gallery.title}">
-                                    <figcaption>${photo.caption}</figcaption>
-                                </figure>
-                            `;
-                        }
-                    });
-                }
-                photosHtml += '</div>';
-
-                section.innerHTML = `
-                    <h2>${gallery.title}</h2>
-                    ${photosHtml}
+                albumCard.innerHTML = `
+                    <img src="${album.cover_image}" alt="Capa do álbum ${album.title}" class="album-cover">
+                    <div class="album-info">
+                        <h3 class="album-title">${album.title}</h3>
+                        <p class="album-count">${album.photos.length} fotos</p>
+                    </div>
                 `;
-                galleryContainer.appendChild(section);
+                albumsGrid.appendChild(albumCard);
             }
+
+            // Lógica do Lightbox
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const closeBtn = lightbox.querySelector('.lightbox-close');
+            const prevBtn = lightbox.querySelector('.lightbox-prev');
+            const nextBtn = lightbox.querySelector('.lightbox-next');
+            
+            let currentAlbumPhotos = [];
+            let currentImageIndex = 0;
+
+            albumsGrid.addEventListener('click', (e) => {
+                const albumCard = e.target.closest('.album-card');
+                if (albumCard) {
+                    const albumIndex = parseInt(albumCard.dataset.albumIndex, 10);
+                    currentAlbumPhotos = allGalleries[albumIndex].photos;
+                    currentImageIndex = 0;
+                    openLightbox();
+                }
+            });
+
+            function openLightbox() {
+                if (currentAlbumPhotos.length > 0) {
+                    updateLightboxImage();
+                    lightbox.classList.add('active');
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+            }
+
+            function updateLightboxImage() {
+                const photo = currentAlbumPhotos[currentImageIndex];
+                lightboxImage.src = photo.image;
+                lightboxCaption.textContent = photo.caption;
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + currentAlbumPhotos.length) % currentAlbumPhotos.length;
+                updateLightboxImage();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % currentAlbumPhotos.length;
+                updateLightboxImage();
+            }
+
+            closeBtn.addEventListener('click', closeLightbox);
+            prevBtn.addEventListener('click', showPrevImage);
+            nextBtn.addEventListener('click', showNextImage);
 
             fetchGalleries();
         });
