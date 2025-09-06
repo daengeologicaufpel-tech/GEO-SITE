@@ -44,7 +44,7 @@ collections:
       - {label: "Descrição Curta (para a lista)", name: "excerpt", widget: "text"}
       - {label: "Descrição Completa do Evento", name: "body", widget: "markdown"}
       
-  - name: "galleries"
+    - name: "galleries"
     label: "Galerias de Fotos"
     label_singular: "Galeria por Ano"
     folder: "_galleries"
