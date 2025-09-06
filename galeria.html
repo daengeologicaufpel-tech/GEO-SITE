@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria - DAFPO - Engenharia Geológica UFPel</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <style>
+        :root {
+            --color-primary-green: #67651c;
+            --color-heading-maroon: #702727;
+            --color-background: #f4f4f4;
+            --color-surface: #ffffff;
+            --color-text-primary: #2d2d2d;
+            --color-text-secondary: #5f5f5f;
+            --color-text-light: #fdfdfc;
+            --font-body: 'Poppins', sans-serif;
+            --font-heading: 'Lora', serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background-color: var(--color-background); color: var(--color-text-primary); }
+        .site-header { position: sticky; top: 0; width: 100%; z-index: 1000; background-color: var(--color-primary-green); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 10px 30px; height: 70px; }
+        .logo { height: 50px; width: auto; }
+        .main-nav ul { display: flex; list-style: none; }
+        .main-nav ul li { position: relative; }
+        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+        .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; z-index: 1001;}
+        .main-nav ul li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
+        .dropdown-menu li a { padding: 12px 20px; white-space: nowrap; transition: background-color 0.3s ease; }
+        .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
+        .dropdown-menu--wide li a { white-space: normal; text-align: left; }
+        .dropdown-arrow { display: none; width: 18px; height: 18px; fill: currentColor; }
+        .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border: 1px solid transparent; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; }
+        .login-button:hover { background-color: rgba(255,255,255,0.8); }
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
+        .menu-toggle svg path { stroke: var(--color-text-light); }
+        .page-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .page-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            color: var(--color-heading-maroon);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .gallery-year-section {
+            margin-bottom: 50px;
+        }
+        .gallery-year-section h2 {
+            font-family: var(--font-heading);
+            color: var(--color-primary-green);
+            font-size: 2.2rem;
+            border-bottom: 2px solid var(--color-background);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .photo-item {
+            background-color: var(--color-surface);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-item figcaption {
+            padding: 15px;
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            background-color: var(--color-surface);
+        }
+        .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
+        .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
+        .footer-column p, .footer-column a { color: rgba(255, 255, 255, 0.8); text-decoration: none; line-height: 1.7; }
+        .footer-column a:hover { color: white; text-decoration: underline; }
+        .social-links { display: flex; gap: 15px; margin-top: 15px; }
+        .social-links a { display: inline-block; transition: transform 0.3s ease; }
+        .social-links a:hover { transform: scale(1.1); }
+        .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
+        
+        @media (max-width: 992px) {
+            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
+            .main-nav ul.nav-active { display: flex; }
+            .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
+            .main-nav ul li:hover > .dropdown-menu { display: none; }
+            .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; }
+            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; }
+            .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; }
+            .dropdown-arrow { display: inline-block; }
+            .menu-toggle { display: block; z-index: 10; }
+        }
+        @media (max-width: 768px) { 
+            .nav-container { padding: 10px 20px; } 
+            .page-container { padding: 0 15px; margin: 20px 0; } 
+            .page-header h1 { font-size: 2.2rem; }
+            .photo-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header scrolled">
+        <div class="nav-container">
+            <a href="index.html"><img src="img/logo-dafpo.png" alt="Logo do DAFPO" class="logo"></a>
+            <nav class="main-nav">
+                <ul id="nav-list">
+                    <li><a href="index.html">Início</a></li>
+                    <li class="has-dropdown">
+                        <a href="origem.html">Quem somos<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="origem.html">Origem</a></li>
+                            <li><a href="diretorias.html">Diretorias</a></li>
+                            <li><a href="estatuto.html">Estatuto</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="curso.html">O Curso<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
+                        <ul class="dropdown-menu dropdown-menu--wide">
+                            <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
+                            <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
+                            <li><a href="egressos.html">Egressos</a></li>
+                            <li><a href="professores.html">Professores</a></li>
+                            <li><a href="laboratorios.html">Laboratórios</a></li>
+                            <li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
+                    <li><a href="contato.html">Fale Conosco</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                    <li><a href="galeria.html">Galeria</a></li>
+                </ul>
+            </nav>
+            <a class="login-button" id="login-button">Fazer login</a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <header class="page-header">
+            <h1>Galeria de Fotos</h1>
+        </header>
+        
+        <div id="gallery-container">
+            </div>
+    </main>
+
+    <footer class="site-footer">
+        </footer>
+    
+    <script>
+        // Script para o menu mobile e login
+        const menuToggle = document.getElementById('menu-toggle');
+        const navList = document.getElementById('nav-list');
+        const loginButton = document.getElementById('login-button');
+
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navList.classList.toggle('nav-active');
+            });
+        }
+
+        document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
+            menuLink.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992) {
+                    event.preventDefault();
+                    this.parentElement.classList.toggle('dropdown-active');
+                }
+            });
+        });
+
+        if(loginButton) {
+            loginButton.addEventListener('click', () => {
+                if (window.netlifyIdentity) {
+                    netlifyIdentity.open();
+                }
+            });
+        }
+        
+        // Lógica para carregar as galerias dinamicamente
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryContainer = document.getElementById('gallery-container');
+            const GITHUB_USER = "daengeologicaufpel-tech";
+            const GITHUB_REPO = "GEO-SITE";
+            const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/_galleries`;
+
+            async function fetchGalleries() {
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) throw new Error(`Erro de rede: ${response.statusText}`);
+                    
+                    const files = await response.json();
+                    if (!Array.isArray(files) || files.message) throw new Error("A pasta _galleries não foi encontrada ou o repositório é privado.");
+
+                    galleryContainer.innerHTML = '';
+                    if (files.length === 0) {
+                        galleryContainer.innerHTML = '<p>Nenhuma galeria de fotos encontrada.</p>';
+                        return;
+                    }
+                    
+                    // Ordena os anos do mais novo para o mais antigo
+                    files.sort((a, b) => b.name.localeCompare(a.name));
+
+                    for (const file of files) {
+                        const galleryResponse = await fetch(file.download_url);
+                        const content = await galleryResponse.text();
+                        const gallery = parseFrontmatter(content);
+                        
+                        if (gallery) {
+                            displayGallery(gallery);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar as galerias:', error);
+                    galleryContainer.innerHTML = '<p>Não foi possível carregar as galerias no momento.</p>';
+                }
+            }
+
+            function parseFrontmatter(markdownContent) {
+                const parts = markdownContent.split('---');
+                const frontmatter = {};
+                if (parts.length > 1 && parts[1]) {
+                    const lines = parts[1].trim().split('\n');
+                    lines.forEach(line => {
+                        const [key, ...valueParts] = line.split(':');
+                        if (key.trim() === 'photos') {
+                            frontmatter.photos = [];
+                        } else if (key.startsWith('  - image:')) {
+                             const imageUrl = key.split(':')[1].trim();
+                             const captionLine = lines[lines.indexOf(line) + 1] || '';
+                             const caption = captionLine.includes('caption:') ? captionLine.split(':')[1].trim() : '';
+                             frontmatter.photos.push({ image: imageUrl, caption: caption });
+                        } else if (key.trim() === 'title') {
+                            frontmatter.title = valueParts.join(':').trim();
+                        }
+                    });
+                }
+                return frontmatter;
+            }
+
+            function displayGallery(gallery) {
+                const section = document.createElement('section');
+                section.classList.add('gallery-year-section');
+
+                let photosHtml = '<div class="photo-grid">';
+                if (gallery.photos && gallery.photos.length > 0) {
+                    gallery.photos.forEach(photo => {
+                        if (photo.image) {
+                            photosHtml += `
+                                <figure class="photo-item">
+                                    <img src="${photo.image}" alt="${photo.caption || gallery.title}">
+                                    <figcaption>${photo.caption}</figcaption>
+                                </figure>
+                            `;
+                        }
+                    });
+                }
+                photosHtml += '</div>';
+
+                section.innerHTML = `
+                    <h2>${gallery.title}</h2>
+                    ${photosHtml}
+                `;
+                galleryContainer.appendChild(section);
+            }
+
+            fetchGalleries();
+        });
+    </script>
+</body>
+</html>
