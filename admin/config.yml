@@ -46,15 +46,17 @@ collections:
       
   - name: "galleries"
     label: "Galerias de Fotos"
-    label_singular: "Galeria por Ano"
+    label_singular: "Álbum por Ano"
     folder: "_galleries"
     create: true
     slug: "{{title}}"
     fields:
-      - {label: "Ano da Galeria", name: "title", widget: "string"}
+      - {label: "Ano ou Título do Álbum", name: "title", widget: "string"}
+      - {label: "Imagem de Capa do Álbum", name: "cover_image", widget: "image"}
       - name: "photos"
-        label: "Fotos"
+        label: "Fotos do Álbum"
         widget: "list"
         fields:
           - {label: "Imagem", name: "image", widget: "image"}
           - {label: "Legenda", name: "caption", widget: "string"}
+
