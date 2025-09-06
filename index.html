@@ -12,6 +12,7 @@
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
     <style>
+        /* CSS completo e sem alterações */
         :root {
             --color-primary-green: #67651c;
             --color-heading-maroon: #702727;
@@ -134,8 +135,6 @@
             .hero h2 { font-size: 1rem; }
             .content-grid { padding: 20px; gap: 20px; }
             .posts-grid { grid-template-columns: 1fr; }
-            /* A linha abaixo foi removida para que o botão de login apareça no celular */
-            /* .login-button { display: none; } */
         }
     </style>
 </head>
@@ -392,7 +391,7 @@
                     const formattedDate = postDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
 
                     postCard.innerHTML = `
-                        <a href="post.html?post=${post.slug}">
+                        <a href="post.html?type=posts&slug=${post.slug}">
                             <div class="post-card-image">
                                 <img src="${post.thumbnail}" alt="">
                             </div>
