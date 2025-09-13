@@ -58,5 +58,5 @@ collections:
         widget: "list"
         fields:
           - {label: "Imagem", name: "image", widget: "image"}
-          - {label: "Legenda", name: "caption", widget: "string"}
+          - {label: "Legenda", name: "caption", widget: "string"} 
 
