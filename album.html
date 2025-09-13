@@ -85,6 +85,7 @@
             background-color: var(--color-surface);
         }
 
+        /* LIGHTBOX STYLES - CORRIGIDO */
         .lightbox {
             display: none;
             position: fixed;
@@ -97,42 +98,66 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            overflow: hidden; /* Evita rolagem desnecessária no fundo */
         }
         .lightbox.active {
             display: flex;
         }
         .lightbox-content {
             position: relative;
-            max-width: 90vw;
-            max-height: 80vh;
+            max-width: 95vw; /* Aumenta a largura máxima */
+            max-height: 90vh; /* Aumenta a altura máxima */
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px; /* Espaçamento interno */
         }
         .lightbox-image {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* CORREÇÃO: Garante que a imagem inteira apareça */
+            object-fit: contain; /* ESSA É A PRINCIPAL CORREÇÃO: Garante que a imagem inteira apareça sem cortes */
+            transition: transform 0.3s ease; /* Adiciona transição para zoom */
         }
         .lightbox-caption {
             color: white;
             text-align: center;
-            padding: 15px;
-            font-size: 1.1rem;
-            max-width: 80vw;
+            padding: 10px 15px;
+            font-size: 1rem; /* Um pouco menor para celular */
+            max-width: 90vw;
+            background-color: rgba(0,0,0,0.5); /* Fundo semi-transparente para legenda */
+            border-radius: 5px;
+            margin-top: 10px; /* Espaço entre imagem e legenda */
         }
         .lightbox-close, .lightbox-prev, .lightbox-next {
             position: absolute;
             cursor: pointer;
             color: white;
-            font-size: 3rem;
+            font-size: 2.5rem; /* Um pouco menor para celular */
+            font-weight: bold;
             user-select: none;
             z-index: 10000;
+            background-color: rgba(0,0,0,0.4); /* Fundo para os botões */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
-        .lightbox-close { top: 15px; right: 30px; }
-        .lightbox-prev, .lightbox-next { top: 50%; transform: translateY(-50%); }
-        .lightbox-prev { left: 15px; }
-        .lightbox-next { right: 15px; }
+        .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
+            background-color: rgba(0,0,0,0.7);
+            transform: scale(1.1);
+        }
+        .lightbox-close { 
+            top: 15px; 
+            right: 15px; 
+            font-size: 2rem; /* 'x' menor */
+            width: 40px;
+            height: 40px;
+        }
+        .lightbox-prev { left: 10px; }
+        .lightbox-next { right: 10px; }
         
         .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
@@ -163,14 +188,36 @@
             .page-header h1 { font-size: 2.2rem; }
             /* CORREÇÃO: Grade de 3 colunas no celular */
             .photo-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 5px;
+                grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+                gap: 5px; /* Espaçamento menor entre as fotos */
             }
             .photo-item img {
-                height: 120px; /* Altura menor para caber 3 por linha */
+                height: 100px; /* Altura menor para caber 3 por linha */
             }
             .photo-item figcaption {
                 display: none; /* Esconde a legenda na grade para um visual mais limpo */
+            }
+
+            /* Melhorias no lightbox para mobile */
+            .lightbox-close { 
+                top: 5px; 
+                right: 5px; 
+                font-size: 2rem;
+                width: 35px;
+                height: 35px;
+            }
+            .lightbox-prev, .lightbox-next {
+                font-size: 2rem;
+                width: 40px;
+                height: 40px;
+                background-color: rgba(0,0,0,0.6); /* Um pouco mais escuro para contraste */
+            }
+            .lightbox-prev { left: 5px; }
+            .lightbox-next { right: 5px; }
+            .lightbox-caption {
+                font-size: 0.9rem;
+                padding: 8px 10px;
+                max-width: 95vw;
             }
         }
     </style>
@@ -204,6 +251,48 @@
     
     <script>
         // Scripts de menu e login (cole o script completo de outra página aqui)
+        // Certifique-se de que os scripts do menu e login estejam aqui, se você os tiver em outras páginas
+        // Exemplo:
+        // 1. Efeito do cabeçalho ao rolar a página
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 2. Funcionalidade do menu hambúrguer para mobile
+        const menuToggle = document.getElementById('menu-toggle');
+        const navList = document.getElementById('nav-list');
+        if (menuToggle && navList) {
+            menuToggle.addEventListener('click', () => {
+                navList.classList.toggle('nav-active');
+            });
+        }
+
+        // 3. LÓGICA PARA DROPDOWNS NO MOBILE (AO CLICAR)
+        document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
+            menuLink.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992) {
+                    event.preventDefault();
+                    this.parentElement.classList.toggle('dropdown-active');
+                }
+            });
+        });
+        
+        // 4. ATIVAR BOTÃO DE LOGIN
+        const loginButton = document.getElementById('login-button');
+        if (loginButton) {
+            loginButton.addEventListener('click', () => {
+                if (window.netlifyIdentity) {
+                    netlifyIdentity.open();
+                }
+            });
+        }
+        // Fim dos scripts de menu e login de exemplo
+        
 
         document.addEventListener('DOMContentLoaded', () => {
             const GITHUB_USER = "daengeologicaufpel-tech";
@@ -303,9 +392,14 @@
                 if (currentAlbumPhotos.length > 0) {
                     updateLightboxImage();
                     lightbox.classList.add('active');
+                    // Bloqueia a rolagem do corpo quando o lightbox está ativo
+                    document.body.style.overflow = 'hidden'; 
                 }
             }
-            function closeLightbox() { lightbox.classList.remove('active'); }
+            function closeLightbox() { 
+                lightbox.classList.remove('active'); 
+                document.body.style.overflow = ''; // Restaura a rolagem
+            }
             function updateLightboxImage() {
                 const photo = currentAlbumPhotos[currentImageIndex];
                 lightboxImage.src = photo.image;
@@ -323,6 +417,15 @@
             closeBtn.addEventListener('click', closeLightbox);
             prevBtn.addEventListener('click', showPrevImage);
             nextBtn.addEventListener('click', showNextImage);
+
+            // Adiciona navegação por teclado (opcional, mas bom para desktop)
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.classList.contains('active')) {
+                    if (e.key === 'ArrowLeft') showPrevImage();
+                    if (e.key === 'ArrowRight') showNextImage();
+                    if (e.key === 'Escape') closeLightbox();
+                }
+            });
 
             fetchAlbum();
         });
