@@ -5,6 +5,12 @@ backend:
 media_folder: "img"
 public_folder: "/img"
 
+# ADICIONADO: Regras para limpar nomes de arquivos e slugs
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
 collections:
   - name: "posts" # Nome da coleção
     label: "Posts (Fique por Dentro)" # Como aparece no menu
@@ -58,5 +64,4 @@ collections:
         widget: "list"
         fields:
           - {label: "Imagem", name: "image", widget: "image"}
-          - {label: "Legenda", name: "caption", widget: "string"} 
-
+          - {label: "Legenda", name: "caption", widget: "string"}
