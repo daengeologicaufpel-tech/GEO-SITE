@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    </head>
+<body>
+    <header class="site-header scrolled">
+        </header>
+
+    <main class="page-container">
+        <header class="page-header">
+            <h1 id="album-title">Carregando Álbum...</h1>
+        </header>
+        
+        <div class="photo-grid" id="photo-grid">
+            </div>
+    </main>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-prev">&#10094;</span>
+        <span class="lightbox-next">&#10095;</span>
+        <div class="lightbox-content">
+            <img src="" class="lightbox-image" id="lightbox-image">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        </footer>
+
+    <script>
+        // Scripts de menu e login (cole o script completo de outra página aqui)
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const GITHUB_USER = "daengeologicaufpel-tech";
+            const GITHUB_REPO = "GEO-SITE";
+            
+            const params = new URLSearchParams(window.location.search);
+            const albumSlug = params.get('year');
+            const apiUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/_galleries/${albumSlug}.md`;
+
+            const albumTitle = document.getElementById('album-title');
+            const photoGrid = document.getElementById('photo-grid');
+            let currentAlbumPhotos = [];
+            
+            // Lógica do Lightbox
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const closeBtn = lightbox.querySelector('.lightbox-close');
+            const prevBtn = lightbox.querySelector('.lightbox-prev');
+            const nextBtn = lightbox.querySelector('.lightbox-next');
+            let currentImageIndex = 0;
+
+            async function fetchAlbum() {
+                if (!albumSlug) {
+                    albumTitle.textContent = "Álbum não encontrado";
+                    return;
+                }
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) throw new Error('Álbum não encontrado');
+                    
+                    const content = await response.text();
+                    const album = parseFrontmatter(content);
+
+                    if (album && album.title) {
+                        albumTitle.textContent = `Álbum: ${album.title}`;
+                        document.title = `${album.title} - Galeria DAFPO`;
+                        currentAlbumPhotos = album.photos || [];
+                        displayPhotos(currentAlbumPhotos);
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar o álbum:', error);
+                    albumTitle.textContent = "Erro ao carregar o álbum";
+                }
+            }
+
+            // ... (Função parseFrontmatter idêntica à da página galeria.html) ...
+
+            function displayPhotos(photos) {
+                photoGrid.innerHTML = '';
+                if (photos.length === 0) {
+                    photoGrid.innerHTML = '<p>Nenhuma foto neste álbum.</p>';
+                    return;
+                }
+                photos.forEach((photo, index) => {
+                    const photoEl = document.createElement('figure');
+                    photoEl.className = 'photo-item';
+                    photoEl.dataset.index = index;
+                    photoEl.innerHTML = `
+                        <img src="${photo.image}" alt="${photo.caption || 'Foto do álbum'}">
+                        <figcaption>${photo.caption}</figcaption>
+                    `;
+                    photoGrid.appendChild(photoEl);
+                });
+            }
+
+            photoGrid.addEventListener('click', (e) => {
+                const item = e.target.closest('.photo-item');
+                if (item) {
+                    currentImageIndex = parseInt(item.dataset.index, 10);
+                    openLightbox();
+                }
+            });
+
+            function openLightbox() {
+                if (currentAlbumPhotos.length > 0) {
+                    updateLightboxImage();
+                    lightbox.classList.add('active');
+                }
+            }
+            function closeLightbox() { lightbox.classList.remove('active'); }
+            function updateLightboxImage() {
+                const photo = currentAlbumPhotos[currentImageIndex];
+                lightboxImage.src = photo.image;
+                lightboxCaption.textContent = photo.caption;
+            }
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + currentAlbumPhotos.length) % currentAlbumPhotos.length;
+                updateLightboxImage();
+            }
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % currentAlbumPhotos.length;
+                updateLightboxImage();
+            }
+
+            closeBtn.addEventListener('click', closeLightbox);
+            prevBtn.addEventListener('click', showPrevImage);
+            nextBtn.addEventListener('click', showNextImage);
+
+            fetchAlbum();
+        });
+    </script>
+</body>
+</html>
