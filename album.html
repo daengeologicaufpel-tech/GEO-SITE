@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeria - DAFPO - Engenharia Geológica UFPel</title>
+    <title>Álbum - DAFPO - Engenharia Geológica UFPel</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
 
     <style>
         :root {
@@ -111,7 +112,7 @@
         .lightbox-image {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain;
+            object-fit: contain; /* CORREÇÃO: Garante que a imagem inteira apareça */
         }
         .lightbox-caption {
             color: white;
@@ -134,7 +135,15 @@
         .lightbox-next { right: 15px; }
         
         .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
-        /* ... (restante do CSS do rodapé) ... */
+        .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
+        .footer-column p, .footer-column a { color: rgba(255, 255, 255, 0.8); text-decoration: none; line-height: 1.7; }
+        .footer-column a:hover { color: white; text-decoration: underline; }
+        .social-links { display: flex; gap: 15px; margin-top: 15px; }
+        .social-links a { display: inline-block; transition: transform 0.3s ease; }
+        .social-links a:hover { transform: scale(1.1); }
+        .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
         
         @media (max-width: 992px) {
             .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
@@ -152,7 +161,17 @@
             .nav-container { padding: 10px 20px; } 
             .page-container { padding: 0 15px; margin: 20px 0; } 
             .page-header h1 { font-size: 2.2rem; }
-            .photo-grid { grid-template-columns: 1fr; }
+            /* CORREÇÃO: Grade de 3 colunas no celular */
+            .photo-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+            }
+            .photo-item img {
+                height: 120px; /* Altura menor para caber 3 por linha */
+            }
+            .photo-item figcaption {
+                display: none; /* Esconde a legenda na grade para um visual mais limpo */
+            }
         }
     </style>
 </head>
