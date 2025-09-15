@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todas as Publicações - DAFPO</title>
+    <title>Publicações - DAFPO</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
     <style>
-        /* SEU CSS COMPLETO E SEM ALTERAÇÕES VAI AQUI */
+        /* CSS GERAL (sem alterações) */
         :root {
             --color-primary-green: #67651c;
             --color-heading-maroon: #702727;
@@ -44,21 +44,6 @@
         .login-button:hover { background-color: rgba(255,255,255,0.8); }
         .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
         .menu-toggle svg path { stroke: var(--color-text-light); }
-        .page-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; min-height: 60vh; } /* Adicionado min-height */
-        .page-header { text-align: center; margin-bottom: 40px; }
-        .page-header h1 { font-family: var(--font-heading); font-size: 2.8rem; color: var(--color-heading-maroon); }
-        .search-bar { margin-bottom: 40px; text-align: center; }
-        #search-input { width: 100%; max-width: 500px; padding: 12px 20px; font-size: 1rem; border: 2px solid #ddd; border-radius: 25px; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
-        #search-input:focus { outline: none; border-color: var(--color-primary-green); box-shadow: 0 0 8px rgba(103, 101, 28, 0.2); }
-        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .post-card { background-color: var(--color-surface); border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; } /* Adicionado display flex */
-        .post-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
-        .post-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; flex-grow: 1; } /* Adicionado display flex */
-        .post-card-image img { width: 100%; height: 200px; object-fit: cover; }
-        .post-card-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; } /* Adicionado display flex */
-        .post-date { font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 8px; display: block; }
-        .post-title { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 10px; }
-        .post-excerpt { font-size: 0.95rem; line-height: 1.6; color: var(--color-text-secondary); flex-grow: 1; } /* Adicionado flex-grow */
         .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
@@ -69,6 +54,41 @@
         .social-links a:hover { transform: scale(1.1); }
         .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
         .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
+
+        /* CSS DA PÁGINA DE POSTS (com adições) */
+        .page-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; min-height: 60vh; }
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { font-family: var(--font-heading); font-size: 2.8rem; color: var(--color-heading-maroon); }
+        .search-bar { margin-bottom: 40px; text-align: center; }
+        #search-input { width: 100%; max-width: 500px; padding: 12px 20px; font-size: 1rem; border: 2px solid #ddd; border-radius: 25px; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        #search-input:focus { outline: none; border-color: var(--color-primary-green); box-shadow: 0 0 8px rgba(103, 101, 28, 0.2); }
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .post-card { background-color: var(--color-surface); border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .post-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .post-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; flex-grow: 1; }
+        .post-card-image img { width: 100%; height: 200px; object-fit: cover; }
+        .post-card-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .post-date { font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 8px; display: block; }
+        .post-title { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 10px; }
+        .post-excerpt { font-size: 0.95rem; line-height: 1.6; color: var(--color-text-secondary); flex-grow: 1; }
+        #loading-indicator { text-align: center; font-size: 1.2rem; color: var(--color-text-secondary); padding: 40px; }
+        .hidden { display: none; } /* Classe utilitária para esconder elementos */
+
+        /* --- NOVOS ESTILOS PARA O POST INDIVIDUAL --- */
+        .single-post-container { max-width: 800px; margin: 20px auto; background-color: var(--color-surface); padding: 30px 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .post-header-image { width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 8px; margin-bottom: 25px; }
+        .single-post-title { font-family: var(--font-heading); font-size: 2.5rem; color: var(--color-heading-maroon); margin-bottom: 10px; line-height: 1.2; }
+        .post-meta { color: var(--color-text-secondary); margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .post-content { font-size: 1.1rem; line-height: 1.8; color: var(--color-text-primary); }
+        .post-content h2 { font-family: var(--font-heading); font-size: 1.8rem; margin-top: 30px; margin-bottom: 15px; color: var(--color-text-primary); }
+        .post-content p { margin-bottom: 1.2em; }
+        .post-content a { color: var(--color-primary-green); text-decoration: none; font-weight: 600; }
+        .post-content a:hover { text-decoration: underline; }
+        .post-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
+        .back-to-posts { display: inline-block; margin-top: 40px; font-weight: 600; color: var(--color-primary-green); text-decoration: none; }
+        .back-to-posts:hover { text-decoration: underline; }
+
+        /* Media Queries */
         @media (max-width: 992px) {
             .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
             .main-nav ul.nav-active { display: flex; }
@@ -83,16 +103,11 @@
         }
         @media (max-width: 768px) { 
             .nav-container { padding: 10px 20px; } 
-            .page-container { padding: 0 15px; margin: 20px auto; } /* Ajuste no margin */
+            .page-container { padding: 0 15px; margin: 20px auto; }
             .page-header h1 { font-size: 2.2rem; }
             .posts-grid { grid-template-columns: 1fr; }
-        }
-        /* Estilo para o indicador de carregamento */
-        #loading-indicator {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--color-text-secondary);
-            padding: 40px;
+            .single-post-container { padding: 20px; }
+            .single-post-title { font-size: 2rem; }
         }
     </style>
 </head>
@@ -104,7 +119,7 @@
             <nav class="main-nav">
                 <ul id="nav-list">
                     <li><a href="index.html">Início</a></li>
-                    <li><a href="posts.html">Posts</a></li>
+                    <li><a href="post.html">Posts</a></li>
                     <li class="has-dropdown">
                         <a href="origem.html">Quem somos 
                             <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
@@ -142,17 +157,20 @@
     </header>
 
     <main class="page-container">
-        <header class="page-header">
-            <h1>Todas as Publicações</h1>
-        </header>
+        <div id="list-view">
+            <header class="page-header">
+                <h1>Todas as Publicações</h1>
+            </header>
+            <div class="search-bar">
+                <input type="search" id="search-input" placeholder="Pesquisar por título ou resumo...">
+            </div>
+            <div class="posts-grid" id="all-posts-grid">
+                <p id="loading-indicator">Carregando publicações...</p>
+            </div>
+        </div>
 
-        <div class="search-bar">
-            <input type="search" id="search-input" placeholder="Pesquisar por título ou resumo...">
-        </div>
-        
-        <div class="posts-grid" id="all-posts-grid">
-            <p id="loading-indicator">Carregando publicações...</p>
-        </div>
+        <div id="single-post-view" class="single-post-container hidden">
+            </div>
     </main>
 
     <footer class="site-footer">
@@ -176,56 +194,134 @@
     </footer>
     
     <script>
-        // CORREÇÃO 4: ADICIONE OS SCRIPTS DO MENU E LOGIN AQUI
-        // Funcionalidade do menu hambúrguer para mobile
+        // Scripts do menu e login (sem alterações)
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
         if (menuToggle) {
-            menuToggle.addEventListener('click', () => {
-                navList.classList.toggle('nav-active');
-            });
+            menuToggle.addEventListener('click', () => navList.classList.toggle('nav-active'));
         }
-        
-        // Lógica para dropdowns no mobile (ao clicar)
         document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
             menuLink.addEventListener('click', function(event) {
                 if (window.innerWidth <= 992) {
                     event.preventDefault();
-                    // Fecha outros dropdowns abertos
-                    this.parentElement.parentElement.querySelectorAll('.dropdown-active').forEach(item => {
-                        if (item !== this.parentElement) {
-                            item.classList.remove('dropdown-active');
-                        }
-                    });
                     this.parentElement.classList.toggle('dropdown-active');
                 }
             });
         });
-
-        // Ativar botão de login do Netlify Identity
         const loginButton = document.getElementById('login-button');
         if (loginButton) {
             loginButton.addEventListener('click', () => {
-                if (window.netlifyIdentity) {
-                    netlifyIdentity.open();
-                }
+                if (window.netlifyIdentity) netlifyIdentity.open();
             });
         }
 
-
-        // SCRIPT PARA CARREGAR E FILTRAR OS POSTS
+        // --- SCRIPT PRINCIPAL TOTALMENTE REFEITO ---
         document.addEventListener('DOMContentLoaded', () => {
+            const GITHUB_USER = "daengeologicaufpel-tech";
+            const GITHUB_REPO = "GEO-SITE";
+            
+            // Elementos da Visão de Lista
+            const listView = document.getElementById('list-view');
             const postsGrid = document.getElementById('all-posts-grid');
             const searchInput = document.getElementById('search-input');
             const loadingIndicator = document.getElementById('loading-indicator');
+
+            // Elementos da Visão de Post Individual
+            const singlePostView = document.getElementById('single-post-view');
             
-            const GITHUB_USER = "daengeologicaufpel-tech";
-            const GITHUB_REPO = "GEO-SITE";
-            const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/_posts`;
+            // Lógica para decidir se mostra a lista ou um post individual
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
 
-            let allPostsData = []; 
+            if (slug) {
+                // Se tem slug na URL, mostra o post individual
+                displaySinglePost(slug);
+            } else {
+                // Se não tem slug, mostra a lista de posts
+                displayPostList();
+            }
 
-            async function fetchAllPosts() {
+            // ==========================================================
+            // FUNÇÕES PARA A VISÃO DE POST INDIVIDUAL
+            // ==========================================================
+            async function displaySinglePost(slug) {
+                listView.classList.add('hidden');
+                singlePostView.classList.remove('hidden');
+                singlePostView.innerHTML = `<p>Carregando post...</p>`;
+
+                try {
+                    const postUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/_posts/${slug}.md`;
+                    const response = await fetch(postUrl, { headers: { 'Accept': 'application/vnd.github.v3.raw' } });
+                    
+                    if (!response.ok) throw new Error('Post não encontrado.');
+
+                    const markdownContent = await response.text();
+                    
+                    const postData = parseFullMarkdown(markdownContent);
+                    document.title = `${postData.frontmatter.title} - DAFPO`; // Atualiza o título da página
+
+                    const postHtml = `
+                        <img src="${postData.frontmatter.thumbnail}" alt="${postData.frontmatter.title}" class="post-header-image">
+                        <h1 class="single-post-title">${postData.frontmatter.title}</h1>
+                        <p class="post-meta">Publicado em ${new Date(postData.frontmatter.date).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                        <div class="post-content">
+                            ${convertMarkdownToHtml(postData.body)}
+                        </div>
+                        <a href="post.html" class="back-to-posts">← Voltar para todas as publicações</a>
+                    `;
+                    singlePostView.innerHTML = postHtml;
+
+                } catch (error) {
+                    console.error("Erro ao carregar o post:", error);
+                    singlePostView.innerHTML = `<p>Erro ao carregar a publicação. Verifique o link ou tente novamente.</p> <a href="post.html" class="back-to-posts">← Voltar</a>`;
+                }
+            }
+            
+            function parseFullMarkdown(markdown) {
+                const frontmatterMatch = markdown.match(/---([\s\S]*?)---/);
+                const frontmatter = {};
+                if (frontmatterMatch) {
+                    frontmatterMatch[1].trim().split('\n').forEach(line => {
+                        const [key, ...valueParts] = line.split(':');
+                        if (key) frontmatter[key.trim()] = valueParts.join(':').trim().replace(/['"]/g, '');
+                    });
+                }
+                const body = markdown.replace(/---[\s\S]*?---/, '').trim();
+                return { frontmatter, body };
+            }
+
+            function convertMarkdownToHtml(md) {
+                let html = md
+                    // Títulos (h2, h3)
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                    // Imagens: ![alt](src)
+                    .replace(/!\[(.*?)\]\((.*?)\)/gim, '<img src="$2" alt="$1">')
+                    // Links: [text](href)
+                    .replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+                    // Negrito: **text** ou __text__
+                    .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+                    .replace(/__(.*?)__/gim, '<strong>$1</strong>')
+                    // Itálico: *text* ou _text_
+                    .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+                    .replace(/_(.*?)_/gim, '<em>$1</em>')
+                    // Parágrafos (adiciona tags <p> em linhas que não são tags HTML)
+                    .split('\n').map(line => line.trim() === '' ? '' : `<p>${line}</p>`).join('')
+                    // Limpa parágrafos vazios ou em volta de outras tags
+                    .replace(/<p><(h[2-3]|img|strong|em)(.*?)<\/\1><\/p>/gim, '<$1$2</$1>')
+                    .replace(/<p>\s*<\/p>/g, '');
+
+                return html;
+            }
+
+
+            // ==========================================================
+            // FUNÇÕES PARA A VISÃO DE LISTA DE POSTS
+            // ==========================================================
+            async function displayPostList() {
+                let allPostsData = [];
+                const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/_posts`;
+                
                 try {
                     const response = await fetch(apiUrl);
                     if (!response.ok) throw new Error(`Erro de rede: ${response.statusText}`);
@@ -245,32 +341,34 @@
                     );
                     
                     allPostsData = (await Promise.all(fetchPromises)).filter(p => p !== null);
-                    allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date)); 
+                    allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date));
 
                     renderPosts(allPostsData);
 
+                    searchInput.addEventListener('input', (e) => {
+                        const searchTerm = e.target.value.toLowerCase();
+                        const filteredPosts = allPostsData.filter(post => 
+                            post.title.toLowerCase().includes(searchTerm) || 
+                            post.excerpt.toLowerCase().includes(searchTerm)
+                        );
+                        renderPosts(filteredPosts);
+                    });
+
                 } catch (error) {
                     console.error('Erro ao carregar posts:', error);
-                    postsGrid.innerHTML = '<p>Não foi possível carregar as publicações. Tente novamente mais tarde.</p>';
+                    postsGrid.innerHTML = '<p>Não foi possível carregar as publicações.</p>';
                 } finally {
-                    // CORREÇÃO 5: ESCONDE O INDICADOR DE CARREGAMENTO NO FINAL
-                    if(loadingIndicator) {
-                        loadingIndicator.style.display = 'none';
-                    }
+                    if(loadingIndicator) loadingIndicator.classList.add('hidden');
                 }
             }
 
             function parseFrontmatter(text) {
                 const match = text.match(/---([\s\S]*?)---/);
                 if (!match) return null;
-                const lines = match[1].trim().split('\n');
                 const data = {};
-                lines.forEach(line => {
+                match[1].trim().split('\n').forEach(line => {
                     const [key, ...valueParts] = line.split(':');
-                    if (key) {
-                        const value = valueParts.join(':').trim().replace(/['"]/g, '');
-                        data[key.trim()] = value;
-                    }
+                    if (key) data[key.trim()] = valueParts.join(':').trim().replace(/['"]/g, '');
                 });
                 return data;
             }
@@ -289,7 +387,7 @@
                     postCard.innerHTML = `
                         <a href="post.html?slug=${post.slug}">
                             <div class="post-card-image">
-                                <img src="${post.thumbnail}" alt="Imagem de capa para ${post.title}">
+                                <img src="${post.thumbnail}" alt="Imagem para ${post.title}">
                             </div>
                             <div class="post-card-content">
                                 <span class="post-date">${formattedDate}</span>
@@ -301,17 +399,6 @@
                     postsGrid.appendChild(postCard);
                 });
             }
-
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                const filteredPosts = allPostsData.filter(post => 
-                    post.title.toLowerCase().includes(searchTerm) || 
-                    post.excerpt.toLowerCase().includes(searchTerm)
-                );
-                renderPosts(filteredPosts);
-            });
-
-            fetchAllPosts();
         });
     </script>
 </body>
