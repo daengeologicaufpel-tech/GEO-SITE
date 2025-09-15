@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Post - DAFPO</title>
+    <link rel="stylesheet" href="style.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header>
+        </header>
+
+    <main id="post-content-area">
+        <p>Carregando post...</p>
+    </main>
+    
+    <footer>
+        </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+            const contentArea = document.getElementById('post-content-area');
+            
+            if (!slug) {
+                contentArea.innerHTML = '<h1>Post não encontrado.</h1>';
+                return;
+            }
+
+            const GITHUB_USER = "daengeologicaufpel-tech";
+            const GITHUB_REPO = "GEO-SITE";
+            const postUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/_posts/${slug}.md`;
+
+            try {
+                const response = await fetch(postUrl);
+                if (!response.ok) throw new Error('Post não encontrado no repositório.');
+                
+                const markdown = await response.text();
+                
+                // Separa o frontmatter do conteúdo
+                const content = markdown.split('---').slice(2).join('---').trim();
+                
+                // Usa a biblioteca "marked" para converter Markdown em HTML
+                contentArea.innerHTML = marked.parse(content);
+                
+            } catch (error) {
+                console.error('Erro ao buscar o post:', error);
+                contentArea.innerHTML = '<h1>Erro ao carregar o post.</h1>';
+            }
+        });
+    </script>
+</body>
+</html>
