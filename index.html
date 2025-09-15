@@ -12,7 +12,7 @@
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
     <style>
-        /* CSS completo e sem alterações */
+        /* CSS completo e sem alterações, com adição do botão 'see-all-button' */
         :root {
             --color-primary-green: #67651c;
             --color-heading-maroon: #702727;
@@ -84,10 +84,10 @@
         .play-pause .icon-play { display: none; }
         .play-pause.is-paused .icon-pause { display: none; }
         .play-pause.is-paused .icon-play { display: block; }
-        .posts-section { padding: 40px; max-width: 1400px; margin: 0 auto; }
+        .posts-section { padding: 40px; max-width: 1400px; margin: 0 auto; text-align: center; }
         .posts-section h2 { font-family: var(--font-heading); font-size: 2.5rem; color: var(--color-text-primary); text-align: center; margin-bottom: 30px; }
-        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .post-card { background-color: var(--color-surface); border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .post-card { background-color: var(--color-surface); border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: left; }
         .post-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
         .post-card a { text-decoration: none; color: inherit; display: block; }
         .post-card-image img { width: 100%; height: 200px; object-fit: cover; }
@@ -95,6 +95,8 @@
         .post-date { font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 8px; display: block; }
         .post-title { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 10px; }
         .post-excerpt { font-size: 0.95rem; line-height: 1.6; color: var(--color-text-secondary); }
+        .see-all-button { display: inline-block; background-color: var(--color-primary-green); color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; transition: background-color 0.3s ease, transform 0.3s ease; }
+        .see-all-button:hover { background-color: #525016; transform: translateY(-2px); }
         .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
@@ -105,43 +107,14 @@
         .social-links a:hover { transform: scale(1.1); }
         .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
         .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
-        
-        @media (max-width: 992px) {
-            .main-nav ul { 
-                display: none; 
-                flex-direction: column; 
-                position: absolute; 
-                top: 70px; 
-                left: 0; 
-                width: 100%; 
-                background-color: var(--color-primary-green);
-                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-            }
-            .main-nav ul.nav-active { display: flex; }
-            .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
-            .main-nav ul li:hover > .dropdown-menu { display: none; }
-            .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; }
-            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; }
-            .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; }
-            .dropdown-arrow { display: inline-block; }
-            .menu-toggle { display: block; z-index: 10; }
-            .content-grid { grid-template-columns: 1fr; }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-container { padding: 10px 20px; }
-            .hero h1 { font-size: 2.2rem; }
-            .hero h2 { font-size: 1rem; }
-            .content-grid { padding: 20px; gap: 20px; }
-            .posts-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 992px) { .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); } .main-nav ul.nav-active { display: flex; } .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); } .main-nav ul li.dropdown-active > .dropdown-menu { display: block; } .main-nav ul li:hover > .dropdown-menu { display: none; } .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; } .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; } .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; } .dropdown-arrow { display: inline-block; } .menu-toggle { display: block; z-index: 10; } .content-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .nav-container { padding: 10px 20px; } .hero h1 { font-size: 2.2rem; } .hero h2 { font-size: 1rem; } .content-grid { padding: 20px; gap: 20px; } .posts-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
     <header class="site-header" id="site-header">
-        <div class="nav-container">
+         <div class="nav-container">
             <a href="index.html"><img src="img/logo-dafpo.png" alt="Logo do DAFPO" class="logo"></a>
             <nav class="main-nav">
                 <ul id="nav-list">
@@ -193,7 +166,7 @@
     <main>
         <div class="content-grid">
             <aside class="sidebar sidebar-left">
-                 <div class="social-widget" style="background-image: url('img/banner insta.png');">
+                  <div class="social-widget" style="background-image: url('img/banner insta.png');">
                     <div class="overlay">
                         <h3>DAFPO</h3>
                         <div class="social-buttons">
@@ -234,7 +207,8 @@
         <section class="posts-section" id="fique-por-dentro">
             <h2>Fique por Dentro</h2>
             <div class="posts-grid" id="posts-grid">
-            </div>
+                </div>
+            <a href="post.html" class="see-all-button">Ver todas as publicações</a>
         </section>
     </main>
 
@@ -261,7 +235,7 @@
     </footer>
     
     <script>
-        // SCRIPT COMPLETO E CORRIGIDO
+        // SCRIPT COMPLETO (com a lógica dos posts alterada)
         
         // 1. Efeito do cabeçalho ao rolar a página
         const header = document.getElementById('site-header');
@@ -280,7 +254,7 @@
             navList.classList.toggle('nav-active');
         });
 
-        // 3. LÓGICA PARA DROPDOWNS NO MOBILE (AO CLICAR)
+        // 3. Lógica para dropdowns no mobile (ao clicar)
         document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
             menuLink.addEventListener('click', function(event) {
                 if (window.innerWidth <= 992) {
@@ -290,7 +264,7 @@
             });
         });
         
-        // 4. ATIVAR BOTÃO DE LOGIN
+        // 4. Ativar botão de login
         const loginButton = document.getElementById('login-button');
         if (loginButton) {
             loginButton.addEventListener('click', () => {
@@ -300,12 +274,13 @@
             });
         }
         
-        // 5. LÓGICA DO SLIDESHOW E POSTS DINÂMICOS
+        // 5. Lógica do slideshow e posts dinâmicos
         document.addEventListener('DOMContentLoaded', () => {
+            // Lógica do SLIDESHOW (sem alterações)
             const slidesContainer = document.getElementById('slides-container');
             if (slidesContainer) {
                 const imageData = [
-                    { file: "PREDIO DA ALFANDEGA.jpg", caption: "PREDIO DA ALFANDEGA"}, { file: "2012 - Campo de Prospecção e Pesquisa Mineral - Minas de Corrales - Uruguai.jpg", caption: "Campo de Prospecção e Pesquisa Mineral (Minas de Corrales/Uruguai) - 2012" }, { file: "Pedreira Pelotense - Pelotas RS.jpg", caption: "Pedreira Pelotense (Pelotas/RS)" }, { file: "MINAS DO CAMAQUA 2.jpg", caption: "Minas do Camaquã" }, { file: "MINAS DO CAMAQUA 1.jpg", caption: "Minas do Camaquã" }, { file: "VETERANOS E BIXOS 2017-1.jpg", caption: "Veteranos e Bixos - 2017/1" }, { file: "VETERANOS E BIXOS 2016-1.png", caption: "Veteranos e Bixos - 2016/1" }, { file: "MAPEAMENTO GEOLOGICO 2019-2.png", caption: "Mapeamento Geológico - 2019/2" }, { file: "VETERANOS E BIXOS 2019-1.jpg", caption: "Veteranos e Bixos - 2019/1" }, { file: "SEDIMENTOLOGIA 2019-1.jpg", caption: "Sedimentologia - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2019-1.jpg", caption: "Campo de Geologia Geral - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2018-1.jpg", caption: "Campo de Geologia Geral - 2018/1" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "PETROLOGIA METAMORFICA 2018-2.png", caption: "Petrologia Metamórfica - 2018/2" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "GEOLOGIA ESTRUTURAL 2018-2.jpg", caption: "Geologia Estrutural - 2018/2" }, { file: "PETROLOGIA SEDIMENTAR 2017-2.jpg", caption: "Petrologia Sedimentar - 2017/2" }, { file: "XVII SNET XI SSBG 2019-1.jpg", caption: "XVII SNET XI SSBG - 2019/1" }, { file: "FORMATURA.jpg", caption: "Formatura" }
+                     { file: "PREDIO DA ALFANDEGA.jpg", caption: "PREDIO DA ALFANDEGA"}, { file: "2012 - Campo de Prospecção e Pesquisa Mineral - Minas de Corrales - Uruguai.jpg", caption: "Campo de Prospecção e Pesquisa Mineral (Minas de Corrales/Uruguai) - 2012" }, { file: "Pedreira Pelotense - Pelotas RS.jpg", caption: "Pedreira Pelotense (Pelotas/RS)" }, { file: "MINAS DO CAMAQUA 2.jpg", caption: "Minas do Camaquã" }, { file: "MINAS DO CAMAQUA 1.jpg", caption: "Minas do Camaquã" }, { file: "VETERANOS E BIXOS 2017-1.jpg", caption: "Veteranos e Bixos - 2017/1" }, { file: "VETERANOS E BIXOS 2016-1.png", caption: "Veteranos e Bixos - 2016/1" }, { file: "MAPEAMENTO GEOLOGICO 2019-2.png", caption: "Mapeamento Geológico - 2019/2" }, { file: "VETERANOS E BIXOS 2019-1.jpg", caption: "Veteranos e Bixos - 2019/1" }, { file: "SEDIMENTOLOGIA 2019-1.jpg", caption: "Sedimentologia - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2019-1.jpg", caption: "Campo de Geologia Geral - 2019/1" }, { file: "CAMPO GEOLOGIA GERAL 2018-1.jpg", caption: "Campo de Geologia Geral - 2018/1" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "PETROLOGIA METAMORFICA 2018-2.png", caption: "Petrologia Metamórfica - 2018/2" }, { file: "PETROLOGIA IGNEA 2019-1.jpg", caption: "Petrologia Ígnea - 2019/1" }, { file: "GEOLOGIA ESTRUTURAL 2018-2.jpg", caption: "Geologia Estrutural - 2018/2" }, { file: "PETROLOGIA SEDIMENTAR 2017-2.jpg", caption: "Petrologia Sedimentar - 2017/2" }, { file: "XVII SNET XI SSBG 2019-1.jpg", caption: "XVII SNET XI SSBG - 2019/1" }, { file: "FORMATURA.jpg", caption: "Formatura" }
                 ];
                 imageData.forEach(data => { const slide = document.createElement('div'); slide.classList.add('slide'); const img = document.createElement('img'); img.src = `img/${data.file}`; img.alt = data.caption; img.classList.add('slide-image'); const caption = document.createElement('div'); caption.classList.add('caption'); caption.textContent = data.caption; slide.appendChild(img); slide.appendChild(caption); if(slidesContainer) {slidesContainer.appendChild(slide);} });
                 const slides = document.querySelectorAll('.slide'); const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn'); const playPauseBtn = document.getElementById('play-pause-btn');
@@ -322,17 +297,19 @@
                 }
             }
 
+            // Lógica dos POSTS (alterada para mostrar apenas os 3 mais recentes)
             const postsGrid = document.getElementById('posts-grid');
             if(postsGrid) {
                 const GITHUB_USER = "daengeologicaufpel-tech";
                 const GITHUB_REPO = "GEO-SITE";
                 const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/_posts`;
+
                 async function fetchPosts() {
                     try {
                         const response = await fetch(apiUrl);
-                        if (!response.ok) { throw new Error(`Erro de rede: ${response.statusText}`); }
+                        if (!response.ok) throw new Error(`Erro de rede: ${response.statusText}`);
                         const files = await response.json();
-                        if (!Array.isArray(files) || files.message) { throw new Error("A pasta _posts não foi encontrada ou o repositório é privado."); }
+                        if (!Array.isArray(files) || files.message) throw new Error("A pasta _posts não foi encontrada.");
                         
                         postsGrid.innerHTML = ''; 
                         if (files.length === 0) {
@@ -355,7 +332,12 @@
                             return dateB - dateA;
                         });
                         
-                        postsData.forEach(postData => {
+                        // --- ALTERAÇÃO PRINCIPAL AQUI ---
+                        // Pega apenas os 3 primeiros posts (os mais recentes)
+                        const recentPosts = postsData.slice(0, 3);
+                        
+                        // Itera sobre a lista de posts recentes em vez da lista completa
+                        recentPosts.forEach(postData => {
                             const post = parseFrontmatter(postData.content);
                             if (post) {
                                 post.slug = postData.slug;
@@ -392,7 +374,7 @@
                     const formattedDate = postDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
 
                     postCard.innerHTML = `
-                        <a href="post.html?type=posts&slug=${post.slug}">
+                        <a href="post.html?slug=${post.slug}">
                             <div class="post-card-image">
                                 <img src="${post.thumbnail}" alt="">
                             </div>
@@ -412,5 +394,3 @@
     </script>
 </body>
 </html>
-
-
