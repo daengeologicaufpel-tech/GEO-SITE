@@ -51,17 +51,27 @@ collections:
       - {label: "Descrição Completa do Evento", name: "body", widget: "markdown"}
       
   - name: "galleries"
-    label: "Galerias de Fotos"
-    label_singular: "Álbum por Ano"
+    label: "Galerias de Mídia" # Alterado para um nome mais genérico
+    label_singular: "Álbum"
     folder: "_galleries"
     create: true
     slug: "{{title}}"
     fields:
       - {label: "Ano ou Título do Álbum", name: "title", widget: "string"}
       - {label: "Imagem de Capa do Álbum", name: "cover_image", widget: "image"}
-      - name: "photos"
-        label: "Fotos do Álbum"
+      - name: "itens_do_album" # Renomeado para refletir o conteúdo misto
+        label: "Itens do Álbum (Fotos e Vídeos)"
         widget: "list"
-        fields:
-          - {label: "Imagem", name: "image", widget: "image"}
-          - {label: "Legenda", name: "caption", widget: "string"}
+        types: # Usamos "types" para permitir diferentes tipos de itens
+          - name: "foto"
+            label: "Foto"
+            widget: "object"
+            fields:
+              - {label: "Imagem", name: "image", widget: "image"}
+              - {label: "Legenda", name: "caption", widget: "string", required: false}
+          - name: "video"
+            label: "Vídeo"
+            widget: "object"
+            fields:
+              - {label: "URL do Vídeo (YouTube, Vimeo, etc.)", name: "video_url", widget: "string"}
+              - {label: "Legenda", name: "caption", widget: "string", required: false}
