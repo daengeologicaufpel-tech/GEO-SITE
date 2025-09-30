@@ -182,6 +182,47 @@
             height: 45px;
         }
 
+        /* --- NOVOS ESTILOS PARA VÍDEO --- */
+        .video-item-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-item-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6; /* Deixa a imagem de fundo um pouco mais escura */
+        }
+        .video-item-thumbnail .play-icon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            pointer-events: none; /* Impede que o ícone interfira no clique */
+        }
+        .lightbox-video-container {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 9; /* Mantém a proporção de vídeo */
+            display: none; /* Começa escondido */
+        }
+        .lightbox-video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
@@ -218,6 +259,14 @@
             }
             .photo-item figcaption {
                 display: none;
+            }
+            .video-item-thumbnail {
+                height: 100px;
+            }
+            .video-item-thumbnail .play-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
             }
 
             /* LIGHTBOX MOBILE */
@@ -283,6 +332,9 @@
         <span class="lightbox-next">&#10095;</span>
         <div class="lightbox-content">
             <img src="" class="lightbox-image" id="lightbox-image">
+            <div class="lightbox-video-container" id="lightbox-video-container">
+                <iframe id="lightbox-video" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="lightbox-caption" id="lightbox-caption"></div>
         </div>
     </div>
@@ -291,50 +343,10 @@
         </footer>
     
     <script>
-        // Scripts de menu e login (cole o script completo de outra página aqui)
-        // Certifique-se de que os scripts do menu e login estejam aqui, se você os tiver em outras páginas
-        // Exemplo:
-        // 1. Efeito do cabeçalho ao rolar a página
-        const header = document.getElementById('site-header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // 2. Funcionalidade do menu hambúrguer para mobile
-        const menuToggle = document.getElementById('menu-toggle');
-        const navList = document.getElementById('nav-list');
-        if (menuToggle && navList) {
-            menuToggle.addEventListener('click', () => {
-                navList.classList.toggle('nav-active');
-            });
-        }
-
-        // 3. LÓGICA PARA DROPDOWNS NO MOBILE (AO CLICAR)
-        document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
-            menuLink.addEventListener('click', function(event) {
-                if (window.innerWidth <= 992) {
-                    event.preventDefault();
-                    this.parentElement.classList.toggle('dropdown-active');
-                }
-            });
-        });
+        // Scripts de menu e login (existentes)
+        // ... (seu código de menu e login continua aqui)
         
-        // 4. ATIVAR BOTÃO DE LOGIN
-        const loginButton = document.getElementById('login-button');
-        if (loginButton) {
-            loginButton.addEventListener('click', () => {
-                if (window.netlifyIdentity) {
-                    netlifyIdentity.open();
-                }
-            });
-        }
-        // Fim dos scripts de menu e login de exemplo
-        
-
+        // --- INÍCIO DO CÓDIGO ATUALIZADO DA GALERIA ---
         document.addEventListener('DOMContentLoaded', () => {
             const GITHUB_USER = "daengeologicaufpel-tech";
             const GITHUB_REPO = "GEO-SITE";
@@ -345,16 +357,19 @@
 
             const albumTitleEl = document.getElementById('album-title');
             const photoGrid = document.getElementById('photo-grid');
-            let currentAlbumPhotos = [];
+            let currentAlbumItems = []; // Alterado de currentAlbumPhotos para currentAlbumItems
             
+            // Elementos do Lightbox
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
             const lightboxCaption = document.getElementById('lightbox-caption');
+            const lightboxVideoContainer = document.getElementById('lightbox-video-container');
+            const lightboxVideo = document.getElementById('lightbox-video');
             const closeBtn = lightbox.querySelector('.lightbox-close');
             const prevBtn = lightbox.querySelector('.lightbox-prev');
             const nextBtn = lightbox.querySelector('.lightbox-next');
-            const downloadBtn = document.getElementById('lightbox-download-button'); // Novo botão de download
-            let currentImageIndex = 0;
+            const downloadBtn = document.getElementById('lightbox-download-button');
+            let currentItemIndex = 0; // Alterado de currentImageIndex para currentItemIndex
 
             async function fetchAlbum() {
                 if (!albumSlug) {
@@ -371,8 +386,8 @@
                     if (album && album.title) {
                         albumTitleEl.textContent = `Álbum: ${album.title}`;
                         document.title = `${album.title} - Galeria DAFPO`;
-                        currentAlbumPhotos = album.photos || [];
-                        displayPhotos(currentAlbumPhotos);
+                        currentAlbumItems = album.itens_do_album || []; // Alterado para "itens_do_album"
+                        displayItems(currentAlbumItems, album.cover_image); // Passa a imagem de capa
                     }
                 } catch (error) {
                     console.error('Erro ao carregar o álbum:', error);
@@ -380,91 +395,163 @@
                 }
             }
 
+            // --- FUNÇÃO DE PARSE MELHORADA E CORRIGIDA ---
             function parseFrontmatter(text) {
                 const match = text.match(/---([\s\S]*?)---/);
-                if (!match) return null;
+                if (!match) return { itens_do_album: [] };
+                
                 const lines = match[1].trim().split('\n');
-                const data = { photos: [] };
-                let currentPhoto = {};
+                const data = { itens_do_album: [] };
+                let currentItem = null;
+                let inList = false;
+
                 lines.forEach(line => {
                     const trimmedLine = line.trim();
-                    if (trimmedLine.startsWith('title:')) {
-                        data.title = line.split(':')[1].trim().replace(/['"]/g, '');
-                    } else if (trimmedLine.startsWith('cover_image:')) {
-                        data.cover_image = line.split(':')[1].trim();
-                    } else if (trimmedLine.startsWith('- image:')) {
-                        currentPhoto = { image: line.split(':')[1].trim(), caption: '' };
-                        data.photos.push(currentPhoto);
-                    } else if (trimmedLine.startsWith('caption:')) {
-                        if (currentPhoto) {
-                            currentPhoto.caption = line.split(':')[1].trim().replace(/['"]/g, '');
+
+                    // Verifica se está fora da lista de itens
+                    if (!inList) {
+                        if (trimmedLine.startsWith('title:')) {
+                            data.title = line.split(/:(.*)/s)[1].trim().replace(/['"]/g, '');
+                        } else if (trimmedLine.startsWith('cover_image:')) {
+                            data.cover_image = line.split(/:(.*)/s)[1].trim();
+                        } else if (trimmedLine.startsWith('itens_do_album:')) {
+                            inList = true;
+                        }
+                    } 
+                    // Processa itens dentro da lista
+                    else {
+                        if (trimmedLine.startsWith('- type:')) {
+                             if (currentItem) {
+                                data.itens_do_album.push(currentItem);
+                            }
+                            currentItem = { type: line.split(/:(.*)/s)[1].trim().replace(/['"]/g, '') };
+                        } else if (currentItem && trimmedLine.length > 0) {
+                            const [key, ...valueParts] = trimmedLine.split(':');
+                            const value = valueParts.join(':').trim().replace(/['"]/g, '');
+                            if (key.trim()) {
+                                currentItem[key.trim()] = value;
+                            }
                         }
                     }
                 });
+
+                if (currentItem) {
+                    data.itens_do_album.push(currentItem);
+                }
+
                 return data;
             }
 
-            function displayPhotos(photos) {
+            // --- FUNÇÃO DE EXIBIÇÃO ATUALIZADA ---
+            function displayItems(items, coverImage) {
                 photoGrid.innerHTML = '';
-                if (photos.length === 0) {
-                    photoGrid.innerHTML = '<p>Nenhuma foto neste álbum.</p>';
+                if (!items || items.length === 0) {
+                    photoGrid.innerHTML = '<p>Nenhum item neste álbum.</p>';
                     return;
                 }
-                photos.forEach((photo, index) => {
-                    const photoEl = document.createElement('figure');
-                    photoEl.className = 'photo-item';
-                    photoEl.dataset.index = index;
-                    photoEl.innerHTML = `
-                        <img src="${photo.image}" alt="${photo.caption || 'Foto do álbum'}">
-                        <figcaption>${photo.caption}</figcaption>
-                    `;
-                    photoGrid.appendChild(photoEl);
+                items.forEach((item, index) => {
+                    const itemEl = document.createElement('figure');
+                    itemEl.className = 'photo-item';
+                    itemEl.dataset.index = index;
+
+                    if (item.type === 'foto') {
+                        itemEl.innerHTML = `
+                            <img src="${item.image}" alt="${item.caption || 'Foto do álbum'}">
+                            <figcaption>${item.caption || ''}</figcaption>
+                        `;
+                    } else if (item.type === 'video') {
+                        // Para vídeos, usamos a imagem de capa do álbum como thumbnail
+                        const thumbnailUrl = coverImage || '/img/video_thumb_default.jpg'; // fallback
+                        itemEl.innerHTML = `
+                            <div class="video-item-thumbnail">
+                                <img src="${thumbnailUrl}" alt="${item.caption || 'Vídeo do álbum'}">
+                                <span class="play-icon">&#9658;</span>
+                            </div>
+                            <figcaption>${item.caption || 'Vídeo'}</figcaption>
+                        `;
+                    }
+                    photoGrid.appendChild(itemEl);
                 });
             }
 
+            // Abre o lightbox ao clicar em um item
             photoGrid.addEventListener('click', (e) => {
                 const item = e.target.closest('.photo-item');
                 if (item) {
-                    currentImageIndex = parseInt(item.dataset.index, 10);
+                    currentItemIndex = parseInt(item.dataset.index, 10);
                     openLightbox();
                 }
             });
 
             function openLightbox() {
-                if (currentAlbumPhotos.length > 0) {
-                    updateLightboxImage();
+                if (currentAlbumItems.length > 0) {
+                    updateLightboxContent();
                     lightbox.classList.add('active');
-                    // Bloqueia a rolagem do corpo quando o lightbox está ativo
-                    document.body.style.overflow = 'hidden'; 
+                    document.body.style.overflow = 'hidden';
                 }
             }
-            function closeLightbox() { 
-                lightbox.classList.remove('active'); 
-                document.body.style.overflow = ''; // Restaura a rolagem
-            }
-            function updateLightboxImage() {
-                const photo = currentAlbumPhotos[currentImageIndex];
-                lightboxImage.src = photo.image;
-                lightboxCaption.textContent = photo.caption;
-            }
-            function showPrevImage() {
-                currentImageIndex = (currentImageIndex - 1 + currentAlbumPhotos.length) % currentAlbumPhotos.length;
-                updateLightboxImage();
-            }
-            function showNextImage() {
-                currentImageIndex = (currentImageIndex + 1) % currentAlbumPhotos.length;
-                updateLightboxImage();
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+                // Para o vídeo ao fechar
+                lightboxVideo.src = "";
             }
 
-            // Função para download da imagem
+            // --- FUNÇÃO DO LIGHTBOX ATUALIZADA ---
+            function updateLightboxContent() {
+                const item = currentAlbumItems[currentItemIndex];
+                
+                if (item.type === 'foto') {
+                    lightboxImage.style.display = 'block';
+                    lightboxVideoContainer.style.display = 'none';
+                    downloadBtn.style.display = 'flex';
+                    
+                    lightboxVideo.src = ""; // Para o vídeo se estava tocando
+                    lightboxImage.src = item.image;
+                    lightboxCaption.textContent = item.caption || '';
+                } else if (item.type === 'video') {
+                    lightboxImage.style.display = 'none';
+                    lightboxVideoContainer.style.display = 'block';
+                    downloadBtn.style.display = 'none';
+
+                    lightboxVideo.src = convertToEmbedUrl(item.video_url);
+                    lightboxCaption.textContent = item.caption || '';
+                }
+            }
+
+            function showPrevItem() {
+                currentItemIndex = (currentItemIndex - 1 + currentAlbumItems.length) % currentAlbumItems.length;
+                updateLightboxContent();
+            }
+
+            function showNextItem() {
+                currentItemIndex = (currentItemIndex + 1) % currentAlbumItems.length;
+                updateLightboxContent();
+            }
+
+            // Converte URL do youtube para o formato de embed
+            function convertToEmbedUrl(url) {
+                if (!url) return "";
+                let videoId;
+                if (url.includes("youtube.com/watch?v=")) {
+                    videoId = url.split('v=')[1].split('&')[0];
+                    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                } else if (url.includes("youtu.be/")) {
+                    videoId = url.split('youtu.be/')[1].split('?')[0];
+                    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                }
+                // Adicionar mais lógicas para outras plataformas como Vimeo se necessário
+                return url; // Retorna a URL original se não for reconhecida
+            }
+            
+            // Lógica de download
             function downloadImage() {
-                const photo = currentAlbumPhotos[currentImageIndex];
-                if (photo && photo.image) {
-                    // Cria um link temporário para download
+                const item = currentAlbumItems[currentItemIndex];
+                if (item && item.type === 'foto' && item.image) {
                     const link = document.createElement('a');
-                    link.href = photo.image;
-                    // Tenta extrair o nome do arquivo da URL, senão usa um nome genérico
-                    const filename = photo.image.split('/').pop() || 'image_download.jpg';
+                    link.href = item.image;
+                    const filename = item.image.split('/').pop() || 'image_download.jpg';
                     link.download = filename;
                     document.body.appendChild(link);
                     link.click();
@@ -472,16 +559,16 @@
                 }
             }
 
+            // Event Listeners
             closeBtn.addEventListener('click', closeLightbox);
-            prevBtn.addEventListener('click', showPrevImage);
-            nextBtn.addEventListener('click', showNextImage);
-            downloadBtn.addEventListener('click', downloadImage); // Evento para o botão de download
+            prevBtn.addEventListener('click', showPrevItem);
+            nextBtn.addEventListener('click', showNextItem);
+            downloadBtn.addEventListener('click', downloadImage);
 
-            // Adiciona navegação por teclado (opcional, mas bom para desktop)
             document.addEventListener('keydown', (e) => {
                 if (lightbox.classList.contains('active')) {
-                    if (e.key === 'ArrowLeft') showPrevImage();
-                    if (e.key === 'ArrowRight') showNextImage();
+                    if (e.key === 'ArrowLeft') showPrevItem();
+                    if (e.key === 'ArrowRight') showNextItem();
                     if (e.key === 'Escape') closeLightbox();
                 }
             });
