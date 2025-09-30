@@ -1,493 +1,591 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Álbum - DAFPO - Engenharia Geológica UFPel</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Álbum - DAFPO - Engenharia Geológica UFPel</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
 
-    <style>
-        :root {
-            --color-primary-green: #67651c;
-            --color-heading-maroon: #702727;
-            --color-background: #f4f4f4;
-            --color-surface: #ffffff;
-            --color-text-primary: #2d2d2d;
-            --color-text-secondary: #5f5f5f;
-            --color-text-light: #fdfdfc;
-            --font-body: 'Poppins', sans-serif;
-            --font-heading: 'Lora', serif;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: var(--font-body); background-color: var(--color-background); color: var(--color-text-primary); }
-        .site-header { position: sticky; top: 0; width: 100%; z-index: 1000; background-color: var(--color-primary-green); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 10px 30px; height: 70px; }
-        .logo { height: 50px; width: auto; }
-        .main-nav ul { display: flex; list-style: none; }
-        .main-nav ul li { position: relative; }
-        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
-        .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; z-index: 1001;}
-        .main-nav ul li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
-        .dropdown-menu li a { padding: 12px 20px; white-space: nowrap; transition: background-color 0.3s ease; }
-        .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
-        .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
-        .dropdown-menu--wide li a { white-space: normal; text-align: left; }
-        .dropdown-arrow { display: none; width: 18px; height: 18px; fill: currentColor; }
-        .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border: 1px solid transparent; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; }
-        .login-button:hover { background-color: rgba(255,255,255,0.8); }
-        .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
-        .menu-toggle svg path { stroke: var(--color-text-light); }
-        
-        .page-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        .page-header { text-align: center; margin-bottom: 40px; }
-        .page-header h1 {
-            font-family: var(--font-heading);
-            font-size: 2.8rem;
-            color: var(--color-heading-maroon);
-        }
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .photo-item {
-            background-color: var(--color-surface);
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        .photo-item:hover {
-            transform: scale(1.03);
-        }
-        .photo-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-        .photo-item figcaption {
-            padding: 15px;
-            font-size: 0.95rem;
-            color: var(--color-text-secondary);
-            background-color: var(--color-surface);
-        }
+    <style>
+        :root {
+            --color-primary-green: #67651c;
+            --color-heading-maroon: #702727;
+            --color-background: #f4f4f4;
+            --color-surface: #ffffff;
+            --color-text-primary: #2d2d2d;
+            --color-text-secondary: #5f5f5f;
+            --color-text-light: #fdfdfc;
+            --font-body: 'Poppins', sans-serif;
+            --font-heading: 'Lora', serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background-color: var(--color-background); color: var(--color-text-primary); }
+        .site-header { position: sticky; top: 0; width: 100%; z-index: 1000; background-color: var(--color-primary-green); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); transition: background-color 0.3s; }
+        .site-header.scrolled { background-color: var(--color-primary-green); /* Mantém a cor ou pode ser alterada ao rolar */ }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 10px 30px; height: 70px; }
+        .logo { height: 50px; width: auto; }
+        .main-nav ul { display: flex; list-style: none; }
+        .main-nav ul li { position: relative; }
+        .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+        .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; z-index: 1001;}
+        .main-nav ul li:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
+        .dropdown-menu li a { padding: 12px 20px; white-space: nowrap; transition: background-color 0.3s ease; }
+        .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
+        .dropdown-menu--wide li a { white-space: normal; text-align: left; }
+        .dropdown-arrow { display: none; width: 18px; height: 18px; fill: currentColor; }
+        .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border: 1px solid transparent; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; font-weight: 600; }
+        .login-button:hover { background-color: rgba(255,255,255,0.8); }
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
+        .menu-toggle svg { width: 28px; height: 28px; }
+        .menu-toggle .icon-close { display: none; }
+        
+        .page-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            color: var(--color-heading-maroon);
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .photo-item {
+            background-color: var(--color-surface);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .photo-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-item figcaption {
+            padding: 15px;
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            background-color: var(--color-surface);
+        }
 
-        /* LIGHTBOX STYLES - MODERNIZADO E CORRIGIDO */
-        .lightbox {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.95); /* Fundo mais escuro para foco */
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            overflow-y: auto; /* Permite rolagem se o conteúdo for maior que a tela */
-            padding: 20px; /* Padding geral para o lightbox */
-            -webkit-backdrop-filter: blur(5px); /* Efeito de blur no fundo para navegadores webkit */
-            backdrop-filter: blur(5px); /* Efeito de blur no fundo */
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .lightbox.active {
-            display: flex;
-            opacity: 1;
-        }
-        .lightbox-content {
-            position: relative;
-            display: flex;
-            flex-direction: column; /* Organiza imagem e legenda em coluna */
-            align-items: center;
-            justify-content: center;
-            max-width: 90vw; /* Ajusta a largura máxima */
-            max-height: 90vh; /* Ajusta a altura máxima */
-            background-color: #1a1a1a; /* Fundo sutil para o conteúdo do lightbox */
-            border-radius: 10px;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
-            padding: 20px;
-            overflow: hidden; /* Garante que nada vaze */
-        }
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 75vh; /* Reserva espaço para legenda e botões */
-            object-fit: contain;
-            border-radius: 8px; /* Cantos arredondados para a imagem */
-            margin-bottom: 15px; /* Espaço entre imagem e legenda */
-            transition: transform 0.3s ease;
-        }
-        .lightbox-caption {
-            color: white;
-            text-align: center;
-            padding: 10px 15px;
-            font-size: 1.1rem;
-            max-width: 80vw;
-            background-color: rgba(0,0,0,0.6); /* Fundo mais discreto para legenda */
-            border-radius: 5px;
-            word-wrap: break-word; /* Garante que legendas longas quebrem a linha */
-        }
-        .lightbox-controls {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            gap: 10px;
-            z-index: 10001; /* Garante que os controles fiquem acima */
-        }
-        .lightbox-close, .lightbox-prev, .lightbox-next, .lightbox-download {
-            cursor: pointer;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            user-select: none;
-            background-color: rgba(0,0,0,0.5);
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            border: none; /* Remove borda padrão de botões */
-            outline: none; /* Remove outline de foco */
-        }
-        .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover, .lightbox-download:hover {
-            background-color: rgba(0,0,0,0.8);
-            transform: scale(1.1);
-        }
-        .lightbox-close {
-            position: static; /* Ajusta a posição para ser parte dos controles */
-            font-size: 1.8rem;
-        }
-        .lightbox-prev { left: 15px; top: 50%; transform: translateY(-50%); position: fixed; }
-        .lightbox-next { right: 15px; top: 50%; transform: translateY(-50%); position: fixed; }
-        .lightbox-download {
-            font-size: 1.5rem; /* Ícone de download */
-            width: 45px;
-            height: 45px;
-        }
+        /* LIGHTBOX STYLES */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 20px;
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        .lightbox-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 90vw;
+            max-height: 90vh;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+            padding: 20px;
+            overflow: hidden;
+        }
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        .lightbox-caption {
+            color: white;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 1.1rem;
+            max-width: 80vw;
+            background-color: rgba(0,0,0,0.6);
+            border-radius: 5px;
+            word-wrap: break-word;
+        }
+        .lightbox-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 10001;
+        }
+        .lightbox-close, .lightbox-prev, .lightbox-next, .lightbox-download {
+            cursor: pointer;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            outline: none;
+        }
+        .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover, .lightbox-download:hover {
+            background-color: rgba(0,0,0,0.8);
+            transform: scale(1.1);
+        }
+        .lightbox-close {
+            position: static;
+            font-size: 1.8rem;
+        }
+        .lightbox-prev { left: 15px; top: 50%; transform: translateY(-50%); position: fixed; }
+        .lightbox-next { right: 15px; top: 50%; transform: translateY(-50%); position: fixed; }
+        .lightbox-download {
+            font-size: 1.5rem;
+        }
 
-        .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
-        .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
-        .footer-column p, .footer-column a { color: rgba(255, 255, 255, 0.8); text-decoration: none; line-height: 1.7; }
-        .footer-column a:hover { color: white; text-decoration: underline; }
-        .social-links { display: flex; gap: 15px; margin-top: 15px; }
-        .social-links a { display: inline-block; transition: transform 0.3s ease; }
-        .social-links a:hover { transform: scale(1.1); }
-        .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
-        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
-        
-        @media (max-width: 992px) {
-            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
-            .main-nav ul.nav-active { display: flex; }
-            .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
-            .main-nav ul li:hover > .dropdown-menu { display: none; }
-            .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; }
-            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; }
-            .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; }
-            .dropdown-arrow { display: inline-block; }
-            .menu-toggle { display: block; z-index: 10; }
-        }
-        @media (max-width: 768px) { 
-            .nav-container { padding: 10px 20px; } 
-            .page-container { padding: 0 15px; margin: 20px 0; } 
-            .page-header h1 { font-size: 2.2rem; }
-            .photo-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 5px;
-            }
-            .photo-item img {
-                height: 100px;
-            }
-            .photo-item figcaption {
-                display: none;
-            }
+        .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
+        .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .footer-column h3 { font-family: var(--font-heading); color: var(--color-surface); margin-bottom: 15px; font-size: 1.3rem; }
+        .footer-column p, .footer-column a { color: rgba(255, 255, 255, 0.8); text-decoration: none; line-height: 1.7; }
+        .footer-column a:hover { color: white; text-decoration: underline; }
+        .social-links { display: flex; gap: 15px; margin-top: 15px; }
+        .social-links a { display: inline-block; transition: transform 0.3s ease; }
+        .social-links a:hover { transform: scale(1.1); }
+        .social-links svg { width: 24px; height: 24px; fill: var(--color-text-light); }
+        .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
+        
+        @media (max-width: 992px) {
+            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
+            .main-nav ul.nav-active { display: flex; }
+            .main-nav ul li { width: 100%; }
+            .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; }
+            .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
+            .main-nav ul li:hover > .dropdown-menu { display: none; }
+            .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; }
+            .dropdown-menu { position: static; box-shadow: none; border-radius: 0; background-color: rgba(0,0,0,0.2); opacity: 1; visibility: visible; transform: none; transition: none; display: none; }
+            .dropdown-menu--wide { display: none; min-width: auto; gap: 0; grid-template-columns: 1fr; }
+            .dropdown-arrow { display: inline-block; }
+            .menu-toggle { display: block; }
+        }
+        @media (max-width: 768px) { 
+            .nav-container { padding: 10px 20px; } 
+            .page-container { padding: 0 15px; margin: 20px auto; } 
+            .page-header h1 { font-size: 2.2rem; }
+            .photo-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+            }
+            .photo-item img {
+                height: 100px;
+            }
+            .photo-item figcaption {
+                display: none;
+            }
 
-            /* LIGHTBOX MOBILE */
-            .lightbox-content {
-                max-width: 95vw;
-                max-height: 95vh;
-                padding: 10px; /* Reduz padding no mobile */
-            }
-            .lightbox-image {
-                max-height: 70vh; /* Ajusta altura no mobile */
-                margin-bottom: 10px;
-            }
-            .lightbox-caption {
-                font-size: 0.9rem;
-                padding: 8px 10px;
-                max-width: 95vw;
-            }
-            .lightbox-prev, .lightbox-next {
-                font-size: 1.8rem;
-                width: 35px;
-                height: 35px;
-                background-color: rgba(0,0,0,0.7);
-            }
-            .lightbox-prev { left: 5px; }
-            .lightbox-next { right: 5px; }
-            .lightbox-controls {
-                top: 5px;
-                right: 5px;
-                gap: 5px;
-            }
-            .lightbox-close, .lightbox-download {
-                font-size: 1.5rem;
-                width: 35px;
-                height: 35px;
-            }
-        }
-    </style>
+            /* LIGHTBOX MOBILE */
+            .lightbox-content {
+                max-width: 95vw;
+                max-height: 95vh;
+                padding: 10px;
+            }
+            .lightbox-image {
+                max-height: 70vh;
+                margin-bottom: 10px;
+            }
+            .lightbox-caption {
+                font-size: 0.9rem;
+                padding: 8px 10px;
+                max-width: 95vw;
+            }
+            .lightbox-prev, .lightbox-next {
+                font-size: 1.8rem;
+                width: 35px;
+                height: 35px;
+                background-color: rgba(0,0,0,0.7);
+            }
+            .lightbox-prev { left: 5px; }
+            .lightbox-next { right: 5px; }
+            .lightbox-controls {
+                top: 5px;
+                right: 5px;
+                gap: 5px;
+            }
+            .lightbox-close, .lightbox-download {
+                font-size: 1.5rem;
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <header class="site-header scrolled">
-        </header>
+    <header class="site-header" id="site-header">
+        <div class="nav-container">
+            <a href="index.html">
+                <img src="https://raw.githubusercontent.com/daengeologicaufpel-tech/GEO-SITE/main/images/logo-dafpo-final-branco.png" alt="Logo DAFPO" class="logo">
+            </a>
+            <nav class="main-nav">
+                <ul id="nav-list">
+                    <li><a href="index.html">Início</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">Sobre Nós 
+                            <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="sobre.html">O DAFPO</a></li>
+                            <li><a href="gestao.html">Gestão Atual</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="albuns.html">Galeria
+                            <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+                        </a>
+                        <ul class="dropdown-menu">
+                             <li><a href="album.html?year=2024">2024</a></li>
+                            <li><a href="album.html?year=2023">2023</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+            <div>
+                <a href="#" id="login-button" class="login-button">Login</a>
+            </div>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <svg class="icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+                <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    </header>
+    <main class="page-container">
+        <header class="page-header">
+            <h1 id="album-title">Carregando Álbum...</h1>
+        </header>
+        
+        <div class="photo-grid" id="photo-grid">
+            </div>
+    </main>
 
-    <main class="page-container">
-        <header class="page-header">
-            <h1 id="album-title">Carregando Álbum...</h1>
-        </header>
-        
-        <div class="photo-grid" id="photo-grid">
-            </div>
-    </main>
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-controls">
+            <button class="lightbox-download" id="lightbox-download-button" title="Baixar Imagem">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13v4h-10v-4H5l7-7 7 7h-2z"/>
+                </svg>
+            </button>
+            <button class="lightbox-close" title="Fechar">&times;</button>
+        </div>
+        <span class="lightbox-prev">&#10094;</span>
+        <span class="lightbox-next">&#10095;</span>
+        <div class="lightbox-content">
+            <img src="" class="lightbox-image" id="lightbox-image" alt="Imagem ampliada">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
 
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-controls">
-            <button class="lightbox-download" id="lightbox-download-button" title="Baixar Imagem">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15l-5-5h4V7h2v5h4l-5 5z"/>
-                </svg>
-            </button>
-            <button class="lightbox-close" title="Fechar">&times;</button>
-        </div>
-        <span class="lightbox-prev">&#10094;</span>
-        <span class="lightbox-next">&#10095;</span>
-        <div class="lightbox-content">
-            <img src="" class="lightbox-image" id="lightbox-image">
-            <div class="lightbox-caption" id="lightbox-caption"></div>
-        </div>
-    </div>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>DAFPO - Engenharia Geológica</h3>
+                <p>Diretório Acadêmico da Faculdade de Pelotas, representando os estudantes do curso de Engenharia Geológica da Universidade Federal de Pelotas (UFPel).</p>
+            </div>
+            <div class="footer-column">
+                <h3>Links Rápidos</h3>
+                <p><a href="index.html">Início</a></p>
+                <p><a href="sobre.html">Sobre Nós</a></p>
+                <p><a href="albuns.html">Galeria</a></p>
+                <p><a href="contato.html">Contato</a></p>
+            </div>
+            <div class="footer-column">
+                <h3>Siga-nos</h3>
+                <p>Fique por dentro das novidades e eventos através das nossas redes sociais.</p>
+                <div class="social-links">
+                    <a href="#" target="_blank" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.2,5.2 0,0 1,16.2 22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.2,5.2 0,0 1,7.8 2M7.6,4A3.6,3.6 0,0 0,4 7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0,0 0,20 16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0,0 1,18.5 6.75A1.25,1.25 0,0 1,17.25 8A1.25,1.25 0,0 1,16 6.75A1.25,1.25 0,0 1,17.25 5.5M12,7A5,5 0,0 1,17 12A5,5 0,0 1,12 17A5,5 0,0 1,7 12A5,5 0,0 1,12 7M12,9A3,3 0,0 0,9 12A3,3 0,0 0,12 15A3,3 0,0 0,15 12A3,3 0,0 0,12 9Z"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 DAFPO - Engenharia Geológica UFPel. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    <script>
+        // ======================= SCRIPTS GERAIS (MENU E LOGIN) =======================
+        
+        // 1. Efeito do cabeçalho ao rolar a página
+        const header = document.getElementById('site-header');
+        if(header) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
 
-    <footer class="site-footer">
-        </footer>
-    
-    <script>
-        // Scripts de menu e login (cole o script completo de outra página aqui)
-        // Certifique-se de que os scripts do menu e login estejam aqui, se você os tiver em outras páginas
-        // Exemplo:
-        // 1. Efeito do cabeçalho ao rolar a página
-        const header = document.getElementById('site-header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+        // 2. Funcionalidade do menu hambúrguer para mobile
+        const menuToggle = document.getElementById('menu-toggle');
+        const navList = document.getElementById('nav-list');
+        const iconOpen = document.querySelector('.icon-open');
+        const iconClose = document.querySelector('.icon-close');
 
-        // 2. Funcionalidade do menu hambúrguer para mobile
-        const menuToggle = document.getElementById('menu-toggle');
-        const navList = document.getElementById('nav-list');
-        if (menuToggle && navList) {
-            menuToggle.addEventListener('click', () => {
-                navList.classList.toggle('nav-active');
-            });
-        }
+        if (menuToggle && navList && iconOpen && iconClose) {
+            menuToggle.addEventListener('click', () => {
+                const isActive = navList.classList.toggle('nav-active');
+                iconOpen.style.display = isActive ? 'none' : 'block';
+                iconClose.style.display = isActive ? 'block' : 'none';
+            });
+        }
 
-        // 3. LÓGICA PARA DROPDOWNS NO MOBILE (AO CLICAR)
-        document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
-            menuLink.addEventListener('click', function(event) {
-                if (window.innerWidth <= 992) {
-                    event.preventDefault();
-                    this.parentElement.classList.toggle('dropdown-active');
-                }
-            });
-        });
-        
-        // 4. ATIVAR BOTÃO DE LOGIN
-        const loginButton = document.getElementById('login-button');
-        if (loginButton) {
-            loginButton.addEventListener('click', () => {
-                if (window.netlifyIdentity) {
-                    netlifyIdentity.open();
-                }
-            });
-        }
-        // Fim dos scripts de menu e login de exemplo
-        
+        // 3. Lógica para dropdowns no mobile (ao clicar)
+        document.querySelectorAll('.has-dropdown > a').forEach(menuLink => {
+            menuLink.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992) {
+                    // Previne a navegação para que o dropdown possa abrir
+                    event.preventDefault();
+                    this.parentElement.classList.toggle('dropdown-active');
+                }
+            });
+        });
+        
+        // 4. Ativar botão de login
+        const loginButton = document.getElementById('login-button');
+        if (loginButton) {
+            loginButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (window.netlifyIdentity) {
+                    netlifyIdentity.open();
+                }
+            });
+        }
+        
+        // ======================= SCRIPT ESPECÍFICO DO ÁLBUM =======================
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const GITHUB_USER = "daengeologicaufpel-tech";
-            const GITHUB_REPO = "GEO-SITE";
-            
-            const params = new URLSearchParams(window.location.search);
-            const albumSlug = params.get('year');
-            const apiUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/_galleries/${albumSlug}.md`;
+        document.addEventListener('DOMContentLoaded', () => {
+            const GITHUB_USER = "daengeologicaufpel-tech";
+            const GITHUB_REPO = "GEO-SITE";
+            
+            const params = new URLSearchParams(window.location.search);
+            const albumSlug = params.get('year');
+            const apiUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/_galleries/${albumSlug}.md`;
 
-            const albumTitleEl = document.getElementById('album-title');
-            const photoGrid = document.getElementById('photo-grid');
-            let currentAlbumPhotos = [];
-            
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImage = document.getElementById('lightbox-image');
-            const lightboxCaption = document.getElementById('lightbox-caption');
-            const closeBtn = lightbox.querySelector('.lightbox-close');
-            const prevBtn = lightbox.querySelector('.lightbox-prev');
-            const nextBtn = lightbox.querySelector('.lightbox-next');
-            const downloadBtn = document.getElementById('lightbox-download-button'); // Novo botão de download
-            let currentImageIndex = 0;
+            const albumTitleEl = document.getElementById('album-title');
+            const photoGrid = document.getElementById('photo-grid');
+            let currentAlbumPhotos = [];
+            
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const closeBtn = lightbox.querySelector('.lightbox-close');
+            const prevBtn = lightbox.querySelector('.lightbox-prev');
+            const nextBtn = lightbox.querySelector('.lightbox-next');
+            const downloadBtn = document.getElementById('lightbox-download-button');
+            let currentImageIndex = 0;
 
-            async function fetchAlbum() {
-                if (!albumSlug) {
-                    albumTitleEl.textContent = "Álbum não encontrado";
-                    return;
-                }
-                try {
-                    const response = await fetch(apiUrl);
-                    if (!response.ok) throw new Error('Álbum não encontrado');
-                    
-                    const content = await response.text();
-                    const album = parseFrontmatter(content);
+            async function fetchAlbum() {
+                if (!albumSlug) {
+                    albumTitleEl.textContent = "Álbum não encontrado";
+                    photoGrid.innerHTML = '<p>Por favor, selecione um álbum na página da galeria.</p>';
+                    return;
+                }
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) throw new Error('Arquivo do álbum não encontrado no repositório.');
+                    
+                    const content = await response.text();
+                    const album = parseFrontmatter(content);
 
-                    if (album && album.title) {
-                        albumTitleEl.textContent = `Álbum: ${album.title}`;
-                        document.title = `${album.title} - Galeria DAFPO`;
-                        currentAlbumPhotos = album.photos || [];
-                        displayPhotos(currentAlbumPhotos);
-                    }
-                } catch (error) {
-                    console.error('Erro ao carregar o álbum:', error);
-                    albumTitleEl.textContent = "Erro ao carregar o álbum";
-                }
-            }
+                    if (album && album.title) {
+                        albumTitleEl.textContent = `Álbum: ${album.title}`;
+                        document.title = `${album.title} - Galeria DAFPO`;
+                        currentAlbumPhotos = album.photos || [];
+                        displayPhotos(currentAlbumPhotos);
+                    } else {
+                        throw new Error('Não foi possível processar o conteúdo do álbum.');
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar o álbum:', error);
+                    albumTitleEl.textContent = "Erro ao Carregar o Álbum";
+                    photoGrid.innerHTML = `<p>Ocorreu um erro: ${error.message}. Verifique se o slug '${albumSlug}' está correto.</p>`;
+                }
+            }
 
-            function parseFrontmatter(text) {
-                const match = text.match(/---([\s\S]*?)---/);
-                if (!match) return null;
-                const lines = match[1].trim().split('\n');
-                const data = { photos: [] };
-                let currentPhoto = {};
-                lines.forEach(line => {
-                    const trimmedLine = line.trim();
-                    if (trimmedLine.startsWith('title:')) {
-                        data.title = line.split(':')[1].trim().replace(/['"]/g, '');
-                    } else if (trimmedLine.startsWith('cover_image:')) {
-                        data.cover_image = line.split(':')[1].trim();
-                    } else if (trimmedLine.startsWith('- image:')) {
-                        currentPhoto = { image: line.split(':')[1].trim(), caption: '' };
-                        data.photos.push(currentPhoto);
-                    } else if (trimmedLine.startsWith('caption:')) {
-                        if (currentPhoto) {
-                            currentPhoto.caption = line.split(':')[1].trim().replace(/['"]/g, '');
-                        }
-                    }
-                });
-                return data;
-            }
+            function parseFrontmatter(text) {
+                const match = text.match(/---([\s\S]*?)---/);
+                if (!match) return null;
+                
+                const lines = match[1].trim().split('\n');
+                const data = { photos: [] };
+                let currentPhoto = null;
 
-            function displayPhotos(photos) {
-                photoGrid.innerHTML = '';
-                if (photos.length === 0) {
-                    photoGrid.innerHTML = '<p>Nenhuma foto neste álbum.</p>';
-                    return;
-                }
-                photos.forEach((photo, index) => {
-                    const photoEl = document.createElement('figure');
-                    photoEl.className = 'photo-item';
-                    photoEl.dataset.index = index;
-                    photoEl.innerHTML = `
-                        <img src="${photo.image}" alt="${photo.caption || 'Foto do álbum'}">
-                        <figcaption>${photo.caption}</figcaption>
-                    `;
-                    photoGrid.appendChild(photoEl);
-                });
-            }
+                lines.forEach(line => {
+                    const trimmedLine = line.trim();
+                    if (trimmedLine.startsWith('title:')) {
+                        data.title = line.substring(line.indexOf(':') + 1).trim().replace(/['"]/g, '');
+                    } else if (trimmedLine.startsWith('cover_image:')) {
+                        data.cover_image = line.substring(line.indexOf(':') + 1).trim();
+                    } else if (trimmedLine.startsWith('- image:')) {
+                        if (currentPhoto) {
+                            data.photos.push(currentPhoto);
+                        }
+                        currentPhoto = { 
+                            image: line.substring(line.indexOf(':') + 1).trim(), 
+                            caption: '' 
+                        };
+                    } else if (trimmedLine.startsWith('  caption:')) {
+                        if (currentPhoto) {
+                            currentPhoto.caption = line.substring(line.indexOf(':') + 1).trim().replace(/['"]/g, '');
+                        }
+                    }
+                });
 
-            photoGrid.addEventListener('click', (e) => {
-                const item = e.target.closest('.photo-item');
-                if (item) {
-                    currentImageIndex = parseInt(item.dataset.index, 10);
-                    openLightbox();
-                }
-            });
+                if (currentPhoto) {
+                    data.photos.push(currentPhoto);
+                }
+                
+                return data;
+            }
 
-            function openLightbox() {
-                if (currentAlbumPhotos.length > 0) {
-                    updateLightboxImage();
-                    lightbox.classList.add('active');
-                    // Bloqueia a rolagem do corpo quando o lightbox está ativo
-                    document.body.style.overflow = 'hidden'; 
-                }
-            }
-            function closeLightbox() { 
-                lightbox.classList.remove('active'); 
-                document.body.style.overflow = ''; // Restaura a rolagem
-            }
-            function updateLightboxImage() {
-                const photo = currentAlbumPhotos[currentImageIndex];
-                lightboxImage.src = photo.image;
-                lightboxCaption.textContent = photo.caption;
-            }
-            function showPrevImage() {
-                currentImageIndex = (currentImageIndex - 1 + currentAlbumPhotos.length) % currentAlbumPhotos.length;
-                updateLightboxImage();
-            }
-            function showNextImage() {
-                currentImageIndex = (currentImageIndex + 1) % currentAlbumPhotos.length;
-                updateLightboxImage();
-            }
+            function displayPhotos(photos) {
+                photoGrid.innerHTML = '';
+                if (photos.length === 0) {
+                    photoGrid.innerHTML = '<p>Nenhuma foto foi encontrada neste álbum ainda.</p>';
+                    return;
+                }
+                photos.forEach((photo, index) => {
+                    const photoEl = document.createElement('figure');
+                    photoEl.className = 'photo-item';
+                    photoEl.dataset.index = index;
+                    photoEl.innerHTML = `
+                        <img src="${photo.image}" alt="${photo.caption || 'Foto do álbum'}" loading="lazy">
+                        <figcaption>${photo.caption || ''}</figcaption>
+                    `;
+                    photoGrid.appendChild(photoEl);
+                });
+            }
 
-            // Função para download da imagem
-            function downloadImage() {
-                const photo = currentAlbumPhotos[currentImageIndex];
-                if (photo && photo.image) {
-                    // Cria um link temporário para download
-                    const link = document.createElement('a');
-                    link.href = photo.image;
-                    // Tenta extrair o nome do arquivo da URL, senão usa um nome genérico
-                    const filename = photo.image.split('/').pop() || 'image_download.jpg';
-                    link.download = filename;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-            }
+            photoGrid.addEventListener('click', (e) => {
+                const item = e.target.closest('.photo-item');
+                if (item) {
+                    currentImageIndex = parseInt(item.dataset.index, 10);
+                    openLightbox();
+                }
+            });
 
-            closeBtn.addEventListener('click', closeLightbox);
-            prevBtn.addEventListener('click', showPrevImage);
-            nextBtn.addEventListener('click', showNextImage);
-            downloadBtn.addEventListener('click', downloadImage); // Evento para o botão de download
+            function openLightbox() {
+                if (currentAlbumPhotos.length > 0) {
+                    updateLightboxImage();
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden'; 
+                }
+            }
+            function closeLightbox() { 
+                lightbox.classList.remove('active'); 
+                document.body.style.overflow = '';
+            }
+            function updateLightboxImage() {
+                const photo = currentAlbumPhotos[currentImageIndex];
+                lightboxImage.src = photo.image;
+                lightboxCaption.textContent = photo.caption;
+            }
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + currentAlbumPhotos.length) % currentAlbumPhotos.length;
+                updateLightboxImage();
+            }
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % currentAlbumPhotos.length;
+                updateLightboxImage();
+            }
 
-            // Adiciona navegação por teclado (opcional, mas bom para desktop)
-            document.addEventListener('keydown', (e) => {
-                if (lightbox.classList.contains('active')) {
-                    if (e.key === 'ArrowLeft') showPrevImage();
-                    if (e.key === 'ArrowRight') showNextImage();
-                    if (e.key === 'Escape') closeLightbox();
-                }
-            });
+            async function downloadImage() {
+                try {
+                    const photo = currentAlbumPhotos[currentImageIndex];
+                    if (!photo || !photo.image) return;
 
-            fetchAlbum();
-        });
-    </script>
+                    // Fetch da imagem como um blob
+                    const response = await fetch(photo.image);
+                    const blob = await response.blob();
+                    
+                    // Cria um link temporário para download
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    const filename = photo.image.split('/').pop() || 'imagem.jpg';
+                    link.download = filename;
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                } catch (error) {
+                    console.error("Erro ao baixar a imagem:", error);
+                    alert("Não foi possível baixar a imagem.");
+                }
+            }
+
+            closeBtn.addEventListener('click', closeLightbox);
+            prevBtn.addEventListener('click', showPrevImage);
+            nextBtn.addEventListener('click', showNextImage);
+            downloadBtn.addEventListener('click', downloadImage);
+
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.classList.contains('active')) {
+                    if (e.key === 'ArrowLeft') showPrevImage();
+                    if (e.key === 'ArrowRight') showNextImage();
+                    if (e.key === 'Escape') closeLightbox();
+                }
+            });
+
+            fetchAlbum();
+        });
+    </script>
 </body>
 </html>
