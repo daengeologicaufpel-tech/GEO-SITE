@@ -1,67 +1,67 @@
 backend:
-  name: git-gateway
-  branch: main
+  name: git-gateway
+  branch: main
 
 media_folder: "img"
 public_folder: "/img"
 
 # ADICIONADO: Regras para limpar nomes de arquivos e slugs
 slug:
-  encoding: "ascii"
-  clean_accents: true
-  sanitize_replacement: "-"
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
 
 collections:
-  - name: "posts" # Nome da coleção
-    label: "Posts (Fique por Dentro)" # Como aparece no menu
-    label_singular: "Post" # Rótulo para um item
-    folder: "_posts" # Salvará cada post como um arquivo separado nesta pasta
-    create: true # ESSENCIAL: Habilita o botão "New Post"
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields: # Campos para cada post
-      - {label: "Título", name: "title", widget: "string"}
-      - {label: "Data de Publicação", name: "date", widget: "datetime"}
-      - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
-      - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
-      - {label: "Conteúdo Completo do Post", name: "body", widget: "markdown"}
-      
-  - name: "projetos" # Identificador da nova coleção
-    label: "Projetos de Pesquisa" # Nome que aparecerá no painel
-    label_singular: "Projeto" # Rótulo para um item
-    folder: "_projetos" # Pasta onde os arquivos dos projetos serão salvos
-    create: true # Habilita o botão "Novo Projeto"
-    slug: "{{slug}}" # O nome do arquivo será o título
-    fields:
-      - {label: "Título do Projeto", name: "title", widget: "string"}
-      - {label: "Professor Responsável", name: "coordenador", widget: "string"}
-      - {label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false}
-      - {label: "Descrição Completa do Projeto", name: "body", widget: "markdown"}
-      
-  - name: "eventos" # Identificador da nova coleção
-    label: "Eventos" # Nome que aparecerá no painel
-    label_singular: "Evento" # Rótulo para um item
-    folder: "_eventos" # Pasta onde os arquivos dos eventos serão salvos
-    create: true # Habilita o botão "Novo Evento"
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - {label: "Título do Evento", name: "title", widget: "string"}
-      - {label: "Data do Evento", name: "date", widget: "datetime"}
-      - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
-      - {label: "Descrição Curta (para a lista)", name: "excerpt", widget: "text"}
-      - {label: "Descrição Completa do Evento", name: "body", widget: "markdown"}
-      
-  - name: "galleries"
-    label: "Galerias de Fotos"
-    label_singular: "Álbum por Ano"
-    folder: "_galleries"
-    create: true
-    slug: "{{title}}"
-    fields:
-      - {label: "Ano ou Título do Álbum", name: "title", widget: "string"}
-      - {label: "Imagem de Capa do Álbum", name: "cover_image", widget: "image"}
-      - name: "photos"
-        label: "Fotos do Álbum"
-        widget: "list"
-        fields:
-          - {label: "Imagem", name: "image", widget: "image"}
-          - {label: "Legenda", name: "caption", widget: "string"}
+  - name: "posts" # Nome da coleção
+    label: "Posts (Fique por Dentro)" # Como aparece no menu
+    label_singular: "Post" # Rótulo para um item
+    folder: "_posts" # Salvará cada post como um arquivo separado nesta pasta
+    create: true # ESSENCIAL: Habilita o botão "New Post"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields: # Campos para cada post
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Data de Publicação", name: "date", widget: "datetime"}
+      - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
+      - {label: "Resumo (para a página inicial)", name: "excerpt", widget: "text"}
+      - {label: "Conteúdo Completo do Post", name: "body", widget: "markdown"}
+      
+  - name: "projetos" # Identificador da nova coleção
+    label: "Projetos de Pesquisa" # Nome que aparecerá no painel
+    label_singular: "Projeto" # Rótulo para um item
+    folder: "_projetos" # Pasta onde os arquivos dos projetos serão salvos
+    create: true # Habilita o botão "Novo Projeto"
+    slug: "{{slug}}" # O nome do arquivo será o título
+    fields:
+      - {label: "Título do Projeto", name: "title", widget: "string"}
+      - {label: "Professor Responsável", name: "coordenador", widget: "string"}
+      - {label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false}
+      - {label: "Descrição Completa do Projeto", name: "body", widget: "markdown"}
+      
+  - name: "eventos" # Identificador da nova coleção
+    label: "Eventos" # Nome que aparecerá no painel
+    label_singular: "Evento" # Rótulo para um item
+    folder: "_eventos" # Pasta onde os arquivos dos eventos serão salvos
+    create: true # Habilita o botão "Novo Evento"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Título do Evento", name: "title", widget: "string"}
+      - {label: "Data do Evento", name: "date", widget: "datetime"}
+      - {label: "Imagem de Destaque", name: "thumbnail", widget: "image"}
+      - {label: "Descrição Curta (para a lista)", name: "excerpt", widget: "text"}
+      - {label: "Descrição Completa do Evento", name: "body", widget: "markdown"}
+      
+  - name: "galleries"
+    label: "Galerias de Fotos"
+    label_singular: "Álbum por Ano"
+    folder: "_galleries"
+    create: true
+    slug: "{{title}}"
+    fields:
+      - {label: "Ano ou Título do Álbum", name: "title", widget: "string"}
+      - {label: "Imagem de Capa do Álbum", name: "cover_image", widget: "image"}
+      - name: "photos"
+        label: "Fotos do Álbum"
+        widget: "list"
+        fields: # <-- ESTA LINHA FOI CORRIGIDA
+          - {label: "Imagem", name: "image", widget: "image"}
+          - {label: "Legenda", name: "caption", widget: "string"}
