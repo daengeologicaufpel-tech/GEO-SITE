@@ -30,7 +30,7 @@
         .site-header { position: sticky; top: 0; width: 100%; z-index: 1000; background-color: var(--color-primary-green); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); }
         .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 10px 30px; height: 70px; }
         .logo { height: 50px; width: auto; }
-        .main-nav ul { display: flex; list-style: none; align-items: center; } /* Alinhamento adicionado */
+        .main-nav ul { display: flex; list-style: none; align-items: center; }
         .main-nav ul li { position: relative; }
         .main-nav ul li a { color: var(--color-text-light); text-decoration: none; padding: 10px 15px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
         .dropdown-menu { list-style: none; position: absolute; top: 100%; left: 0; background-color: var(--color-primary-green); min-width: 180px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 0 0 4px 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s; z-index: 1001;}
@@ -39,12 +39,11 @@
         .dropdown-menu li a:hover { background-color: rgba(255, 255, 255, 0.1); }
         .dropdown-menu--wide { display: grid; grid-template-columns: repeat(2, 1fr); min-width: 450px; gap: 0 10px; }
         .dropdown-menu--wide li a { white-space: normal; text-align: left; }
-        .dropdown-arrow { display: inline-block; width: 18px; height: 18px; fill: currentColor; transition: transform 0.3s; }
-        .has-dropdown > a:hover .dropdown-arrow { transform: rotate(180deg); }
+        .dropdown-arrow { display: none; width: 18px; height: 18px; fill: currentColor; }
         .login-button { background-color: var(--color-surface); color: var(--color-primary-green); border: 1px solid transparent; padding: 8px 20px; border-radius: 20px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; font-weight: 600; }
         .login-button:hover { background-color: rgba(255,255,255,0.8); }
         .menu-toggle { display: none; background: none; border: none; cursor: pointer; z-index: 1002; }
-        .menu-toggle svg { stroke: var(--color-text-light); width: 30px; height: 30px;}
+        .menu-toggle svg path { stroke: var(--color-text-light); }
         
         .page-container {
             max-width: 1200px;
@@ -86,102 +85,18 @@
             background-color: var(--color-surface);
         }
 
-        /* LIGHTBOX STYLES */
-        .lightbox {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.95);
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            overflow-y: auto;
-            padding: 20px;
-            -webkit-backdrop-filter: blur(5px);
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .lightbox.active {
-            display: flex;
-            opacity: 1;
-        }
-        .lightbox-content {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 90vw;
-            max-height: 90vh;
-            background-color: #1a1a1a;
-            border-radius: 10px;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
-            padding: 20px;
-            overflow: hidden;
-        }
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 75vh;
-            object-fit: contain;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            transition: transform 0.3s ease;
-        }
-        .lightbox-caption {
-            color: white;
-            text-align: center;
-            padding: 10px 15px;
-            font-size: 1.1rem;
-            max-width: 80vw;
-            background-color: rgba(0,0,0,0.6);
-            border-radius: 5px;
-            word-wrap: break-word;
-        }
-        .lightbox-controls {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            gap: 10px;
-            z-index: 10001;
-        }
-        .lightbox-close, .lightbox-prev, .lightbox-next, .lightbox-download {
-            cursor: pointer;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            user-select: none;
-            background-color: rgba(0,0,0,0.5);
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            border: none;
-            outline: none;
-        }
-        .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover, .lightbox-download:hover {
-            background-color: rgba(0,0,0,0.8);
-            transform: scale(1.1);
-        }
-        .lightbox-close {
-            position: static;
-            font-size: 1.8rem;
-        }
+        .lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow-y: auto; padding: 20px; -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.3s ease; }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox-content { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 90vw; max-height: 90vh; background-color: #1a1a1a; border-radius: 10px; box-shadow: 0 5px 30px rgba(0,0,0,0.5); padding: 20px; overflow: hidden; }
+        .lightbox-image { max-width: 100%; max-height: 75vh; object-fit: contain; border-radius: 8px; margin-bottom: 15px; transition: transform 0.3s ease; }
+        .lightbox-caption { color: white; text-align: center; padding: 10px 15px; font-size: 1.1rem; max-width: 80vw; background-color: rgba(0,0,0,0.6); border-radius: 5px; word-wrap: break-word; }
+        .lightbox-controls { position: absolute; top: 15px; right: 15px; display: flex; gap: 10px; z-index: 10001; }
+        .lightbox-close, .lightbox-prev, .lightbox-next, .lightbox-download { cursor: pointer; color: white; font-size: 2rem; font-weight: bold; user-select: none; background-color: rgba(0,0,0,0.5); border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s ease, transform 0.2s ease; border: none; outline: none; }
+        .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover, .lightbox-download:hover { background-color: rgba(0,0,0,0.8); transform: scale(1.1); }
+        .lightbox-close { position: static; font-size: 1.8rem; }
         .lightbox-prev { left: 15px; top: 50%; transform: translateY(-50%); position: fixed; }
         .lightbox-next { right: 15px; top: 50%; transform: translateY(-50%); position: fixed; }
-        .lightbox-download {
-            font-size: 1.5rem;
-            width: 45px;
-            height: 45px;
-        }
+        .lightbox-download { font-size: 1.5rem; width: 45px; height: 45px; }
 
         .site-footer { background-color: var(--color-text-primary); color: var(--color-text-light); padding: 50px 40px; margin-top: 40px; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
@@ -195,10 +110,9 @@
         .footer-bottom { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
         
         @media (max-width: 992px) {
-            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); align-items: flex-start; }
+            .main-nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--color-primary-green); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
             .main-nav ul.nav-active { display: flex; }
             .main-nav ul li a { color: var(--color-text-light); border-bottom: 1px solid rgba(255,255,255,0.1); width: 100%; }
-            .main-nav ul li:last-child { border-bottom: none; } /* Remove border from last item */
             .main-nav ul li.dropdown-active > .dropdown-menu { display: block; }
             .main-nav ul li:hover > .dropdown-menu { display: none; }
             .main-nav ul li.dropdown-active:hover > .dropdown-menu { display: block; }
@@ -209,81 +123,71 @@
         }
         @media (max-width: 768px) { 
             .nav-container { padding: 10px 20px; } 
-            .page-container { padding: 0 15px; margin: 20px 0; } 
+            .page-container { padding: 0 15px; margin: 20px auto; } 
             .page-header h1 { font-size: 2.2rem; }
             .photo-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 5px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
             .photo-item img {
-                height: 100px;
+                height: 120px;
             }
             .photo-item figcaption {
                 display: none;
             }
 
-            /* LIGHTBOX MOBILE */
-            .lightbox-content {
-                max-width: 95vw;
-                max-height: 95vh;
-                padding: 10px;
-            }
-            .lightbox-image {
-                max-height: 70vh;
-                margin-bottom: 10px;
-            }
-            .lightbox-caption {
-                font-size: 0.9rem;
-                padding: 8px 10px;
-                max-width: 95vw;
-            }
-            .lightbox-prev, .lightbox-next {
-                font-size: 1.8rem;
-                width: 35px;
-                height: 35px;
-                background-color: rgba(0,0,0,0.7);
-            }
+            .lightbox-content { max-width: 95vw; max-height: 95vh; padding: 10px; }
+            .lightbox-image { max-height: 70vh; margin-bottom: 10px; }
+            .lightbox-caption { font-size: 0.9rem; padding: 8px 10px; max-width: 95vw; }
+            .lightbox-prev, .lightbox-next { font-size: 1.8rem; width: 35px; height: 35px; background-color: rgba(0,0,0,0.7); }
             .lightbox-prev { left: 5px; }
             .lightbox-next { right: 5px; }
-            .lightbox-controls {
-                top: 5px;
-                right: 5px;
-                gap: 5px;
-            }
-            .lightbox-close, .lightbox-download {
-                font-size: 1.5rem;
-                width: 35px;
-                height: 35px;
-            }
+            .lightbox-controls { top: 5px; right: 5px; gap: 5px; }
+            .lightbox-close, .lightbox-download { font-size: 1.5rem; width: 35px; height: 35px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="site-header">
+    <header class="site-header" id="site-header">
         <div class="nav-container">
-            <a href="/" class="logo-link">
-                <img src="path/to/your/logo.svg" alt="Logo DAFPO Engenharia Geológica" class="logo">
-            </a>
+            <a href="index.html"><img src="img/logo-dafpo.png" alt="Logo do DAFPO" class="logo"></a>
             <nav class="main-nav">
                 <ul id="nav-list">
-                    <li><a href="/">Início</a></li>
+                    <li><a href="index.html">Início</a></li>
                     <li class="has-dropdown">
-                        <a href="#">Sobre
-                            <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 15l-4.243-4.243 1.415-1.414L12 12.172l2.828-2.829 1.415 1.414z"/></svg>
+                        <a href="origem.html">Quem somos 
+                            <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">O DAFPO</a></li>
-                            <li><a href="#">Gestão Atual</a></li>
+                            <li><a href="origem.html">Origem</a></li>
+                            <li><a href="diretorias.html">Diretorias</a></li>
+                            <li><a href="estatuto.html">Estatuto</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Eventos</a></li>
-                    <li><a href="/albuns.html">Galeria</a></li> <li><a href="#">Contato</a></li>
-                    <li><button id="login-button" class="login-button">Login</button></li>
+                    <li class="has-dropdown">
+                        <a href="curso.html">O Curso
+                            <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu--wide">
+                            <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
+                            <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
+                            <li><a href="egressos.html">Egressos</a></li>
+                            <li><a href="professores.html">Professores</a></li>
+                            <li><a href="laboratorios.html">Laboratórios</a></li>
+                            <li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
+                    <li><a href="post.html">Posts</a></li>
+                    <li><a href="contato.html">Fale Conosco</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                    <li><a href="galeria.html">Galeria</a></li>
                 </ul>
             </nav>
+            <a href="newsletter.html" class="login-button">Inscreva-se</a>
             <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
             </button>
         </div>
     </header>
@@ -316,31 +220,22 @@
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-column">
-                <h3>Sobre o DAFPO</h3>
-                <p>Diretório Acadêmico F. P. de Oliveira, representando os estudantes de Engenharia Geológica da Universidade Federal de Pelotas (UFPel).</p>
+                <h3>Quem Somos</h3>
+                <p>O Diretório Acadêmico Francisco de Paula Oliveira (DAFPO) é a entidade que representa os estudantes do curso de Engenharia Geológica da UFPel, lutando por seus direitos e promovendo a integração acadêmica.</p>
             </div>
             <div class="footer-column">
-                <h3>Links Úteis</h3>
-                <ul style="list-style: none;">
-                    <li><a href="https://wp.ufpel.edu.br/geologia/" target="_blank" rel="noopener noreferrer">Curso de Geologia UFPel</a></li>
-                    <li><a href="https://cobalto.ufpel.edu.br/" target="_blank" rel="noopener noreferrer">Portal do Aluno</a></li>
-                    <li><a href="https://www.ufpel.edu.br/" target="_blank" rel="noopener noreferrer">Site da UFPel</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Siga-nos</h3>
+                <h3>Contato</h3>
+                <p>Email: <a href="mailto:diretorioengeologica@gmail.com">diretorioengeologica@gmail.com</a></p>
                 <div class="social-links">
-                    <a href="#" title="Instagram" target="_blank" rel="noopener noreferrer">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.058 1.644-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-7.38 3.143-7.58 7.58-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.2 4.437 3.222 7.38 7.58 7.58 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c4.358-.2 7.38-3.143 7.58-7.58.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.2-4.437-3.222-7.38-7.58-7.58-1.28-.058-1.688-.072-4.947-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg>
-                    </a>
-                    <a href="#" title="Facebook" target="_blank" rel="noopener noreferrer">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
-                    </a>
+                    <a href="https://www.instagram.com/engeo.ufpel" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg></a>
+                    <a href="https://www.facebook.com/dafpo.ufpel" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3h-2.5v6.8c4.56-.93 8-4.96 8-9.8z"></path></svg></a>
+                    <a href="https://www.linkedin.com/company/dafpo" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path></svg></a>
+                    <a href="https://wa.me/5553999024007" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 12c0 1.74.44 3.38 1.22 4.82l-1.34 4.91 5.04-1.32c1.39.73 2.96 1.15 4.59 1.15h.01c5.46 0 9.9-4.45 9.9-9.91s-4.44-9.9-9.89-9.9zm4.31 14.23c-.19.29-.71.55-1.07.61-.33.05-.72.06-1.12-.04-.45-.11-1.06-.41-2.02-1.25-1.16-.96-1.9-2.14-2.04-2.5-.14-.35-.01-.55.13-.7.13-.14.29-.36.42-.5.15-.17.2-.29.3-.47.1-.19.04-.36-.02-.52s-.52-1.25-.71-1.71c-.19-.46-.39-.4-.54-.4h-.47c-.15 0-.41.06-.63.31-.22.25-.87.84-.87 2.05 0 1.21.89 2.37 1.01 2.53.13.16 1.71 2.73 4.16 3.63 2.44.9 2.44.6 2.88.55.43-.05 1.36-.55 1.55-.94.19-.38.19-.71.13-.81-.06-.09-.24-.15-.42-.27z"></path></svg></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; <script>document.write(new Date().getFullYear())</script> DAFPO - Engenharia Geológica UFPel. Todos os direitos reservados.
+            <p>© 2025 por DAFPO - Engenharia Geológica UFPel. Todos os direitos reservados.</p>
         </div>
     </footer>
     <script>
@@ -363,8 +258,8 @@
                 });
             });
             
-            const loginButton = document.getElementById('login-button');
-            if (loginButton) {
+            const loginButton = document.querySelector('.login-button'); // Alterado para querySelector para mais flexibilidade
+            if (loginButton && loginButton.id === 'login-button') { // Verifica se é o botão de login
                 loginButton.addEventListener('click', () => {
                     if (window.netlifyIdentity) {
                         netlifyIdentity.open();
@@ -424,7 +319,7 @@
                 if (!match) return null;
                 const lines = match[1].trim().split('\n');
                 const data = { photos: [] };
-                let currentPhoto = {};
+                let currentPhoto = null;
                 let inPhotosSection = false;
                 lines.forEach(line => {
                     const trimmedLine = line.trim();
@@ -437,10 +332,9 @@
                     } else if (inPhotosSection && trimmedLine.startsWith('- image:')) {
                         currentPhoto = { image: line.split(/:(.*)/s)[1].trim(), caption: '' };
                         data.photos.push(currentPhoto);
-                    } else if (inPhotosSection && trimmedLine.startsWith('  caption:')) {
-                         if (currentPhoto) {
-                            currentPhoto.caption = line.split(/:(.*)/s)[1].trim().replace(/['"]/g, '');
-                        }
+                    } else if (inPhotosSection && currentPhoto && trimmedLine.startsWith('caption:')) {
+                        // ***** ESTA É A CORREÇÃO PRINCIPAL PARA AS LEGENDAS *****
+                        currentPhoto.caption = line.split(/:(.*)/s)[1].trim().replace(/['"]/g, '');
                     }
                 });
                 return data;
@@ -448,7 +342,7 @@
 
             function displayPhotos(photos) {
                 photoGrid.innerHTML = '';
-                if (photos.length === 0) {
+                if (!photos || photos.length === 0) {
                     photoGrid.innerHTML = '<p>Nenhuma foto neste álbum.</p>';
                     return;
                 }
@@ -458,7 +352,7 @@
                     photoEl.dataset.index = index;
                     photoEl.innerHTML = `
                         <img src="${photo.image}" alt="${photo.caption || 'Foto do álbum'}" loading="lazy">
-                        <figcaption>${photo.caption}</figcaption>
+                        <figcaption>${photo.caption || ' '}</figcaption>
                     `;
                     photoGrid.appendChild(photoEl);
                 });
