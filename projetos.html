@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projetos de Pesquisa - DAFPO - Engenharia Geológica UFPel</title>
-    
+    
+    <base href="/">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-        <style>
+        
+    <style>
         :root {
             --color-primary-green: #67651c;
             --color-heading-maroon: #702727;
@@ -110,35 +113,9 @@
         }
         @media (max-width: 768px) { 
             .nav-container { padding: 10px 20px; } 
-            .page-container { padding: 20px; margin: 20px 15px; } 
-            .page-header h1 { font-size: 2.2rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <header class="site-header scrolled">
-        <div class="nav-container">
-            <a href="index.html"><img src="img/logo-dafpo.png" alt="Logo do DAFPO" class="logo"></a>
-            <nav class="main-nav">
-                <ul id="nav-list">
-                    <li><a href="index.html">Início</a></li>
-                    <li class="has-dropdown">
-                        <a href="origem.html">Quem somos<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="origem.html">Origem</a></li>
-                            <li><a href="diretorias.html">Diretorias</a></li>
-                            <li><a href="estatuto.html">Estatuto</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="curso.html">O Curso<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
-                        <ul class="dropdown-menu dropdown-menu--wide">
-                            <li><a href="curso.html">O curso de Engenharia Geológica</a></li>
-                            <li><a href="projeto-pedagogico.html">Projeto pedagógico do curso</a></li>
-                  _         <li><a href="egressos.html">Egressos</a></li>
+            .page-container { padding: 20px; margin: 20px 15px; }Egressos</a></li>
                             <li><a href="professores.html">Professores</a></li>
-        _                   <li><a href="laboratorios.html">Laboratórios</a></li>
+                            <li><a href="laboratorios.html">Laboratórios</a></li>
                             <li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li>
                         </ul>
                     </li>
@@ -161,7 +138,7 @@
         </header>
         
         <div id="projects-list">
-                    </div>
+                    </div>
     </main>
 
     <footer class="site-footer">
@@ -187,10 +164,11 @@
     </footer>
     
         <script>
-        // Script para o menu mobile e login (SEU CÓDIGO ORIGINAL)
+        // --- INÍCIO DA LÓGICA DO MENU MOBILE (Seu código original) ---
         const menuToggle = document.getElementById('menu-toggle');
         const navList = document.getElementById('nav-list');
-        const loginButton = document.getElementById('login-button'); // Seu seletor original
+        // Corrigido para querySelector para encontrar a CLASSE 'login-button'
+        const loginButton = document.querySelector('.login-button'); 
 
         if(menuToggle) {
             menuToggle.addEventListener('click', () => {
@@ -207,32 +185,73 @@
             });
         });
 
-        // Seu seletor original `getElementById('login-button')` não encontra 
-        // o <a class="login-button">. Se precisar que o login funcione, 
-        // mude o seletor. Mas, por enquanto, o link para newsletter.html 
-        // funciona normalmente.
-        if(loginButton) { 
-            loginButton.addEventListener('click', () => {
+        // O seu HTML original não usa o Netlify Identity, 
+        // o botão é um link normal para 'newsletter.html'.
+        // O código abaixo é para o Netlify Identity. Se o botão
+        // for só um link, não precisa deste 'if(loginButton)'.
+        if(loginButton) { 
+            loginButton.addEventListener('click', (e) => {
+                // Se o botão for SÓ para o Identity, prevenimos o link
+                // e.preventDefault(); 
                 if (window.netlifyIdentity) {
                     netlifyIdentity.open();
-                }
+                } else {
+                    // Se não houver Identity, ele segue o link (newsletter.html)
+                }
             });
         }
         
         // --- INÍCIO DA NOVA LÓGICA DE PROJETOS ---
         document.addEventListener('DOMContentLoaded', () => {
             const projectsList = document.getElementById('projects-list');
-            
+            
             async function fetchProjects() {
                 try {
-                    // 1. Chama a "Ponte" (Netlify Function) que criamos
+                    // 1. Chama a "Ponte" (Netlify Function) que criamos
                     const response = await fetch('/.netlify/functions/get-projetos');
                     
                     if (!response.ok) {
-                        throw new Error(`Erro de rede: ${response.statusText}`);
-                    }
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
                     
-                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+                    const projects = await response.json();
+
+                    projectsList.innerHTML = ''; // Limpa a lista
+                    if (!projects || projects.length === 0) {
+                        projectsList.innerHTML = '<p>Nenhum projeto de pesquisa encontrado no momento.</p>';
+                        return;
+              _     }
+
+                    // 3. Cria um card para cada projeto encontrado
+                    for (const project of projects) {
+                        displayProject(project);
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao carregar os projetos:', error);
+                    projectsList.innerHTML = '<p>Não foi possível carregar os projetos no momento. Tente recarregar a página.</p>';
+normalmente.
+        if(loginButton) { 
+            loginButton.addEventListener('click', () => {
+                if (window.netlifyIdentity) {
+                    netlifyIdentity.open();
+key, ...valueParts] = line.split(':');
+                        if (key) {
+                            const value = valueParts.join(':').trim().replace(/^['"]|['"]$/g, '');
+                            frontmatter[key.trim()] = value;
+                        }
+                    });
+                }
+                frontmatter.body = parts.slice(2).join('---').trim();
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+    _               if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
                     const projects = await response.json();
 
                     projectsList.innerHTML = ''; // Limpa a lista
@@ -241,7 +260,7 @@
                         return;
                     }
 
-                    // 3. Cria um card para cada projeto encontrado
+                    // 3. Cria um card para cada projeto encontrado
                     for (const project of projects) {
                         displayProject(project);
                     }
@@ -252,28 +271,329 @@
                 }
             }
 
-            // Esta função cria o HTML para cada card de projeto
+            // Esta função cria o HTML para cada card de projeto
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+                    const projects = await response.json();
+
+                    projectsList.innerHTML = ''; // Limpa a lista
+                    if (!projects || projects.length === 0) {
+                        projectsList.innerHTML = '<p>Nenhum projeto de pesquisa encontrado no momento.</p>';
+                        return;
+                    }
+
+                    // 3. Cria um card para cada projeto encontrado
+Click
+                    for (const project of projects) {
+                        displayProject(project);
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao carregar os projetos:', error);
+                    projectsList.innerHTML = '<p>Não foi possível carregar os projetos no momento. Tente recarregar a página.</p>';
+                }
+            }
+
+            // Esta função cria o HTML para cada card de projeto
             function displayProject(project) {
                 const projectCard = document.createElement('article');
                 projectCard.classList.add('project-card');
 
-                // Converte quebras de linha (texto puro) em <br> (HTML)
-                // Se 'project.body' não existir, usa um texto padrão
-                const bodyHtml = project.body ? project.body.replace(/\n/g, '<br>') : 'Resumo não disponível.';
+                // Converte quebras de linha (texto puro) em <br> (HTML)
+                // Se 'project.body' não existir, usa um texto padrão
+                const bodyHtml = project.body ? project.body.replace(/\n/g, '<br>') : 'Resumo não disponível.';
+
+                projectCard.innerHTML = `
+                    <h2>${project.title}</h2>
+logo" class="logo"></a>
+            <nav class="main-nav">
+                <ul id="nav-list">
+                    <li><a href="index.html">Início</a></li>
+                    <li class="has-dropdown">
+                        <a href="origem.html">Quem somos<svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="origem.html">Origem</a></li>
+                            <li><a href="diretorias.html">Diretorias</a></li>
+as, Ensino e Extensão</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
+                    <li><a href="contato.html">Fale Conosco</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                    <li><a href="galeria.html">Galeria</a></li>
+                </ul>
+            </nav>
+            <a href="newsletter.html" class="login-button">Inscreva-se</a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <header class="page-header">
+            <h1>Projetos de Pesquisa, Ensino e Extensão</h1>
+        </header>
+        
+        <div id="projects-list">
+            A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+Two
+                    const projects = await response.json();
+
+                    projectsList.innerHTML = ''; // Limpa a lista
+                    if (!projects || projects.length === 0) {
+                        projectsList.innerHTML = '<p>Nenhum projeto de pesquisa encontrado no momento.</p>';
+Screen
+                        return;
+                    }
+
+                    // 3. Cria um card para cada projeto encontrado
+                    for (const project of projects) {
+                        displayProject(project);
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+                    const projects = await response.json();
+
+                    projectsList.innerHTML = ''; // Limpa a lista
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+key, ...valueParts] = line.split(':');
+          _             if (key) {
+                            const value = valueParts.join(':').trim().replace(/^['"]|['"]$/g, '');
+                            frontmatter[key.trim()] = value;
+                        }
+                    });
+                }
+                frontmatter.body = parts.slice(2).join('---').trim();
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+April
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+Key
+                    const projects = await response.json();
+
+                    projectsList.innerHTML = ''; // Limpa a lista
+                    if (!projects || projects.length === 0) {
+                        projectsList.innerHTML = '<p>Nenhum projeto de pesquisa encontrado no momento.</p>';
+Look
+                        return;
+                    }
+
+                    // 3. Cria um card para cada projeto encontrado
+                    for (const project of projects) {
+                    _   displayProject(project);
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao carregar os projetos:', error);
+                    projectsList.innerHTML = '<p>Não foi possível carregar os projetos no momento. Tente recarregar a página.</p>';
+                }
+            }
+
+            // Esta função cria o HTML para cada card de projeto
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+  A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+                    const projects = await response.json();
+
+                    projectsList.innerHTML = ''; // Limpa a lista
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+Two
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+A "Ponte" (Netlify Function) que criamos
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+A "Ponte" (Netlify Function) que criamos
+ar os projetos:', error);
+                    projectsList.innerHTML = '<p>Não foi possível carregar os projetos no momento. Tente recarregar a página.</p>';
+                }
+            }
+
+            // Esta função cria o HTML para cada card de projeto
+A "Ponte" (Netlify Function) que criamos
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+A "Ponte" (Netlify Function) que criamos
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+Egressos</a></li>
+                            <li><a href="professores.html">Professores</a></li>
+                            <li><a href="laboratorios.html">Laboratórios</a></li>
+                            <li><a href="projetos.html">Projetos de Pesquisa, Ensino e Extensão</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://geolojapay.netlify.app/" target="_blank" rel="noopener noreferrer">GeoLoja</a></li>
+                    <li><a href="contato.html">Fale Conosco</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+Click
+                    <li><a href="galeria.html">Galeria</a></li>
+                </ul>
+            </nav>
+            <a href="newsletter.html" class="login-button">Inscreva-se</a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12H21" stroke="currentColor" stroke-width="2"/><path d="M3 6H21" stroke="currentColor" stroke-width="2"/><path d="M3 18H21" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <header class="page-header">
+            <h1>Projetos de Pesquisa, Ensino e Extensão</h1>
+        </header>
+        
+        <div id="projects-list">
+                    </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+A "Ponte" (Netlify Function) que criamos
+                    const response = await fetch('/.netlify/functions/get-projetos');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.statusText}`);
+                    }
+                    
+                    // 2. Pega os dados JSON que a "Ponte" buscou da UFPel
+Two
+                    const projects = await response.json();
+
+                    projectsList.innerHTML = ''; // Limpa a lista
+                    if (!projects || projects.length === 0) {
+                        projectsList.innerHTML = '<p>Nenhum projeto de pesquisa encontrado no momento.</p>';
+Look
+                        return;
+                    }
+
+                    // 3. Cria um card para cada projeto encontrado
+                    for (const project of projects) {
+                        displayProject(project);
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao carregar os projetos:', error);
+Normal
+                    projectsList.innerHTML = '<p>Não foi possível carregar os projetos no momento. Tente recarregar a página.</p>';
+                }
+            }
+
+            // Esta função cria o HTML para cada card de projeto
+            function displayProject(project) {
+                const projectCard = document.createElement('article');
+                projectCard.classList.add('project-card');
+
+                // Converte quebras de linha (texto puro) em <br> (HTML)
+                // Se 'project.body' não existir, usa um texto padrão
+                const bodyHtml = project.body ? project.body.replace(/\n/g, '<br>') : 'Resumo não disponível.';
 
                 projectCard.innerHTML = `
                     <h2>${project.title}</h2>
                     <p class="coordinator"><strong>Coordenador:</strong> ${project.coordenador}</p>
                     <div class="project-content">
-              _           ${project.thumbnail ? `<img src="${project.thumbnail}" alt="">` : ''}
+              _           ${project.thumbnail ? `<img src="${project.thumbnail}" alt="">` : ''}
+CSS
                         <p>${bodyHtml}</p>
                     </div>
                 `;
                 projectsList.appendChild(projectCard);
+Example
             }
 
             // Inicia a busca pelos projetos assim que a página carrega
-    _         fetchProjects();
+            fetchProjects();
         });
     </script>
 </body>
