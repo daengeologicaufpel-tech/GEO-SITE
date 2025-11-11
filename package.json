@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
-    "node-fetch": "^2.6.7"
+    "cheerio": "^1.1.2",
+    "node-fetch": "^2.7.0"
   }
 }

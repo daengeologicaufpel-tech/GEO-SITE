@@ -1,12 +1,16 @@
 # Arquivo de configuração da Netlify
 [build]
-  publish = "."
-  command = ""
+  publish = "."
+  command = ""
 
 # Habilita o sistema de login da Netlify
 [identity]
-  url = "YOUR_SITE_URL" # Substituiremos isso depois
+  url = "YOUR_SITE_URL" # Substituiremos isso depois
 
-# Habilita as funções de backend para os e-mails no futuro
+# Habilita as funções de backend
 [functions]
-  directory = "netlify/functions"
+  directory = "netlify/functions"
+  # LINHA NOVA: Diz ao Netlify como "empacotar" nosso código
+_ node_bundler = "esbuild"
+  # LINHA NOVA: Dá mais tempo para a UFPel responder
+_ timeout = 30
