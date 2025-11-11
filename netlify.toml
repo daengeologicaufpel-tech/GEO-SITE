@@ -11,4 +11,8 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+# Configurações específicas para a NOSSA função
+[functions."get-projetos"]
+  # Aumenta o tempo limite desta função para 30s
   timeout = 30
